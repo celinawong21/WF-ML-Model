@@ -144,5 +144,23 @@ For predictive modeling focused on mortgage default and prepayment rates, bias t
 - Interpretation of the findings, including insights into the impact of macroeconomic factors on default rates.
 - Recommendations for Wells Fargo, such as proactive risk management strategies or adjustments to lending practices based on the predictions.
 
+## Potential Next Steps: Outlined
+Utilizing historical loan origination and performance data from Freddie Mac, our predictive model incorporates forecasted macroeconomic indicators to enhance accuracy. Following client consultation, we plan to develop scenarios accommodating variations in future macroeconomic forecasts. Our next steps involve selecting relevant macroeconomic variables to integrate into the dataset, enhancing our model's ability to predict loan default rates.
 
+Ethical and regulatory compliance are not applicable concerns for this project, as it focuses solely on loan performance rather than approval. After discussions, we've omitted these considerations from the project deliverables. Our priority is to ensure the model can robustly predict default rates across various stress scenarios.
 
+Based on our exploratory data analysis, we propose integrating a simulator using the Plotly package for UI/UX, enabling non-technical managers to analyze predictions without needing to understand the underlying code.
+
+## Risk Considerations: Outlined
+
+A key risk lies in the reliance on historical loan origination data coupled with forecasted macroeconomic variables to predict future default rates for a 30-year mortgage window. Ensuring the model's relevance into the future hinges on the continued validity of historical data and the appropriateness of forecasted macroeconomic variables. Addressing this risk is paramount to the success of the project.
+
+Without ethical or bias considerations, automating decision-making using AI without human oversight poses no inherent consequences for this model. As such, this aspect has been excluded from the project's scope.
+Recommendation for establishing risk mitigation strategies and contingency plans to address unforeseen challenges.
+
+## Appendices: External Sources Used
+- https://www.stat.berkeley.edu/~aldous/Research/Ugrad/Grace_Deng_thesis.pdf
+- https://www.bis.org/bcbs/events/rtf07rodriguez.pdf
+- https://epublications.marquette.edu/cgi/viewcontent.cgi?article=1094&context=fin_fac#:~:text=Consistent%20with%20prior%20work%2C%20higher,difficult%20to%20make%20mortgage%20payments. 
+- https://www.fhfa.gov/Media/PublicAffairs/Pages/House-Price-Index-Frequently-Asked-Questions.aspx 
+- https://www.chase.com/personal/mortgage/education/financing-a-home/inflation-and-interest-rates
