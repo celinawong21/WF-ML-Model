@@ -44,6 +44,7 @@ Wall Street heavily relies on the success of this market, with banks strategical
      * **Variables that change over time**: CURRENT ACTUAL UPB, LOAN AGE, STIMATED LOAN TO VALUE (ELTV)
      * **Variables that change over time and predict for the future**: CURRENT INTEREST RATE, UNEMPLOYMENT RATE, INFLATION RATE, HOUSING PRICE INDEX 
 * Macroeconomic variables such as inflation, Home Price Index (HPI), and unemployment are loaded. HPI is used nationally to accommodate null values at the state level.
+
 ### Sampling Processes
 * Due to the extensive size of our dataset, we employed a strategic sampling method to manage our analysis effectively. The key criteria used for sampling were centered around the "CURRENT LOAN DELINQUENCY STATUS". Our methodology is outlined as follows:
   * **Definition of Default**: We identify a loan as default if its "LOAN DELINQUENCY STATUS" is equal to 6 or marked as "RA". Loans not meeting these conditions are classified as non-default.
