@@ -1,0 +1,137 @@
+```python
+from pyspark.sql import SparkSession
+import pandas as pd
+from pyspark.sql.functions import date_format
+pd.set_option('display.max_rows', None)
+pd.set_option('display.max_columns', None)
+
+
+# Create a Spark session
+spark = SparkSession.builder \
+    .master('local[*]') \
+    .config("spark.driver.memory", "15g") \
+    .appName('TimeSeries') \
+    .getOrCreate()
+spark.conf.set("spark.sql.repl.eagerEval.enabled", True)
+
+# Load data from a CSV file into a DataFrame
+df_merged = spark.read.csv("/Users/andrewrenga/Documents/GW Senior Year/Semester 2/Capstone/df_merged.csv", header=True, inferSchema=True)
+df_merged = df_merged.withColumn('MONTHLY REPORTING PERIOD', date_format('MONTHLY REPORTING PERIOD', 'yyyy-MM'))
+df_merged.show(10, truncate=False, vertical=True)
+```
+
+
+```python
+from pyspark.sql.functions import lit, expr, row_number, monotonically_increasing_id, when, col, first
+from pyspark.sql.window import Window
+from pyspark.sql.types import StructType, StructField, StringType, IntegerType
+import numpy as np
+#pip install tqdm
+from tqdm import tqdm
+
+df_merged_subset = df_merged.withColumn("Source", lit("orig"))
+df_merged_subset = df_merged_subset.withColumn("Horizon", lit(0))
+df_merged_subset = df_merged_subset.withColumn("Group", monotonically_increasing_id())
+
+# Define a window specification
+window_spec = Window.partitionBy("LOAN SEQUENCE NUMBER").orderBy("LOAN AGE")
+
+# Create an empty DataFrame to store the result
+result_df = df_merged_subset.sparkSession.createDataFrame([], df_merged_subset.schema)
+
+# Iterate over each row in the DataFrame
+for row in tqdm(df_merged_subset.collect()):
+    # Add the original row to the result DataFrame
+    result_df = result_df.union(df_merged_subset.sparkSession.createDataFrame([row], df_merged_subset.schema))
+    if row['Source'] == 'orig':  # Check if 'Source' = 'orig'
+        # Duplicate the row 24 times
+        duplicated_rows = df_merged_subset.sparkSession.createDataFrame([row]*24, df_merged_subset.schema)
+        # Mark as 'Duplicated'
+        duplicated_rows = duplicated_rows.withColumn("Source", lit("Duplicated"))
+        # Add 'Horizon' column and label each duplicated row from 1 to 24
+        duplicated_rows = duplicated_rows.withColumn("Horizon", (row_number().over(window_spec) - 1) % 24 + 1)
+        # Nullify other columns for Duplicated rows
+        exclude_cols = ['LOAN SEQUENCE NUMBER','Source', 'Horizon','Group']
+        # Apply the condition to each column
+        for col_name in duplicated_rows.columns:
+            if col_name not in exclude_cols:
+                duplicated_rows = duplicated_rows.withColumn(col_name, when(duplicated_rows["Source"] == "Duplicated", None).otherwise(col(col_name)))
+        # Add the duplicated rows to the result DataFrame
+        result_df = result_df.union(duplicated_rows)
+
+df_merged_skinny = result_df.select("LOAN SEQUENCE NUMBER", "CREDIT SCORE", "LOAN AGE", "DEFAULT", "Horizon", "Source", "Group")
+
+
+#### Adding correct Default value to each horizon
+
+# Find the default values when Source = 'orig' for each group
+default_values_df = df_merged_skinny.filter(col("Source") == "orig") \
+    .withColumn("default_value", first(col("DEFAULT")).over(window_spec)) \
+    .select("LOAN SEQUENCE NUMBER", "Group", "default_value")
+
+# Join the default values back to the df_merged_skinny DataFrame
+df_merged_skinny = df_merged_skinny.join(default_values_df, on=["LOAN SEQUENCE NUMBER", "Group"], how="left")
+
+# Fill DEFAULT column for 'Duplicated' rows with the DEFAULT value from 'orig' rows in the same group
+df_merged_skinny = df_merged_skinny.withColumn("DEFAULT", when(df_merged_skinny["Source"] == "Duplicated", 
+                                                              col("default_value"))
+                                               .otherwise(col("DEFAULT")))
+
+# Drop the temporary column default_value
+df_merged_skinny = df_merged_skinny.drop("default_value")
+
+df_merged_skinny.show(3, truncate=False, vertical=True)
+```
+
+
+```python
+from pyspark.sql.functions import when, col, lit
+from pyspark.sql.window import Window
+
+# Calculate the static LOAN AGE value when Source = 'orig' for each group
+static_loan_age_df = df_merged_skinny.filter(col("Source") == "orig") \
+    .groupBy("Group").agg({"LOAN AGE": "first"}) \
+    .withColumnRenamed("first(LOAN AGE)", "static_LOAN_AGE")
+
+# Join static_loan_age_df to df_merged_skinny based on the "Group" column
+result_df1 = df_merged_skinny.join(static_loan_age_df, on="Group")
+
+# Define a window specification
+window_spec = Window.partitionBy("Group").orderBy("Horizon")
+
+# Subtract the static LOAN AGE value by the 'Horizon' value for each row within the same group
+result_df1 = result_df1.withColumn("LOAN AGE", 
+                                 when(col("Source") == "Duplicated", 
+                                      col("static_LOAN_AGE") - col("Horizon"))
+                                 .otherwise(col("LOAN AGE")))
+
+# Drop the static_LOAN_AGE column and keep rows where loan age >= 0 
+result_df1 = result_df1.drop("static_LOAN_AGE")
+result_df1 = result_df1[result_df1['LOAN AGE'] >= 0]
+
+df_merged_skinny = result_df1
+```
+
+
+```python
+# Left join df_merged into df_merged_skinny based on matching columns
+df_merged_skinny = df_merged_skinny.withColumnRenamed("LOAN SEQUENCE NUMBER", "LOAN SEQUENCE NUMBER 1") \
+                                   .withColumnRenamed("CREDIT SCORE", "CREDIT SCORE 1") \
+                                   .withColumnRenamed("LOAN AGE", "LOAN AGE 1") \
+                                   .withColumnRenamed("DEFAULT", "DEFAULT_orig")
+
+df_timeseries = df_merged_skinny.join(df_merged, 
+                                   (df_merged_skinny["LOAN SEQUENCE NUMBER 1"] == df_merged["LOAN SEQUENCE NUMBER"]) &
+                                   (df_merged_skinny["LOAN AGE 1"] == df_merged["LOAN AGE"]), 
+                                   "left")
+
+# Drop duplicated columns and rename DEFAULT_orig back to DEFAULT
+df_timeseries = df_timeseries.drop("LOAN SEQUENCE NUMBER 1", "CREDIT SCORE 1", "LOAN AGE 1", "DEFAULT")
+df_timeseries = df_timeseries.withColumnRenamed("DEFAULT_orig", "DEFAULT") \
+
+# Show the joined DataFrame
+pandas_df = df_timeseries.toPandas()
+
+# Print the pandas DataFrame
+pandas_df.head(10)
+```
