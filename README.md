@@ -33,10 +33,10 @@ Wall Street heavily relies on the success of this market, with banks strategical
 * Our analysis utilized two main types of datasets: the Origination dataset, which contains mortgage information at the point of loan initiation, and the Performance dataset, which records monthly activities for each loan throughout its contract period. Key strategies implemented in our data preprocessing include:
   * **Handling Missing Data**: We have removed columns that contain Null values across both dataset to ensure the completeness of our analysis.
   * **Merging Origination and Performance Datasets**: To construct a comprehensive analytical framework, we integrate data from the Performance dataset into the Origination dataset, using the LOAN SEQUENCE NUMBER as a key identifier. This merging process guarantees that each record in the Origination dataset is enriched with monthly activities from the performance dataset, offering a complete overview of the loan's lifecycle from its origination to maturity.
-  * The Estimated Loan-to-Value (ELTV) ratio is a crucial variable for our modeling to incorporate the financial risk associated with each loan.; however, we encountered a  
-  significant number of null values for ELTV within our Performance   dataset. To address this, we independently calculated ELTV. This involved dividing the Current Unpaid  
-  Balance by the adjusted housing price. We determined the adjusted   
-  housing price by applying the change in the Housing Price Index from the loan's origination date to the month of prediction, to the original unpaid balance.
+  * **The Estimated Loan-to-Value (ELTV) ratio** is a crucial variable for our modeling to incorporate the financial risk associated with each loan.; however, we encountered a  
+  significant number of null values for ELTV within our Performance  dataset. To address this, we independently calculated ELTV. This involved dividing the Current Unpaid  
+  Balance by the adjusted housing price. We determined the adjusted housing price by applying the change in the Housing Price Index from the loan's origination date to the
+  month of prediction, to the original unpaid balance.
   * Our target variable is the probablity of default rate
   * There are 3 types of input variables that look into for our analysis
      * **Variables that don't change over time**: CREDIT SCORE, CURRENT LOAN DELINQUENCY STATUS, ORIGINAL INTEREST RATE, PROPERTY TYPE, LOAN PURPOSE, SELLER NAME, FIRST TIME   
