@@ -25,20 +25,34 @@ Wall Street heavily relies on the success of this market, with banks strategical
 * The dataset utilized for constructing the predictive model is sourced from Freddie Mac and spans from the year 2000 up to the second quarter of 2023.
 * It encompasses information on single-family home loans categorized into origination and performance files.
 * The primary focus of the student team is on 30-year-fixed rate mortgages as the main dataset for training the model.
-* Before sampling, the dataset consisted of approximately 250 million rows.
+* Before sampling, the dataset consisted of approximately *** million rows.
 
 ## Data Preprocessing 
-### Sampling Process
+### Data Cleansing 
 * PySpark is employed to handle the large dataset, spanning the last 24 years.
-  * Origination and performance data from each year were loaded and joined using the Loan Sequence Number as the common key.
-    * Unnecessary variables were filtered out at this stage.  
-* All loans not classified as 30-year fixed-rate mortgages are filtered out.
-* Loans are then categorized into default or non-default based on their "Current Loan Delinquency Status".
-  * Loans with a status of 6 or greater, indicating a delay of at least 6 months, are classified as defaulted, while others are labeled as non-default.
-* 10% of non-defaulted loans is sampled, while all defaulted loans are retained, aiming to address the low probability of loan defaults and ensure balanced representation in the model.
-* Macroeconomic variables such as inflation, Home Price Index (HPI), and unemployment are loaded.
-  * HPI is used nationally to accommodate null values at the state level.
-* Estimated Loan-to-Value (ELTV) is calculated to incorporate the financial risk associated with each loan.
+* Our analysis utilized two main types of datasets: the Origination dataset, which contains mortgage information at the point of loan initiation, and the Performance dataset, which records monthly activities for each loan throughout its contract period. Key strategies implemented in our data preprocessing include:
+  * **Handling Missing Data**: We have removed columns that contain Null values across both dataset to ensure the completeness of our analysis.
+  * **Merging Origination and Performance Datasets**: To construct a comprehensive analytical framework, we integrate data from the Performance dataset into the Origination dataset, using the LOAN SEQUENCE NUMBER as a key identifier. This merging process guarantees that each record in the Origination dataset is enriched with monthly activities from the performance dataset, offering a complete overview of the loan's lifecycle from its origination to maturity.
+  * The Estimated Loan-to-Value (ELTV) ratio is a crucial variable for our modeling to incorporate the financial risk associated with each loan.; however, we encountered a  
+  significant number of null values for ELTV within our Performance   dataset. To address this, we independently calculated ELTV. This involved dividing the Current Unpaid  
+  Balance by the adjusted housing price. We determined the adjusted   
+  housing price by applying the change in the Housing Price Index from the loan's origination date to the month of prediction, to the original unpaid balance.
+  * Our target variable is the probablity of default rate
+  * There are 3 types of input variables that look into for our analysis
+     * **Variables that don't change over time**: CREDIT SCORE, CURRENT LOAN DELINQUENCY STATUS, ORIGINAL INTEREST RATE, PROPERTY TYPE, LOAN PURPOSE, SELLER NAME, FIRST TIME   
+     HOMEBUYER FLAG, OCCUPANCY STATUS 
+     * **Variables that change over time**: CURRENT ACTUAL UPB, LOAN AGE, STIMATED LOAN TO VALUE (ELTV)
+     * **Variables that change over time and predict for the future**: CURRENT INTEREST RATE, UNEMPLOYMENT RATE, INFLATION RATE, HOUSING PRICE INDEX 
+* Macroeconomic variables such as inflation, Home Price Index (HPI), and unemployment are loaded. HPI is used nationally to accommodate null values at the state level.
+### Sampling Processes
+* Due to the extensive size of our dataset, we employed a strategic sampling method to manage our analysis effectively. The key criteria used for sampling were centered around the "CURRENT LOAN DELINQUENCY STATUS". Our methodology is outlined as follows:
+  * **Definition of Default**: We identify a loan as default if its "LOAN DELINQUENCY STATUS" is equal to 6 or marked as "RA". Loans not meeting these conditions are classified as non-default.
+  * **True_Default**: For clarity in classification, loans meeting the default criteria at any point in time are tagged as "true_default". This distinction allows for  
+  precise identification and analysis of loans that default versus those that do not.
+  * **Sampling Proportion**: To ensure a balanced representation of default and non-default loans across the 24-year span of our dataset, we adopted a selective sampling  
+  approach. Specifically, we sampled 10% of the non-default loans and 100% of the default loans. This approach addresses the relatively lower incidence of defaults within each  
+  year, ensuring that our analysis accurately reflects the dynamics of loan performance over time.
+* The following is our sample dataset
 
 | Variables                       | RECORD 0         |
 |----------------------------------|---------------|
