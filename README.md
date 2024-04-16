@@ -13,7 +13,10 @@
 
 ## Executive Summary
 * The mortgage market is a pivotal component, ranking as the second-largest market globally after interest rates. Banks strategically allocate capital through mortgage bonds, underscoring the industry's immense significance. The desired business outcomes for mortgage models encompass achieving interpretability and accuracy, predicting default and repayment patterns over an extended period, and ensuring adaptability to changing market dynamics. Interpretability is crucial in fostering trust and understanding among related parties, as decisions derived from the model need to be transparent and meaningful. Additionally, predicting the likelihood of default and repayment over the next 24 months is a key objective. This predictive capability is essential for risk management, enabling banks to anticipate potential challenges in mortgage repayments and take proactive measures to mitigate default risks.
-* Will add high-level information about our results here, and how they are applicable to Wells Fargo. 
+* The overarching goal is to identify key predictors that could lead to revenue loss for Wells Fargo and accurately forecast potential losses over the next 24 months. Through risk mitigation efforts, the model seeks to enhance the overall stability of their mortgage-backed securities, taking extra precautions to address potential downward trends that may emerge in the future. Moreover, the model's success is closely tied to its adaptability across diverse economic scenarios, with a specific emphasis on stress testing under various conditions such as crises or pandemics like COVID-19, thereby critically evaluating its robustness.
+
+* Will add high-level information about our results here, and how they are applicable to Wells Fargo.
+  
 ## Problem Understanding
 * The US mortgage market is valued at trillions, ranking second only to interest rates.
 Wall Street heavily relies on the success of this market, with banks strategically allocating capital through mortgage bonds.
@@ -74,11 +77,11 @@ Wall Street heavily relies on the success of this market, with banks strategical
 * Due to the extensive size of our dataset, we employed a strategic sampling method to manage our analysis effectively. The key criteria used for sampling were centered around the "CURRENT LOAN DELINQUENCY STATUS". Our methodology is outlined as follows:
   * **Definition of Default**: We identify a loan as default if its "LOAN DELINQUENCY STATUS" is equal to 6 or marked as "RA". Loans not meeting these conditions are classified as non-default.
   * **True_Default**: For clarity in classification, loans meeting the default criteria at any point in time are tagged as "true_default". This distinction allows for precise identification and analysis of loans that default versus those that do not.
-  * **Sampling Proportion**: To ensure a balanced representation of default and non-default loans across the 24-year span of our dataset, we adopted a selective sampling approach. The following is the main criteria.
+  * **Sampling Proportion**: To ensure a balanced representation of default and non-default loans across the 24-year span of our dataset, we adopted a selective sampling approach. The following are the main criteria.
     * We selected 3,000 loans from each year and sampled an equal amount of 350 defaults and 350 non-defaults for each quarter, ensuring that our analysis accurately reflects the dynamics of loan performance over time.
     * Then, we added three quarter variables: OrigData, OrigYear, and OrigQuarter, to track the effect of the quarter for modeling purposes.
     * Due to a shortage of defaults in certain periods, our sampling faced limitations. Specifically, for the fourth quarter of 2022, we could only sample 264 defaults. In 2023, we were able to sample only 32 defaults in the first quarter and no defaults in the second quarter. 
-* The following is an loan from the 2003 sample dataset
+* The following is a loan from the 2003 sample dataset
   
 | **Variables**                           |     **Record 0**                      |
 |---------------------------|---------------------------|
@@ -127,18 +130,20 @@ Wall Street heavily relies on the success of this market, with banks strategical
 | 1   | 125000 | 675  | Current     | 6.2          | 3            | 0           |
 
 ## Results
-* insert graphs or tables displaying model's within and out of sample fit.
+* insert heatmap pertaining to the correlations of all variables
+* show basic stats of variables (if any stand out) to help the client gauge the data format and better understand the modeling process
+* insert graphs or tables displaying the model's within and out of sample fit.
+
 ## Risk Considerations
-Economic predictions are indeed influenced by a multitude of factors, including inflation rates, housing price indices (HPI), interest rates on loans, and unemployment rates. These variables are interconnected and can be affected by global trade dynamics, geopolitical events, and various other factors.
-
-The efficacy of any economic model is indeed influenced by its ability to account for and adapt to these external factors and fluctuations in economic variables. Models that fail to adequately capture the complexity and interdependence of these factors may struggle to provide accurate predictions.
-
-To mitigate uncertainty and improve the efficacy of economic models, researchers often employ advanced statistical techniques, incorporate more data sources, and refine the underlying assumptions of the models. Additionally, scenario analysis and sensitivity testing can help assess the resilience of the predictions to changes in external factors.
-Despite these efforts, it's important to recognize that economic forecasting will always entail some degree of uncertainty, given the dynamic and interconnected nature of the global economy. Therefore, while economic models can provide valuable insights and guidance, they should be used cautiously and in conjunction with other sources of information and expert judgment.
+* **Automation Risk**: Discussion on the consequences of relying solely on predictive models for decision-making without human oversight.
+* careful consideration of how sampling a minuscule proportion of the overall data may lead to biases or an inability to fully predict default during periods of crisis.
+* * consider how data during times of crisis is inherently biased (because loans will be only given out to customers with great finances who won't default). Rather, it is equally important to predict when a crisis may occur so that proper actions can be taken before it is too late.
 
 ## Potential Next Steps 
 * **Integration of Additional Data Sources**: consider incorporating regional economic indicators or property market data alongside existing sources like Freddie Mac to enhance predictive accuracy.
 * **Dynamic Feature Selection**: develop adaptive feature selection mechanisms to prioritize relevant features and adjust the model's feature set over time based on their importance.
 * **Larger Dataset**: apply the modeling techniques to all Freddie Mac single-family home loan data to further incorporate the changes in the economic scenario over time.
 * **Government Intervention**: consideration of any regulatory compliance and ethical implications in future iterations of the project.
-* **User Interface**: create a front-end development to input certain criteria about a loan and output its potential rate of default.
+* **User Interface**: create a front-end development to input certain criteria about a loan or macroeconomic variables and output its potential rate of default. This application will take user input, visually explain the impact of each variable, and attempt to boost the interpretability of the model. 
+
+## Author Contributions
