@@ -74,6 +74,7 @@ Wall Street heavily relies on the success of this market, with banks strategical
     * Then, we added three quarter variables: OrigData, OrigYear, and OrigQuarter, to track the effect of the quarter for modeling purposes.
     * Due to a shortage of defaults in certain periods, our sampling faced limitations. Specifically, for the fourth quarter of 2022, we could only sample 264 defaults. In 2023, we were able to sample only 32 defaults in the first quarter and no defaults in the second quarter. 
 * Theh following is our sample dataset
+  
 | Variables                       | RECORD 0         |
 |----------------------------------|---------------|
 | LOAN SEQUENCE NUMBER             | F00Q10000050  |
