@@ -40,12 +40,12 @@ Wall Street heavily relies on the success of this market, with banks strategical
      * To address this, ELTV was independently calculated by dividing the CURRENT UNPAID BALANCE by the adjusted housing price. The adjusted housing price is determined by applying the change in the Housing Price Index from the loan's origination date to the month of prediction, to the original unpaid balance.
 
 ## Variable Selection
-* Target variable: is the probablity of default rate
+* Target variable: is the probability of default rate
 * 3 types of input variables
   * **Variables that don't change over time**: CREDIT SCORE, CURRENT LOAN DELINQUENCY STATUS, ORIGINAL INTEREST RATE, PROPERTY TYPE, LOAN PURPOSE, SELLER NAME, FIRST TIME HOMEBUYER FLAG, OCCUPANCY STATUS
-  * **Variables that change over time**: CURRENT ACTUAL UPB, LOAN AGE, STIMATED LOAN TO VALUE (ELTV)
-  * **Variables that change over time and predict for the future**: CURRENT INTEREST RATE, UNEMPLOYMENT RATE, INFLATION RATE, HOUSING PRICE INDEX
-    * Macroeconomic variables such as inflation, Home Price Index (HPI), and unemployment are loaded from third party sources.
+  * **Variables that change over time**: CURRENT ACTUAL UPB, LOAN AGE, ESTIMATED LOAN TO VALUE (ELTV)
+  * **Variables that change over time and predict the future**: CURRENT INTEREST RATE, UNEMPLOYMENT RATE, INFLATION RATE, HOUSING PRICE INDEX
+    * Macroeconomic variables such as inflation, Home Price Index (HPI), and unemployment are loaded from third-party sources.
     * HPI is used nationally to accommodate null values at the state level.
    
 ### Data Dictionary 
@@ -113,5 +113,13 @@ Wall Street heavily relies on the success of this market, with banks strategical
 ## Results
 * insert graphs or tables displaying model's within and out of sample fit.
 ## Risk Considerations
+* **Automation Risk**: Discussion on the consequences of relying solely on predictive models for decision-making without human oversight.
+
 ## Potential Next Steps 
+* **Integration of Additional Data Sources**: consider incorporating regional economic indicators or property market data alongside existing sources like Freddie Mac to enhance predictive accuracy.
+* **Dynamic Feature Selection**: develop adaptive feature selection mechanisms to prioritize relevant features and adjust the model's feature set over time based on their importance.
+* **Larger Dataset**: apply the modeling techniques to all Freddie Mac single-family home loan data to further incorporate the changes in the economic scenario over time.
+* **Government Intervention**: consideration of any regulatory compliance and ethical implications in future iterations of the project.
+* **User Interface**: create a front-end development to input certain criteria about a loan and output its potential rate of default.
+
 ## Author Contributions
