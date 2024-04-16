@@ -142,5 +142,3 @@ Despite these efforts, it's important to recognize that economic forecasting wil
 * **Larger Dataset**: apply the modeling techniques to all Freddie Mac single-family home loan data to further incorporate the changes in the economic scenario over time.
 * **Government Intervention**: consideration of any regulatory compliance and ethical implications in future iterations of the project.
 * **User Interface**: create a front-end development to input certain criteria about a loan and output its potential rate of default.
-
-## Author Contributions
