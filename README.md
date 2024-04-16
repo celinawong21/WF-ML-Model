@@ -68,13 +68,13 @@ Wall Street heavily relies on the success of this market, with banks strategical
 ### Sampling Processes
 * Due to the extensive size of our dataset, we employed a strategic sampling method to manage our analysis effectively. The key criteria used for sampling were centered around the "CURRENT LOAN DELINQUENCY STATUS". Our methodology is outlined as follows:
   * **Definition of Default**: We identify a loan as default if its "LOAN DELINQUENCY STATUS" is equal to 6 or marked as "RA". Loans not meeting these conditions are classified as non-default.
-  * **True_Default**: For clarity in classification, loans meeting the default criteria at any point in time are tagged as "true_default". This distinction allows for  
-  precise identification and analysis of loans that default versus those that do not.
-  * **Sampling Proportion**: To ensure a balanced representation of default and non-default loans across the 24-year span of our dataset, we adopted a selective sampling  
-  approach. Specifically, we sampled 10% of the non-default loans and 100% of the default loans. This approach addresses the relatively lower incidence of defaults within each  
-  year, ensuring that our analysis accurately reflects the dynamics of loan performance over time.
-* The following is our sample dataset
-
+  * **True_Default**: For clarity in classification, loans meeting the default criteria at any point in time are tagged as "true_default". This distinction allows for precise identification and analysis of loans that default versus those that do not.
+  * **Sampling Proportion**: To ensure a balanced representation of default and non-default loans across the 24-year span of our dataset, we adopted a selective sampling approach. The following is the main criteria.
+    * We selected 3,000 loans from eacn year and sampled an equal amount of 350 defaults and 350 non-defaults for each quarter, ensuring that our analysis accurately reflects the dynamics of loan performance over time.
+    * Then, we added three quarter variables: OrigData, OrigYear, and OrigQuarter, to track the effect of the quarter for modeling purposes.
+    * Due to a shortage of defaults in certain periods, our sampling faced limitations. Specifically, for the fourth quarter of 2022, we could only sample 264 defaults. In 2023, we were able to sample only 32 defaults in the first quarter and no defaults in the second quarter. 
+* Theh following is our sample dataset
+  
 | Variables                       | RECORD 0         |
 |----------------------------------|---------------|
 | LOAN SEQUENCE NUMBER             | F00Q10000050  |
