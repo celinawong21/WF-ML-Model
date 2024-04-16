@@ -43,7 +43,7 @@ Wall Street heavily relies on the success of this market, with banks strategical
   * **Lack of Estimated Loan-to-Value (ELTV) ratio**: ELTV is crucial for modeling to incorporate the financial risk associated with each loan, but there were a significant number of null values present within the Performance dataset.
      * To address this, ELTV was independently calculated by dividing _CURRENT UNPAID BALANCE_ by the adjusted housing price. The adjusted housing price is determined by applying the change in the Housing Price Index from the loan's origination date to the month of prediction, to the original unpaid balance.
 
-## Variable Selection
+### Variable Selection
 * Target variable: is the probability of default rate
 * 3 types of input variables
   * **Variables that don't change over time**: CREDIT SCORE, CURRENT LOAN DELINQUENCY STATUS, ORIGINAL INTEREST RATE, PROPERTY TYPE, LOAN PURPOSE, SELLER NAME, FIRST TIME HOMEBUYER FLAG, OCCUPANCY STATUS
@@ -73,8 +73,8 @@ Wall Street heavily relies on the success of this market, with banks strategical
 | Inflation| Macroeconomic| Numeric| Input| The rate of increase in prices over a given period of time, reported monthly| 
 | Default| Target| Binary| Input| Describes whether a loan is 6 months late on payment|
  
-### Sampling Process
-#### Methodology
+## Sampling
+### Methodology
 * Due to the extensive size of the dataset, a strategic sampling method was employed to manage the data. The key criteria used for sampling were centered around the _CURRENT LOAN DELINQUENCY STATUS_.
   * **Criteria for a Defaulted Loan**: if "LOAN DELINQUENCY STATUS" is equal to 6 or marked as "RA", payment on the loan is at least 6 months late.
     * Loans not meeting these conditions are classified as non-default.
@@ -83,7 +83,8 @@ Wall Street heavily relies on the success of this market, with banks strategical
     * 3,000 loans were selected from each year and sampled an equal amount of 350 defaults and 350 non-defaults for each quarter, to ensure that the analysis accurately reflects the dynamics of loan performance over time.
     * Then, three "quarter" variables were added (_OrigData_, _OrigYear_, and _OrigQuarter_), to track the effect of the quarter for modeling purposes.
     * The sampling faced limitations due to a shortage of defaults in certain periods. Specifically, for the fourth quarter of 2022, only 264 defaulted loans were sampled. In 2023, only 32 defaults in the first quarter were sampled and zero defaulted loans were found in the second quarter. 
-* The following is a loan from the 2003 sample dataset:
+
+### 2003, Record 0 
   
 | **Variables**                           |     **Record 0**                      |
 |---------------------------|---------------------------|
@@ -117,8 +118,8 @@ Wall Street heavily relies on the success of this market, with banks strategical
   * Each row is duplicated 24 times to predict default probability over the subsequent 24-month period (sample table below).
 * The decision to opt for a time series horizon model over a traditional time series model was driven by the latter's diminishing predictive power with increasing time duration.
 * Traditional time series models tend to overly emphasize initial lagged time periods, potentially overlooking valuable insights from earlier years.
-* The following is an example of the stacked data method that was employed in the modeling:
 
+### Sample Stacked Data
 | age | amount | FICO | delinquency | unemployment | horizon to y | default (y) |
 |-----|--------|------|-------------|--------------|--------------|-------------|
 | 1   | 125000 | 675  | Current     | 6.2          | 0            | 0           |
