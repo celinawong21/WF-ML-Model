@@ -111,6 +111,7 @@ Wall Street heavily relies on the success of this market, with banks strategical
 | 1   | 125000 | 675  | Current     | 6.2          | 3            | 0           |
 
 ## Results
+* insert graphs or tables displaying model's within and out of sample fit.
 ## Risk Considerations
 ## Potential Next Steps 
 ## Author Contributions
