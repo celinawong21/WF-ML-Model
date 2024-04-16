@@ -3,7 +3,6 @@
 * Organization or People Developing Model: GWU Wells Fargo Predictive Mortgage Default Team (Members: Anukshan Ghosh, Allison Ko, Andrew Renga, and Celina Wong)
 * Model Date: May, 2023
 * Model Version: 1.0
-* License: Apache 2.0
 * Model Implementation Code: [Main Code - PySpark_0412.ipynb](https://github.com/celinawong21/WF-ML-Model/blob/main/Main%20Code%20-%20PySpark_0412.ipynb)
 * Data Obtained from Freddie Mac Database: https://freddiemac.embs.com/FLoan/secure/login.php?pagename=download 
 
