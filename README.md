@@ -12,7 +12,8 @@
 * Out-of-scope use cases: Any use beyond an educational example is out-of-scope.
 
 ## Executive Summary
-
+* The mortgage market is a pivotal component, ranking as the second-largest market globally after interest rates. Banks strategically allocate capital through mortgage bonds, underscoring the industry's immense significance. The desired business outcomes for mortgage models encompass achieving interpretability and accuracy, predicting default and repayment patterns over an extended period, and ensuring adaptability to changing market dynamics. Interpretability is crucial in fostering trust and understanding among related parties, as decisions derived from the model need to be transparent and meaningful. Additionally, predicting the likelihood of default and repayment over the next 24 months is a key objective. This predictive capability is essential for risk management, enabling banks to anticipate potential challenges in mortgage repayments and take proactive measures to mitigate default risks.
+* Will add high-level information about our results here, and how they are applicable to Wells Fargo. 
 ## Problem Understanding
 * The US mortgage market is valued at trillions, ranking second only to interest rates.
 Wall Street heavily relies on the success of this market, with banks strategically allocating capital through mortgage bonds.
