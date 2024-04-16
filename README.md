@@ -75,7 +75,7 @@ Wall Street heavily relies on the success of this market, with banks strategical
 ## Sampling
 ### Methodology
 * Due to the extensive size of the dataset, a strategic sampling method was employed to manage the data. The key criteria used for sampling were centered around the _CURRENT LOAN DELINQUENCY STATUS_.
-  * **Criteria for a Defaulted Loan**: if "LOAN DELINQUENCY STATUS" is equal to 6 or marked as "RA", payment on the loan is at least 6 months late.
+  * **Criteria for a Defaulted Loan**: if _LOAN DELINQUENCY STATUS_ is equal to 6 or marked as "RA", payment on the loan is at least 6 months late.
     * Loans not meeting these conditions are classified as non-default.
   * **True_Default**: For clarity in classification, loans meeting the default criteria at any point in time are tagged as "true_default". This distinction allows for precise identification and analysis of loans that default versus those that do not.
   * **Sampling Proportion**: To ensure a balanced representation of default and non-default loans across the 24 years of our dataset, a selective sampling approach was adopted. The following are the main criteria.
