@@ -149,3 +149,4 @@ Wall Street heavily relies on the success of this market, with banks strategical
 
 ## Author Contributions
 * NOTE - deciding whether or not to keep this section
+* NOTE - still learning how to commit a folder to the repo, instead of .zip if need be
