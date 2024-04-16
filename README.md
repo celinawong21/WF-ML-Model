@@ -129,7 +129,12 @@ Wall Street heavily relies on the success of this market, with banks strategical
 ## Results
 * insert graphs or tables displaying model's within and out of sample fit.
 ## Risk Considerations
-* **Automation Risk**: Discussion on the consequences of relying solely on predictive models for decision-making without human oversight.
+Economic predictions are indeed influenced by a multitude of factors, including inflation rates, housing price indices (HPI), interest rates on loans, and unemployment rates. These variables are interconnected and can be affected by global trade dynamics, geopolitical events, and various other factors.
+
+The efficacy of any economic model is indeed influenced by its ability to account for and adapt to these external factors and fluctuations in economic variables. Models that fail to adequately capture the complexity and interdependence of these factors may struggle to provide accurate predictions.
+
+To mitigate uncertainty and improve the efficacy of economic models, researchers often employ advanced statistical techniques, incorporate more data sources, and refine the underlying assumptions of the models. Additionally, scenario analysis and sensitivity testing can help assess the resilience of the predictions to changes in external factors.
+Despite these efforts, it's important to recognize that economic forecasting will always entail some degree of uncertainty, given the dynamic and interconnected nature of the global economy. Therefore, while economic models can provide valuable insights and guidance, they should be used cautiously and in conjunction with other sources of information and expert judgment.
 
 ## Potential Next Steps 
 * **Integration of Additional Data Sources**: consider incorporating regional economic indicators or property market data alongside existing sources like Freddie Mac to enhance predictive accuracy.
