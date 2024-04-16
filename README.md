@@ -21,13 +21,13 @@
 * The US mortgage market is valued at trillions, ranking second-largest, falling only behind interest rates.
 Wall Street heavily relies on the success of this market, with banks strategically allocating capital through mortgage bonds.
 * Default rates typically remain below 0.2%, but economic crises can cause spikes, reaching highs of 9.5%.
-  * The 2008 financial crisis and the 2020 COVID-19 pandemic highlight the vulnerability of mortgage default rates to economic downturns.
+  * The 2007/2008 financial crisis and the 2020 COVID-19 pandemic highlight the vulnerability of mortgage default rates in the event of an economic downturn.
 * Collaborating with the Wells Fargo team, the student team's objective is to develop a predictive model for mortgage default over the next 24 months.
 * The model will integrate various static, dynamic, and macroeconomic variables to enhance accuracy and robustness.
 
 ## The Data
-* The dataset utilized for constructing the predictive model is sourced from Freddie Mac and spans from the year 2000 up to the second quarter of 2023.
-* It encompasses information on single-family home loans categorized into origination and performance files.
+* The dataset utilized for constructing the predictive model is sourced from Freddie Mac and spans from the year 2000 up to Q2 of 2023.
+* It encompasses information on single-family home loans categorized into Origination and Performance datasets.
    * **Origination**: contains mortgage information at the point of loan initiation.
    * **Performance**: records monthly activities for each loan throughout its contract period.
 * The primary focus of the student team is on 30-year-fixed rate mortgages as the main dataset for training the model.
@@ -43,7 +43,7 @@ Wall Street heavily relies on the success of this market, with banks strategical
      * To address this, ELTV was independently calculated by dividing _CURRENT UNPAID BALANCE_ by the adjusted housing price. The adjusted housing price is determined by applying the change in the Housing Price Index from the loan's origination date to the month of prediction, to the original unpaid balance.
 
 ### Variable Selection
-* Target variable: is the probability of default rate
+* **Target variable**: the probability of default rate
 * 3 types of input variables
   * **Variables that don't change over time**: CREDIT SCORE, CURRENT LOAN DELINQUENCY STATUS, ORIGINAL INTEREST RATE, PROPERTY TYPE, LOAN PURPOSE, SELLER NAME, FIRST TIME HOMEBUYER FLAG, OCCUPANCY STATUS
   * **Variables that change over time**: CURRENT ACTUAL UPB, LOAN AGE, ESTIMATED LOAN TO VALUE (ELTV)
@@ -83,7 +83,7 @@ Wall Street heavily relies on the success of this market, with banks strategical
     * Then, three "quarter" variables were added (_OrigData_, _OrigYear_, and _OrigQuarter_), to track the effect of the quarter for modeling purposes.
     * The sampling faced limitations due to a shortage of defaults in certain periods. Specifically, for the fourth quarter of 2022, only 264 defaulted loans were sampled. In 2023, only 32 defaults in the first quarter were sampled and zero defaulted loans were found in the second quarter. 
 
-### 2003, Record 0 
+### Example from Sampled Data: 2003, Record 0 
   
 | **Variables**                           |     **Record 0**                      |
 |---------------------------|---------------------------|
@@ -143,11 +143,11 @@ Wall Street heavily relies on the success of this market, with banks strategical
 * * consider how data during times of crisis is inherently biased (because loans will be only given out to customers with great finances who won't default). Rather, it is equally important to predict when a crisis may occur so that proper actions can be taken before it is too late.
 
 ## Potential Next Steps 
-* **Integration of Additional Data Sources**: consider incorporating regional economic indicators or property market data alongside existing sources like Freddie Mac to enhance predictive accuracy.
-* **Dynamic Feature Selection**: develop adaptive feature selection mechanisms to prioritize relevant features and adjust the model's feature set over time based on their importance.
 * **Larger Dataset**: apply the modeling techniques to all Freddie Mac single-family home loan data to further incorporate the changes in the economic scenario over time.
-* **Government Intervention**: consideration of any regulatory compliance and ethical implications in future iterations of the project.
-* **User Interface**: create a front-end development to input certain criteria about a loan or macroeconomic variables and output its potential rate of default. This application will take user input, visually explain the impact of each variable, and attempt to boost the interpretability of the model. 
+* * **Dynamic Feature Selection**: develop adaptive feature selection mechanisms to prioritize relevant features and adjust the model's feature set over time based on their importance.
+* **Integration of Additional Data Sources**: consider incorporating regional economic indicators or property market data alongside existing sources like Freddie Mac to enhance predictive accuracy.
+* **Government Intervention**: consider any regulatory compliance and ethical implications in future iterations of the project.
+* **User Interface**: create a front-end development to input certain specifics about a loan and/or macroeconomic variables to output a potential rate of default. This application will take user input, visually explain the impact of each variable, and attempt to boost the interpretability of the model. 
 
 ## Author Contributions
 * NOTE - deciding whether or not to keep this section
