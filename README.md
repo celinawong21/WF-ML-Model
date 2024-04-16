@@ -19,9 +19,9 @@
 * Will add high-level information about our results here, and how they are applicable to Wells Fargo.
   
 ## Problem Understanding
-* The US mortgage market is valued at trillions, ranking second only to interest rates.
+* The US mortgage market is valued at trillions, ranking second-largest, falling only behind interest rates.
 Wall Street heavily relies on the success of this market, with banks strategically allocating capital through mortgage bonds.
-* Default rates typically remain below 0.2%, but economic crises can cause spikes, reaching highs of 10%.
+* Default rates typically remain below 0.2%, but economic crises can cause spikes, reaching highs of 9.5%.
   * The 2008 financial crisis and the 2020 COVID-19 pandemic highlight the vulnerability of mortgage default rates to economic downturns.
 * Collaborating with the Wells Fargo team, the student team's objective is to develop a predictive model for mortgage default over the next 24 months.
 * The model will integrate various static, dynamic, and macroeconomic variables to enhance accuracy and robustness.
@@ -29,20 +29,19 @@ Wall Street heavily relies on the success of this market, with banks strategical
 ## The Data
 * The dataset utilized for constructing the predictive model is sourced from Freddie Mac and spans from the year 2000 up to the second quarter of 2023.
 * It encompasses information on single-family home loans categorized into origination and performance files.
- * Origination: contains mortgage information at the point of loan initiation
- * Performance: records monthly activities for each loan throughout its contract period.
+   * **Origination**: contains mortgage information at the point of loan initiation.
+   * **Performance**: records monthly activities for each loan throughout its contract period.
 * The primary focus of the student team is on 30-year-fixed rate mortgages as the main dataset for training the model.
-* Before sampling, the dataset consisted of approximately *** million rows.
 
 ## Data Preprocessing 
 ### Data Cleaning 
 * PySpark is employed to handle the large dataset, spanning the last 24 years.
 * Key strategies implemented in our data preprocessing include:
-  * **Handling Missing Data**: Columns that contain 95% or more null values across both datasets have been removed.
-  * **Merging Origination and Performance Datasets**: To construct a comprehensive analytical framework, the Performance and Originiation datasets were joined using the LOAN SEQUENCE NUMBER as a key identifier.
-    * This merging process guarantees that each record in the Origination dataset is enriched with monthly activities from the performance dataset, providing an complete overview of the loan's lifecycle from its origination to maturity.
+  * **Handling Missing Data**: columns that contain 95% or more null values across both datasets have been removed.
+  * **Merging Origination and Performance Datasets**: to construct a comprehensive analytical framework, the Performance and Origination datasets were joined using the _LOAN SEQUENCE NUMBER_ as a key identifier.
+    * The merging process ensures that each record in the Origination dataset is subsequently paired with monthly activities from the Performance dataset, providing a complete overview of the loan's lifecycle from origination to maturity.
   * **Lack of Estimated Loan-to-Value (ELTV) ratio**: ELTV is crucial for modeling to incorporate the financial risk associated with each loan, but there were a significant number of null values present within the Performance dataset.
-     * To address this, ELTV was independently calculated by dividing the CURRENT UNPAID BALANCE by the adjusted housing price. The adjusted housing price is determined by applying the change in the Housing Price Index from the loan's origination date to the month of prediction, to the original unpaid balance.
+     * To address this, ELTV was independently calculated by dividing _CURRENT UNPAID BALANCE_ by the adjusted housing price. The adjusted housing price is determined by applying the change in the Housing Price Index from the loan's origination date to the month of prediction, to the original unpaid balance.
 
 ## Variable Selection
 * Target variable: is the probability of default rate
@@ -74,15 +73,17 @@ Wall Street heavily relies on the success of this market, with banks strategical
 | Inflation| Macroeconomic| Numeric| Input| The rate of increase in prices over a given period of time, reported monthly| 
 | Default| Target| Binary| Input| Describes whether a loan is 6 months late on payment|
  
-### Sampling Processes
-* Due to the extensive size of our dataset, we employed a strategic sampling method to manage our analysis effectively. The key criteria used for sampling were centered around the "CURRENT LOAN DELINQUENCY STATUS". Our methodology is outlined as follows:
-  * **Definition of Default**: We identify a loan as default if its "LOAN DELINQUENCY STATUS" is equal to 6 or marked as "RA". Loans not meeting these conditions are classified as non-default.
+### Sampling Process
+#### Methodology
+* Due to the extensive size of the dataset, a strategic sampling method was employed to manage the data. The key criteria used for sampling were centered around the _CURRENT LOAN DELINQUENCY STATUS_.
+  * **Criteria for a Defaulted Loan**: if "LOAN DELINQUENCY STATUS" is equal to 6 or marked as "RA", payment on the loan is at least 6 months late.
+    * Loans not meeting these conditions are classified as non-default.
   * **True_Default**: For clarity in classification, loans meeting the default criteria at any point in time are tagged as "true_default". This distinction allows for precise identification and analysis of loans that default versus those that do not.
-  * **Sampling Proportion**: To ensure a balanced representation of default and non-default loans across the 24-year span of our dataset, we adopted a selective sampling approach. The following are the main criteria.
-    * We selected 3,000 loans from each year and sampled an equal amount of 350 defaults and 350 non-defaults for each quarter, ensuring that our analysis accurately reflects the dynamics of loan performance over time.
-    * Then, we added three quarter variables: OrigData, OrigYear, and OrigQuarter, to track the effect of the quarter for modeling purposes.
-    * Due to a shortage of defaults in certain periods, our sampling faced limitations. Specifically, for the fourth quarter of 2022, we could only sample 264 defaults. In 2023, we were able to sample only 32 defaults in the first quarter and no defaults in the second quarter. 
-* The following is a loan from the 2003 sample dataset
+  * **Sampling Proportion**: To ensure a balanced representation of default and non-default loans across the 24 years of our dataset, a selective sampling approach was adopted. The following are the main criteria.
+    * 3,000 loans were selected from each year and sampled an equal amount of 350 defaults and 350 non-defaults for each quarter, to ensure that the analysis accurately reflects the dynamics of loan performance over time.
+    * Then, three "quarter" variables were added (_OrigData_, _OrigYear_, and _OrigQuarter_), to track the effect of the quarter for modeling purposes.
+    * The sampling faced limitations due to a shortage of defaults in certain periods. Specifically, for the fourth quarter of 2022, only 264 defaulted loans were sampled. In 2023, only 32 defaults in the first quarter were sampled and zero defaulted loans were found in the second quarter. 
+* The following is a loan from the 2003 sample dataset:
   
 | **Variables**                           |     **Record 0**                      |
 |---------------------------|---------------------------|
@@ -95,7 +96,7 @@ Wall Street heavily relies on the success of this market, with banks strategical
 | ESTIMATED LOAN TO VALUE (ELTV) | Undefined             |
 | DEFAULT                   | 0                         |
 | CREDIT SCORE              | 745                       |
-| FIRST TIME HOMEBUYER FLAG | N                         |
+| FIRST-TIME HOMEBUYER FLAG | N                         |
 | OCCUPANCY STATUS          | P                         |
 | ORIGINAL INTEREST RATE    | 6.1250000                 |
 | PROPERTY TYPE             | SF                        |
@@ -116,6 +117,7 @@ Wall Street heavily relies on the success of this market, with banks strategical
   * Each row is duplicated 24 times to predict default probability over the subsequent 24-month period (sample table below).
 * The decision to opt for a time series horizon model over a traditional time series model was driven by the latter's diminishing predictive power with increasing time duration.
 * Traditional time series models tend to overly emphasize initial lagged time periods, potentially overlooking valuable insights from earlier years.
+* The following is an example of the stacked data method that was employed in the modeling:
 
 | age | amount | FICO | delinquency | unemployment | horizon to y | default (y) |
 |-----|--------|------|-------------|--------------|--------------|-------------|
