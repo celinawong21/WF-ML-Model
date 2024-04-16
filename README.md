@@ -5,6 +5,7 @@
 * Model Version: 1.0
 * License: Apache 2.0
 * Model Implementation Code: [Main Code - PySpark_0412.ipynb](https://github.com/celinawong21/WF-ML-Model/blob/main/Main%20Code%20-%20PySpark_0412.ipynb)
+* Data Obtained from Freddie Mac: https://freddiemac.embs.com/FLoan/secure/login.php?pagename=download 
 
 ## Intended Use
 * Primary intended uses: This model is an example of a predictive model for mortgage lenders, financial institutions, and investors to assess and mitigate mortgage lending portfolio risks.
