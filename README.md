@@ -147,3 +147,4 @@ Wall Street heavily relies on the success of this market, with banks strategical
 * **User Interface**: create a front-end development to input certain criteria about a loan or macroeconomic variables and output its potential rate of default. This application will take user input, visually explain the impact of each variable, and attempt to boost the interpretability of the model. 
 
 ## Author Contributions
+* deciding whether or not to keep this section
