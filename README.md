@@ -77,21 +77,32 @@ Wall Street heavily relies on the success of this market, with banks strategical
     * We selected 3,000 loans from eacn year and sampled an equal amount of 350 defaults and 350 non-defaults for each quarter, ensuring that our analysis accurately reflects the dynamics of loan performance over time.
     * Then, we added three quarter variables: OrigData, OrigYear, and OrigQuarter, to track the effect of the quarter for modeling purposes.
     * Due to a shortage of defaults in certain periods, our sampling faced limitations. Specifically, for the fourth quarter of 2022, we could only sample 264 defaults. In 2023, we were able to sample only 32 defaults in the first quarter and no defaults in the second quarter. 
-* Theh following is our sample dataset
+* The following is an loan from the 2003 sample dataset
   
-| Variables                       | RECORD 0         |
-|----------------------------------|---------------|
-| LOAN SEQUENCE NUMBER             | F00Q10000050  |
-| MONTHLY REPORTING PERIOD         | 2000-02       |
-| CURRENT ACTUAL UPB               | 164000.0000   |
-| CURRENT LOAN DELINQUENCY STATUS  | 0             |
-| LOAN AGE                         | 0             |
-| CURRENT INTEREST RATE            | 8.1250000     |
-| CURRENT NON-INTEREST BEARING UPB | 0.00000       |
-| ZERO BALANCE REMOVAL UPB         | NULL          |
-| INTEREST BEARING UPB             | 164000.0000   |
-| ESTIMATED LOAN TO VALUE (ELTV)   | NULL          |
-| DEFAULT                          | 0             |
+| **Variables**                           |     **Record 0**                      |
+|---------------------------|---------------------------|
+| LOAN SEQUENCE NUMBER      | F03Q10000272              |
+| MONTHLY REPORTING PERIOD  | 2003-02                   |
+| CURRENT ACTUAL UPB        | 51000.0000                |
+| CURRENT LOAN DELINQUENCY STATUS | 0                   |
+| LOAN AGE                  | 0                         |
+| CURRENT INTEREST RATE     | 6.1250000                 |
+| ESTIMATED LOAN TO VALUE (ELTV) | Undefined             |
+| DEFAULT                   | 0                         |
+| CREDIT SCORE              | 745                       |
+| FIRST TIME HOMEBUYER FLAG | N                         |
+| OCCUPANCY STATUS          | P                         |
+| ORIGINAL INTEREST RATE    | 6.1250000                 |
+| PROPERTY TYPE             | SF                        |
+| LOAN PURPOSE              | P                         |
+| SELLER NAME               | Other sellers             |
+| OrigYear                  | 2003                      |
+| OrigQuarter               | Q1                        |
+| OrigDate                  | 2003Q1                    |
+| index_sa                  | 168.86                    |
+| UNRATE                    | 5.9                       |
+| inflation                 | 3.0                       |
+| % Change in UPB           | 0.0000                    |
  
 ## Modeling
 * The predictive loan default model utilizes a time series horizon approach.
