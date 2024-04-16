@@ -8,7 +8,7 @@
 
 ## Intended Use
 * Primary intended uses: This model is an example of a predictive model for mortgage lenders, financial institutions, and investors to assess and mitigate mortgage lending portfolio risks.
-* Primary intended users: Wells Fargo Team, Patrick Hall, Miguel Maldonado de Santillana, and GWU Students in DNSC 6317
+* Primary intended users: Wells Fargo Team, Patrick Hall, Miguel Maldonado de Santillana, and GWU Students in DNSC 4289/6317
 * Out-of-scope use cases: Any use beyond an educational example is out-of-scope.
 
 ## Executive Summary
