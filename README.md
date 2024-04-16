@@ -3,44 +3,47 @@
 * Organization or People Developing Model: GWU Wells Fargo Predictive Mortgage Default Team (Members: Anukshan Ghosh, Allison Ko, Andrew Renga, and Celina Wong)
 * Model Date: May, 2023
 * Model Version: 1.0
-* License: Apache 2.0
 * Model Implementation Code: [Main Code - PySpark_0412.ipynb](https://github.com/celinawong21/WF-ML-Model/blob/main/Main%20Code%20-%20PySpark_0412.ipynb)
+* Data Obtained from Freddie Mac Database: https://freddiemac.embs.com/FLoan/secure/login.php?pagename=download 
 
 ## Intended Use
 * Primary intended uses: This model is an example of a predictive model for mortgage lenders, financial institutions, and investors to assess and mitigate mortgage lending portfolio risks.
-* Primary intended users: Wells Fargo Team, Patrick Hall, Miguel Maldonado de Santillana, and GWU Students in DNSC 6317
+* Primary intended users: Wells Fargo Team, Patrick Hall, Miguel Maldonado de Santillana, and GWU Students in DNSC 4289/6317
 * Out-of-scope use cases: Any use beyond an educational example is out-of-scope.
 
 ## Executive Summary
+* The mortgage market is a pivotal component, ranking as the second-largest market globally after interest rates. Banks strategically allocate capital through mortgage bonds, underscoring the industry's immense significance. The desired business outcomes for mortgage models encompass achieving interpretability and accuracy, predicting default and repayment patterns over an extended period, and ensuring adaptability to changing market dynamics. Interpretability is crucial in fostering trust and understanding among related parties, as decisions derived from the model need to be transparent and meaningful. Additionally, predicting the likelihood of default and repayment over the next 24 months is a key objective. This predictive capability is essential for risk management, enabling banks to anticipate potential challenges in mortgage repayments and take proactive measures to mitigate default risks.
+* The overarching goal is to identify key predictors that could lead to revenue loss for Wells Fargo and accurately forecast potential losses over the next 24 months. Through risk mitigation efforts, the model seeks to enhance the overall stability of their mortgage-backed securities, taking extra precautions to address potential downward trends that may emerge in the future. Moreover, the model's success is closely tied to its adaptability across diverse economic scenarios, with a specific emphasis on stress testing under various conditions such as crises or pandemics like COVID-19, thereby critically evaluating its robustness.
 
+* Will add high-level information about our results here, and how they are applicable to Wells Fargo.
+  
 ## Problem Understanding
-* The US mortgage market is valued at trillions, ranking second only to interest rates.
+* The US mortgage market is valued at trillions, ranking second-largest, falling only behind interest rates.
 Wall Street heavily relies on the success of this market, with banks strategically allocating capital through mortgage bonds.
-* Default rates typically remain below 0.2%, but economic crises can cause spikes, reaching highs of 10%.
-  * The 2008 financial crisis and the 2020 COVID-19 pandemic highlight the vulnerability of mortgage default rates to economic downturns.
+* Default rates typically remain below 0.2%, but economic crises can cause spikes, reaching highs of 9.5%.
+  * The 2007/2008 financial crisis and the 2020 COVID-19 pandemic highlight the vulnerability of mortgage default rates in the event of an economic downturn.
 * Collaborating with the Wells Fargo team, the student team's objective is to develop a predictive model for mortgage default over the next 24 months.
 * The model will integrate various static, dynamic, and macroeconomic variables to enhance accuracy and robustness.
 
 ## The Data
-* The dataset utilized for constructing the predictive model is sourced from Freddie Mac and spans from the year 2000 up to the second quarter of 2023.
-* It encompasses information on single-family home loans categorized into origination and performance files.
- * Origination: contains mortgage information at the point of loan initiation
- * Performance: records monthly activities for each loan throughout its contract period.
+* The dataset utilized for constructing the predictive model is sourced from Freddie Mac and spans from the year 2000 up to Q2 of 2023.
+* It encompasses information on single-family home loans categorized into Origination and Performance datasets.
+   * **Origination**: contains mortgage information at the point of loan initiation.
+   * **Performance**: records monthly activities for each loan throughout its contract period.
 * The primary focus of the student team is on 30-year-fixed rate mortgages as the main dataset for training the model.
-* Before sampling, the dataset consisted of approximately *** million rows.
 
 ## Data Preprocessing 
 ### Data Cleaning 
 * PySpark is employed to handle the large dataset, spanning the last 24 years.
 * Key strategies implemented in our data preprocessing include:
-  * **Handling Missing Data**: Columns that contain 95% or more null values across both datasets have been removed.
-  * **Merging Origination and Performance Datasets**: To construct a comprehensive analytical framework, the Performance and Originiation datasets were joined using the LOAN SEQUENCE NUMBER as a key identifier.
-    * This merging process guarantees that each record in the Origination dataset is enriched with monthly activities from the performance dataset, providing an complete overview of the loan's lifecycle from its origination to maturity.
+  * **Handling Missing Data**: columns that contain 95% or more null values across both datasets have been removed.
+  * **Merging Origination and Performance Datasets**: to construct a comprehensive analytical framework, the Performance and Origination datasets were joined using the _LOAN SEQUENCE NUMBER_ as a key identifier.
+    * The merging process ensures that each record in the Origination dataset is subsequently paired with monthly activities from the Performance dataset, providing a complete overview of the loan's lifecycle from origination to maturity.
   * **Lack of Estimated Loan-to-Value (ELTV) ratio**: ELTV is crucial for modeling to incorporate the financial risk associated with each loan, but there were a significant number of null values present within the Performance dataset.
-     * To address this, ELTV was independently calculated by dividing the CURRENT UNPAID BALANCE by the adjusted housing price. The adjusted housing price is determined by applying the change in the Housing Price Index from the loan's origination date to the month of prediction, to the original unpaid balance.
+     * To address this, ELTV was independently calculated by dividing _CURRENT UNPAID BALANCE_ by the adjusted housing price. The adjusted housing price is determined by applying the change in the Housing Price Index from the loan's origination date to the month of prediction, to the original unpaid balance.
 
-## Variable Selection
-* Target variable: is the probability of default rate
+### Variable Selection
+* **Target variable**: the probability of default rate
 * 3 types of input variables
   * **Variables that don't change over time**: CREDIT SCORE, CURRENT LOAN DELINQUENCY STATUS, ORIGINAL INTEREST RATE, PROPERTY TYPE, LOAN PURPOSE, SELLER NAME, FIRST TIME HOMEBUYER FLAG, OCCUPANCY STATUS
   * **Variables that change over time**: CURRENT ACTUAL UPB, LOAN AGE, ESTIMATED LOAN TO VALUE (ELTV)
@@ -69,15 +72,18 @@ Wall Street heavily relies on the success of this market, with banks strategical
 | Inflation| Macroeconomic| Numeric| Input| The rate of increase in prices over a given period of time, reported monthly| 
 | Default| Target| Binary| Input| Describes whether a loan is 6 months late on payment|
  
-### Sampling Processes
-* Due to the extensive size of our dataset, we employed a strategic sampling method to manage our analysis effectively. The key criteria used for sampling were centered around the "CURRENT LOAN DELINQUENCY STATUS". Our methodology is outlined as follows:
-  * **Definition of Default**: We identify a loan as default if its "LOAN DELINQUENCY STATUS" is equal to 6 or marked as "RA". Loans not meeting these conditions are classified as non-default.
+## Sampling
+### Methodology
+* Due to the extensive size of the dataset, a strategic sampling method was employed to manage the data. The key criteria used for sampling were centered around the _CURRENT LOAN DELINQUENCY STATUS_.
+  * **Criteria for a Defaulted Loan**: if _LOAN DELINQUENCY STATUS_ is equal to 6 or marked as "RA", payment on the loan is at least 6 months late.
+    * Loans not meeting these conditions are classified as non-default.
   * **True_Default**: For clarity in classification, loans meeting the default criteria at any point in time are tagged as "true_default". This distinction allows for precise identification and analysis of loans that default versus those that do not.
-  * **Sampling Proportion**: To ensure a balanced representation of default and non-default loans across the 24-year span of our dataset, we adopted a selective sampling approach. The following is the main criteria.
-    * We selected 3,000 loans from each year and sampled an equal amount of 350 defaults and 350 non-defaults for each quarter, ensuring that our analysis accurately reflects the dynamics of loan performance over time.
-    * Then, we added three quarter variables: OrigData, OrigYear, and OrigQuarter, to track the effect of the quarter for modeling purposes.
-    * Due to a shortage of defaults in certain periods, our sampling faced limitations. Specifically, for the fourth quarter of 2022, we could only sample 264 defaults. In 2023, we were able to sample only 32 defaults in the first quarter and no defaults in the second quarter. 
-* The following is an loan from the 2003 sample dataset
+  * **Sampling Proportion**: To ensure a balanced representation of default and non-default loans across the 24 years of our dataset, a selective sampling approach was adopted. The following are the main criteria.
+    * 3,000 loans were selected from each year and sampled an equal amount of 350 defaults and 350 non-defaults for each quarter, to ensure that the analysis accurately reflects the dynamics of loan performance over time.
+    * Then, three "quarter" variables were added (_OrigData_, _OrigYear_, and _OrigQuarter_), to track the effect of the quarter for modeling purposes.
+    * The sampling faced limitations due to a shortage of defaults in certain periods. Specifically, for the fourth quarter of 2022, only 264 defaulted loans were sampled. In 2023, only 32 defaults in the first quarter were sampled and zero defaulted loans were found in the second quarter. 
+
+### Example from Sampled Data: 2003, Record 0 
   
 | **Variables**                           |     **Record 0**                      |
 |---------------------------|---------------------------|
@@ -90,7 +96,7 @@ Wall Street heavily relies on the success of this market, with banks strategical
 | ESTIMATED LOAN TO VALUE (ELTV) | Undefined             |
 | DEFAULT                   | 0                         |
 | CREDIT SCORE              | 745                       |
-| FIRST TIME HOMEBUYER FLAG | N                         |
+| FIRST-TIME HOMEBUYER FLAG | N                         |
 | OCCUPANCY STATUS          | P                         |
 | ORIGINAL INTEREST RATE    | 6.1250000                 |
 | PROPERTY TYPE             | SF                        |
@@ -112,6 +118,7 @@ Wall Street heavily relies on the success of this market, with banks strategical
 * The decision to opt for a time series horizon model over a traditional time series model was driven by the latter's diminishing predictive power with increasing time duration.
 * Traditional time series models tend to overly emphasize initial lagged time periods, potentially overlooking valuable insights from earlier years.
 
+### Sample Stacked Data
 | age | amount | FICO | delinquency | unemployment | horizon to y | default (y) |
 |-----|--------|------|-------------|--------------|--------------|-------------|
 | 1   | 125000 | 675  | Current     | 6.2          | 0            | 0           |
@@ -126,15 +133,22 @@ Wall Street heavily relies on the success of this market, with banks strategical
 | 1   | 125000 | 675  | Current     | 6.2          | 3            | 0           |
 
 ## Results
-* insert graphs or tables displaying model's within and out of sample fit.
+* insert heatmap pertaining to the correlations of all variables
+* show basic stats of variables (if any stand out) to help the client gauge the data format and better understand the modeling process
+* insert graphs or tables displaying the model's within and out of sample fit.
+
 ## Risk Considerations
 * **Automation Risk**: Discussion on the consequences of relying solely on predictive models for decision-making without human oversight.
+* careful consideration of how sampling a minuscule proportion of the overall data may lead to biases or an inability to fully predict default during periods of crisis.
+* * consider how data during times of crisis is inherently biased (because loans will be only given out to customers with great finances who won't default). Rather, it is equally important to predict when a crisis may occur so that proper actions can be taken before it is too late.
 
 ## Potential Next Steps 
-* **Integration of Additional Data Sources**: consider incorporating regional economic indicators or property market data alongside existing sources like Freddie Mac to enhance predictive accuracy.
-* **Dynamic Feature Selection**: develop adaptive feature selection mechanisms to prioritize relevant features and adjust the model's feature set over time based on their importance.
 * **Larger Dataset**: apply the modeling techniques to all Freddie Mac single-family home loan data to further incorporate the changes in the economic scenario over time.
-* **Government Intervention**: consideration of any regulatory compliance and ethical implications in future iterations of the project.
-* **User Interface**: create a front-end development to input certain criteria about a loan and output its potential rate of default.
+* * **Dynamic Feature Selection**: develop adaptive feature selection mechanisms to prioritize relevant features and adjust the model's feature set over time based on their importance.
+* **Integration of Additional Data Sources**: consider incorporating regional economic indicators or property market data alongside existing sources like Freddie Mac to enhance predictive accuracy.
+* **Government Intervention**: consider any regulatory compliance and ethical implications in future iterations of the project.
+* **User Interface**: create a front-end development to input certain specifics about a loan and/or macroeconomic variables to output a potential rate of default. This application will take user input, visually explain the impact of each variable, and attempt to boost the interpretability of the model. 
 
 ## Author Contributions
+* NOTE - deciding whether or not to keep this section
+* NOTE - still learning how to commit a folder to the repo, instead of .zip if need be
