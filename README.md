@@ -304,6 +304,9 @@ The interaction of a lower Home Price Index with a higher unemployment rate demo
 
 <img width="1000" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/c735e21e-2594-43ec-a400-800ae7912702">
 
+<img width="1078" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/73bc97aa-549b-4e28-b583-99dcbede946d">
+
+
 #### Confusion Matrix
 <img width="550" alt="Screenshot 2024-04-23 at 1 18 17 PM" src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/c0ded5db-59f3-4594-9cda-b587f91334ac">
 
