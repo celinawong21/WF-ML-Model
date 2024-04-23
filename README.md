@@ -201,21 +201,15 @@ Results are sorted by the highest Area Under the Curve (AUC) value, providing a 
 #### After Monotonic Adjustment - Credit Score
 <img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/430f4f78-bdf8-48c7-8569-eded2b04df22">
 
-#### Before Monotonic Adjustment - Credit Score
-![image](https://raw.githubusercontent.com/celinawong21/WF-ML-Model/main/assets/159848729/06c29bf4-bd66-4732-9050-581b31339c2f.png)
-
-#### After Monotonic Adjustment - Credit Score
-![image](https://raw.githubusercontent.com/celinawong21/WF-ML-Model/main/assets/159848729/430f4f78-bdf8-48c7-8569-eded2b04df22.png)
-
 
 We made monotonicity adjustments to two variables to enhance interpretability: Current Interest Rate for a increasing monotonicity, and Credit Score for a decreasing monotonically. Specifically, for the Credit Score, we can observe that it has a negative relationship with the target value, indicating that as the credit score increases, the probability of default decreases. After the monotonicity adjustment, the effect of the credit score on the model's predictions increased from 4.5% to 6.6%. 
 
 #### Before Monotonic Adjustment - Current Interest Rate
 
-<img width="384" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/155c04d0-1f89-438f-bed4-e8867ef80fcf">
+<img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/155c04d0-1f89-438f-bed4-e8867ef80fcf">
 
 #### After Monotonic Adjustment - Current Interest Rate
-<img width="380" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/0f264303-37ce-4904-a3c9-5b4608dd7560">
+<img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/0f264303-37ce-4904-a3c9-5b4608dd7560">
 
 Regarding the Current Interest Rate, it has a positive relationship with the target variable, implying that as the current interest rate increases, the probability of default also increases. Following the monotonicity adjustment, the influence of the current interest rate on the predictions rose from 3.7% to 4.5%.
 
