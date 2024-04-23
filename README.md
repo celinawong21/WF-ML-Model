@@ -232,6 +232,7 @@ We made monotonicity adjustments to two variables to enhance interpretability: C
 Regarding the Current Interest Rate, it has a positive relationship with the target variable, implying that as the current interest rate increases, the probability of default also increases. Following the monotonicity adjustment, the influence of the current interest rate on the predictions rose from 3.7% to 4.5%.
 
 
+
 ### Global Interpretability
 
 <table>
@@ -252,6 +253,8 @@ Effect importance refers to the impact of each feature on individual predictions
 
 The consistent prominence of % Change in UPB and Estimated Loan to Value (ELTV) across both feature importance and effect importance analyses underscores their critical roles in the model. These insights can guide further investigations into the underlying mechanisms driving these features' influence on predictions, aiding in model refinement and decision-making processes.
 
+
+
 ### Local Interpretability 
 
 
@@ -271,6 +274,7 @@ Its local interpretation consists of two parts: local feature contribution and l
 Firstly, the local effect contribution displays the outputs of each main effect and pairwise interaction. The predictor value of each effect is shown on the right axis, and the corresponding effect names are shown on the left axis. From the title, we can observe that the predicted value of this sample is 0.1270, which is significantly different from the actual response of 1. The main effect of the current interest rate contributes the most to the final prediction, with a positive contribution (around 1). This is followed by the current interest rate, % change in UPB, credit score, origination interest rate, and ELTV, all of which have a positive contribution. Index_sa and the pairwise effect of index_sa and change in UPB have a negative contribution to the final prediction.
 
 The interpretation of the feature contribution plot is simliar to that of the local effect contribution plot, but instead of displaying the effects, it shows the individual impact of each feature. For our sample, the main effects of "current interest rate" and "credit score" both have a positive contribution to the final prediction. Additionally, the "unemployment rate" shows a negative impact on the final prediction at the feature level, even though it did not appear in the top 10 list of the local effect importance plot.
+
 
 
 ### Interaction Effect: Four interaction effects with the highest percentages
