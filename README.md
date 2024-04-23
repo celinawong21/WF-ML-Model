@@ -41,7 +41,7 @@ Wall Street heavily relies on the success of this market, with banks strategical
 
 ### Variable Selection
 * **Target variable**: the probability of default
-* 3 types of input variables
+* Three types of input variables
   * **Variables that don't change over time**: Credit Score, Original Interest Rate, Property Type, Loan Purpose, Seller Name, First Time Homebuyer Flag, Occupancy Status
   * **Variables that change over time**: Current Actual UPB, Current Loan Delinquency Status, Loan Age, Estimated Loan-to-Value (ELTV)
   * **Variables that change over time and predict the future**: Current Interest Rate, Unemployment Rate, Inflation Rate, House Price Index
@@ -113,8 +113,7 @@ Based on the feature select function in PiML, the following features were chosen
 
 ### Sampling for Parameters
 
-* [SampleForParameter.csv](https://github.com/celinawong21/WF-ML-Model/blob/main/sampleforparameter.csv) is a smaller sample that shows the merged data, which is then used to obtain hyperparameters for both the XGB1 and XGB2 models. Subsequently, these parameters, along with the monotonic variables, are utilized to train four different models for both XGB1 and XGB2.
-* Note, the time series stacked data was not used in building the model. 
+* [SampleForParameter.csv](https://github.com/celinawong21/WF-ML-Model/blob/main/sampleforparameter.csv) is a smaller sample that shows the merged data, which is then used to obtain hyperparameters for both the XGB1 and XGB2 models. Subsequently, these parameters, along with the monotonic variables, are utilized to train four different models for both XGB1 and XGB2. 
 
 ### XGBoost 
 
@@ -181,7 +180,7 @@ Both of the esults are sorted by the highest Area Under the Curve (AUC) value, p
   </tr>
 </table>
 
-We made monotonicity adjustments to two variables to enhance interpretability: Current Interest Rate for a increasing monotonicity, and Credit Score for a decreasing monotonically. Specifically, for the Credit Score, we can observe that it has a negative relationship with the target value, indicating that as the credit score increases, the probability of default decreases. After the monotonicity adjustment, the effect of the credit score on the model's predictions increased from 4.5% to 6.6%. 
+Monotonicity adjustments were made to two variables to enhance interpretability: Current Interest Rate for a increasing monotonicity, and Credit Score for a decreasing monotonically. Specifically, for the Credit Score, it can be observed that it has a negative relationship with the target value, indicating that as the credit score increases, the probability of default decreases. After the monotonicity adjustment, the effect of the credit score on the model's predictions increased from 4.5% to 6.6%. 
 
 
 
@@ -220,7 +219,7 @@ Regarding the Current Interest Rate, it has a positive relationship with the tar
 
 There are two main plots: feature importance and effect importance. Feature importance refers to the relative importance of each feature in the model based on how frequently it is used to split the data across all trees in the ensemble. This plot only shows the aggregate effect of each top 10 features. As you can see from the plot, % change in UPB and index take a critical role in the model’s decision-making process, followed by Estimated Loan-to-Value (ELTV) and UNRATE, which refers to the unemployment rate.
 
-Effect importance refers to the impact of each feature on individual predictions made by the model. It measures how much each feature contributes to the final prediction for a specific data point. We can observe that % Change in UPB and Estimated Loan-to-Value (ELTV) are dominant features, followed by index_sa and Credit Score.
+Effect importance refers to the impact of each feature on individual predictions made by the model. It measures how much each feature contributes to the final prediction for a specific data point. It can be observed that % Change in UPB and Estimated Loan-to-Value (ELTV) are dominant features, followed by index_sa and Credit Score.
 
 The consistent prominence of % Change in UPB and Estimated Loan-to-Value (ELTV) across both feature importance and effect importance analyses underscores their critical roles in the model. These insights can guide further investigations into the underlying mechanisms driving these features' influence on predictions, aiding in model refinement and decision-making processes.
 
@@ -242,13 +241,13 @@ The consistent prominence of % Change in UPB and Estimated Loan-to-Value (ELTV) 
 
 Its local interpretation consists of two parts: local feature contribution and local effect contribution. The local interpretation shows how the predicted value is formed by the main effects and pairwise interactions.
 
-Firstly, the local effect contribution displays the outputs of each main effect and pairwise interaction. The predictor value of each effect is shown on the right axis, and the corresponding effect names are shown on the left axis. From the title, we can observe that the predicted value of this sample is 0.1270, which is significantly different from the actual response of 1. The main effect of the current interest rate contributes the most to the final prediction, with a positive contribution (around 1). This is followed by the current interest rate, % change in UPB, credit score, origination interest rate, and ELTV, all of which have a positive contribution. Index_sa and the pairwise effect of index_sa and change in UPB have a negative contribution to the final prediction.
+Firstly, the local effect contribution displays the outputs of each main effect and pairwise interaction. The predictor value of each effect is shown on the right axis, and the corresponding effect names are shown on the left axis. From the title, it can be observed that the predicted value of this sample is 0.1270, which is significantly different from the actual response of 1. The main effect of the current interest rate contributes the most to the final prediction, with a positive contribution (around 1). This is followed by the current interest rate, % change in UPB, credit score, origination interest rate, and ELTV, all of which have a positive contribution. Index_sa and the pairwise effect of index_sa and change in UPB have a negative contribution to the final prediction.
 
 The interpretation of the feature contribution plot is simliar to that of the local effect contribution plot, but instead of displaying the effects, it shows the individual impact of each feature. For our sample, the main effects of "current interest rate" and "credit score" both have a positive contribution to the final prediction. Additionally, the "unemployment rate" shows a negative impact on the final prediction at the feature level, even though it did not appear in the top 10 list of the local effect importance plot.
 
 
 ### Interaction Effect: Four interaction effects with the highest percentages
-The interaction plots show how the interaction between two features affect the probability of default. We picked the the top 3 interactions based on the highest percentage values.
+The interaction plots show how the interaction between two features affect the probability of default. The top 3 interactions were selected based on the highest percentage values.
 
 * **ELTV x % Change in UPB**
 <img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/e94e0fe8-bd39-4294-b62d-35e31982718d">
