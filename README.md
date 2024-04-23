@@ -234,10 +234,6 @@ Regarding the Current Interest Rate, it has a positive relationship with the tar
 
 ### Global Interpretability
 
-<img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/a0014bbd-a75b-48d7-ac78-feee2c4ab4b7">
-
-<img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/1faee4b7-0ad6-4795-b11f-cf47c1162340">
-
 <table>
   <tr>
     <td>
@@ -258,9 +254,6 @@ The consistent prominence of % Change in UPB and Estimated Loan to Value (ELTV) 
 
 ### Local Interpretability 
 
-<img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/03a2191f-b109-419f-b652-93e31f6392d5">
-
-<img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/92ead311-69ea-4fd8-b196-29abfee20014">
 
 <table>
   <tr>
