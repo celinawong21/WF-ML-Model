@@ -35,7 +35,7 @@
 
 ## Data Preprocessing 
 ### Data Cleaning 
-* Before any data preprocessing begun, there were 64 variables across both datasets and over 50 million loans within the original data.
+* Before any data preprocessing, there were 64 variables across both datasets and over 2.4 billion rows of data.
 * PySpark is employed to handle the large dataset, spanning the last 24 years.
 * Key strategies implemented in our data preprocessing include:
   * **Handling Missing Data**: columns that contain 95% or more null values across both datasets have been removed.
@@ -47,7 +47,7 @@
 ### Variable Selection
 * **Target variable**: the probability of default
 * Three types of input variables
-  * **Variables that don't change over time**: Credit Score, Original Interest Rate, Property Type, Loan Purpose, Seller Name, First Time Homebuyer Flag, Occupancy Status
+  * **Variables that don't change over time**: Credit Score, Original Interest Rate, Property Type, Loan Purpose, Seller Name, First-Time Homebuyer Flag, Occupancy Status
   * **Variables that change over time**: Current Actual UPB, Current Loan Delinquency Status, Loan Age, Estimated Loan-to-Value (ELTV)
   * **Variables that change over time and predict the future**: Current Interest Rate, Unemployment Rate, Inflation Rate, House Price Index
     * Macroeconomic variables such as inflation, House Price Index (HPI), and unemployment are loaded from third-party sources.
@@ -62,7 +62,7 @@
 | Property Type| Origination data| Alpha| Input| Denotes whether the property type secured by the mortgage is a condominium, leasehold, planned unit development (PUD), cooperative share, manufactured home, or Single-Family home|
 | Loan Purpose| Origination data| Alpha| Input| Indicates whether the mortgage loan is a Cash-out Refinance mortgage, No Cash-out Refinance mortgage, or a Purchase mortgage|
 | Seller Name| Origination data| Alpha-numeric| Input| The entity acting in its capacity as a seller of mortgages to Freddie Mac at the time of acquisition|
-| First Time Homebuyer Flag| Origination data| Alpha| Input| Indicates whether the Borrower, or one of a group of Borrowers, is an individual who (1) is purchasing the mortgaged property, (2) will reside in the mortgaged property as a primary residence, and (3) had no ownership interest (sole or joint) in a residential property during the three-year period preceding the date of the purchase of the mortgaged property|
+| First-Time Homebuyer Flag| Origination data| Alpha| Input| Indicates whether the Borrower, or one of a group of Borrowers, is an individual who (1) is purchasing the mortgaged property, (2) will reside in the mortgaged property as a primary residence, and (3) had no ownership interest (sole or joint) in a residential property during the three-year period preceding the date of the purchase of the mortgaged property|
 | Occupancy Status| Origination data| Alpha| Input| Denotes whether the mortgage type is owner occupied, second home, or investment property|
 | Current Actual UPB| Origination data| Numeric| Input| Reflects the mortgage ending balance as reported by the servicer for the corresponding monthly reporting period|
 | Percentage of Unpaid Balance| Created| Numeric| Input| The proportion of the original loan amount that remains unpaid at a given point in time.|
@@ -72,7 +72,7 @@
 | Unemployment Rate| Macroeconomic| Numeric| Input| The number of unemployed as a percentage of the labor force, reported monthly|
 | House Price Index| Macroeconomic| Numeric| Input| A broad measure of single-family house prices that measures average price changes over a period of time, reported quarterly.|
 | Inflation| Macroeconomic| Numeric| Input| The rate of increase in prices over a given period of time, reported monthly| 
-| Default| Target| Binary| | Describes whether a loan is 6 months late on payment|
+| Default| Target| Binary| N/A | Describes whether a loan is 6 months late on payment|
  
 ## Sampling
 ### Methodology
@@ -98,7 +98,7 @@
  ESTIMATED LOAN TO VALUE (ELTV)  | Undefined     
  DEFAULT                         | 0             
  CREDIT SCORE                    | 745           
- FIRST TIME HOMEBUYER FLAG       | N             
+ FIRST-TIME HOMEBUYER FLAG       | N             
  OCCUPANCY STATUS                | P             
  ORIGINAL INTEREST RATE          | 6.1250000     
  PROPERTY TYPE                   | SF            
@@ -112,7 +112,6 @@
  inflation                       | 3.0           
  % Change in UPB                 | 0.0000
 ```     
-
 
 A sample of the first 20 rows of the [2000 Sample Data](Sample_2000_First_20.csv) is included in the repository.
  
@@ -286,7 +285,7 @@ The interaction of a lower Home Price Index with a higher unemployment rate demo
 
 ### Residual Box Plot of Predicted Default Variable from XGB2_v2 Model
 
-<img width= "700" alt = "image" src= "https://github.com/celinawong21/WF-ML-Model/assets/159848729/75fec3ba-b91c-4370-8669-fd30e97c5847">
+<img width= "650" alt = "image" src= "https://github.com/celinawong21/WF-ML-Model/assets/159848729/75fec3ba-b91c-4370-8669-fd30e97c5847">
 
 
 ### Resilience Test - Worst Sample for Top 4 Most Important Features from XGB2_v2
