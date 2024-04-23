@@ -187,15 +187,6 @@ Results are sorted by the highest Area Under the Curve (AUC) value, providing a 
 * **XGB2_V3**: Another variation of XGB2, maintaining default parameters and excluding monotonic variables.
 * **XGB2_V4**: A model akin to XGB2_V2, featuring default parameters alongside the two monotonic variables: "CURRENT INTEREST RATE" (monotonic increasing) and "CREDIT SCORE" (monotonic decreasing).
 
-## Model Comparison: XGB1 and XGB2 
-### **XGB1**
-<img width="660" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/0fa740b5-a80d-48e7-a589-0619a99a12b7">
-
- 
-### **XGB2**
- <img width="660" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/502bc173-fc63-4698-b8be-8d21abc29b4f">
-
-
 ## Model Interpretation: XGB2_v2
 
 ### Global Interpretability
