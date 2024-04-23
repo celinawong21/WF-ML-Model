@@ -303,10 +303,7 @@ The interaction of a lower Home Price Index with a higher unemployment rate demo
 ### Accuracy Descriptions of XGB2_v2 Model
 ![PHOTO-2024-04-22-17-23-54](https://github.com/celinawong21/WF-ML-Model/assets/159848729/8293a99e-0857-4db1-b7e8-cd242c3a9e89)
 
-<img width="700" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/5d307e0d-5758-4627-ae47-e3a473037d07">
-[![image](https://github.com/celinawong21/WF-ML-Model/assets/158225115/5d307e0d-5758-4627-ae47-e3a473037d07)](https://github.com/celinawong21/WF-ML-Model/assets/158225115/5d307e0d-5758-4627-ae47-e3a473037d07)
-
-
+<img width="1000" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/c735e21e-2594-43ec-a400-800ae7912702">
 
  
 ### Residual Box Plot of Predicted Default Variable from XGB2_v2 Model
