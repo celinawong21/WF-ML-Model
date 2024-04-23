@@ -197,7 +197,9 @@ Results are sorted by the highest Area Under the Curve (AUC) value, providing a 
 <img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/1faee4b7-0ad6-4795-b11f-cf47c1162340">
 
 There are two main plots: feature importance and effect importance. Feature importance refers to the relative importance of each feature in the model based on how frequently it is used to split the data across all trees in the ensemble. This plot only shows the aggregate effect of each top 10 features. As you can see from the plot, % change in UPB and index take a critical role in the model’s decision-making process, followed by Estimated Loan to Value (ELTV) and UNRATE, which refers to the unemployment rate.
+
 Effect importance refers to the impact of each feature on individual predictions made by the model. It measures how much each feature contributes to the final prediction for a specific data point. We can observe that % Change in UPB and Estimated Loan to Value (ELTV) are dominant features, followed by index_sa and Credit Score.
+
 The consistent prominence of % Change in UPB and Estimated Loan to Value (ELTV) across both feature importance and effect importance analyses underscores their critical roles in the model. These insights can guide further investigations into the underlying mechanisms driving these features' influence on predictions, aiding in model refinement and decision-making processes.
 
 ### Local Interpretability 
