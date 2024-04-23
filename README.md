@@ -313,10 +313,10 @@ The interaction of a lower Home Price Index with a higher unemployment rate demo
 <table>
   <tr>
     <td>
-      <img src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/a53840d7-1446-4ef7-9386-516f0e1be8e7" alt="ROC Curve" width="450"/>
+      <img src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/2745c93b-3b2e-425d-b970-7c8528ed569d" alt="ROC Curve" width="450"/>
     </td>
     <td>
-      <img src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/3bff02ab-cd39-4e56-b9e9-f7e4c5f1c352" alt="Recall-Precision Curve" width="450"/>
+      <img src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/62fb8a83-52d5-415d-aca7-f013e044c604" alt="Recall-Precision Curve" width="450"/>
     </td>
   </tr>
   <tr>
@@ -324,6 +324,8 @@ The interaction of a lower Home Price Index with a higher unemployment rate demo
     <td>Recall-Precision Curve</td>
   </tr>
 </table>
+<img width="354" alt="Screenshot 2024-04-23 at 1 19 35 PM" src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/2745c93b-3b2e-425d-b970-7c8528ed569d">
+<img width="365" alt="Screenshot 2024-04-23 at 1 20 45 PM" src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/62fb8a83-52d5-415d-aca7-f013e044c604">
 
 
 ### Residual Box Plot of Predicted Default Variable from XGB2_v2 Model
