@@ -317,21 +317,21 @@ This section contains visualizations of the distribution shifts for various feat
 <table style="width:100%;">
   <tr>
     <td style="text-align:center;">
-      <img src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/89afc95d-4243-4370-861d-9e4a09fdce5c" alt="Distribution Shift: % Change in UPB" style="width:100%;" />
+      <img src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/c41919c9-d5fd-4dc6-931a-a384b8dbd7bf" alt="Distribution Shift: % Change in UPB" style="width:100%;" />
       <p style="margin-top: 10px; font-weight: bold;">Distribution Shift: % Change in UPB</p>
     </td>
     <td style="text-align:center;">
-      <img src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/6853bc57-ceb8-4d6a-8e03-31e5860f39b9" alt="Distribution Shift: Estimated Loan to Value (ELTV)" style="width:100%;" />
+      <img src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/7c5111dd-e2a2-48e2-8d61-45838e83d1b1" alt="Distribution Shift: Estimated Loan to Value (ELTV)" style="width:100%;" />
       <p style="margin-top: 10px; font-weight: bold;">Distribution Shift: Estimated Loan to Value (ELTV)</p>
     </td>
   </tr>
   <tr>
     <td style="text-align:center;">
-      <img src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/ab37ff1f-f502-4eb4-a636-2c7d6febdc59" alt="Distribution Shift: Index Seasonally Adjusted (index_sa)" style="width:100%;" />
+      <img src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/a1477a64-eb0d-4f15-bd18-f247779831dc" alt="Distribution Shift: Index Seasonally Adjusted (index_sa)" style="width:100%;" />
       <p style="margin-top: 10px; font-weight: bold;">Distribution Shift: Index Seasonally Adjusted (index_sa)</p>
     </td>
     <td style="text-align:center;">
-      <img src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/64268b94-f207-4094-ba55-e8abe4b95f88" alt="Distribution Shift: Unemployment Rate (UNRATE)" style="width:100%;" />
+      <img src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/3007bd03-9495-40a5-ab00-5b4559b0ca84" alt="Distribution Shift: Unemployment Rate (UNRATE)" style="width:100%;" />
       <p style="margin-top: 10px; font-weight: bold;">Distribution Shift: Unemployment Rate (UNRATE)</p>
     </td>
   </tr>
