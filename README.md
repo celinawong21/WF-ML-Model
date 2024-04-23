@@ -11,12 +11,16 @@
 * **Out-of-scope use cases**: Any use beyond an educational example is out-of-scope.
 
 ## Executive Summary
-* The mortgage market is a pivotal component, ranking as the second-largest market globally after interest rates. Banks strategically allocate capital through mortgage bonds, underscoring the industry's immense significance. The desired business outcomes for mortgage models encompass achieving interpretability and accuracy, predicting default and repayment patterns over an extended period, and ensuring adaptability to changing market dynamics. Interpretability is crucial in fostering trust and understanding among related parties, as decisions derived from the model need to be transparent and meaningful. Additionally, predicting the likelihood of default and repayment over the next 24 months is a key objective. This predictive capability is essential for risk management, enabling banks to anticipate potential challenges in mortgage repayments and take proactive measures to mitigate default risks.
+* The mortgage market is ranked as the second-largest market globally after interest rates.
+* Banks strategically allocate capital through mortgage bonds, underscoring the industry's immense significance. The desired business outcomes for mortgage models encompass achieving interpretability and accuracy, predicting default and repayment patterns over an extended period, and ensuring adaptability to changing market dynamics. Interpretability is crucial in fostering trust and understanding among related parties, as decisions derived from the model need to be transparent and meaningful. Additionally, predicting the likelihood of default and repayment over the next 24 months is a key objective. This predictive capability is essential for risk management, enabling banks to anticipate potential challenges in mortgage repayments and take proactive measures to mitigate default risks.
 * The overarching goal is to identify key predictors that could lead to revenue loss for Wells Fargo and accurately forecast potential losses over the next 24 months. Through risk mitigation efforts, the model seeks to enhance the overall stability of their mortgage-backed securities, taking extra precautions to address potential downward trends that may emerge in the future. Moreover, the model's success is closely tied to its adaptability across diverse economic scenarios, with a specific emphasis on stress testing under various conditions such as crises or pandemics like COVID-19, thereby critically evaluating its robustness.
   
 ## Problem Understanding
-* The US mortgage market is valued at trillions, ranking second-largest, falling only behind interest rates.
-Wall Street heavily relies on the success of this market, with banks strategically allocating capital through mortgage bonds.
+
+<div align= "center">
+    <img src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/f9bf0863-31f4-47b7-8f94-a0df810c629d" alt="Image Description" width="650">
+</div>
+
 * Default rates typically remain below 0.2%, but economic crises can cause spikes, reaching highs of 9.5%.
   * The 2007/2008 financial crisis and the 2020 COVID-19 pandemic highlight the vulnerability of mortgage default rates in the event of an economic downturn.
 * Collaborating with the Wells Fargo team, the student team's objective is to develop a predictive model for mortgage default over the next 24 months.
@@ -83,7 +87,31 @@ Wall Street heavily relies on the success of this market, with banks strategical
 
 #### Example from Sampled Data: 2003 Q1, Record 0 
   
-<img width="385" alt="Screenshot 2024-04-16 at 5 58 06 PM" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/b11f7a26-9c58-4a83-a345-9da4e893d608">
+```python
+-RECORD 0----------------------------------------
+ LOAN SEQUENCE NUMBER            | F03Q10000272  
+ MONTHLY REPORTING PERIOD        | 2003-02       
+ CURRENT ACTUAL UPB              | 51000.0000    
+ CURRENT LOAN DELINQUENCY STATUS | 0             
+ LOAN AGE                        | 0             
+ CURRENT INTEREST RATE           | 6.1250000     
+ ESTIMATED LOAN TO VALUE (ELTV)  | Undefined     
+ DEFAULT                         | 0             
+ CREDIT SCORE                    | 745           
+ FIRST TIME HOMEBUYER FLAG       | N             
+ OCCUPANCY STATUS                | P             
+ ORIGINAL INTEREST RATE          | 6.1250000     
+ PROPERTY TYPE                   | SF            
+ LOAN PURPOSE                    | P             
+ SELLER NAME                     | Other sellers 
+ OrigYear                        | 2003          
+ OrigQuarter                     | Q1            
+ OrigDate                        | 2003Q1        
+ index_sa                        | 168.86        
+ UNRATE                          | 5.9           
+ inflation                       | 3.0           
+ % Change in UPB                 | 0.0000
+```     
 
 
 A sample of the first 20 rows of the [2000 Sample Data](Sample_2000_First_20.csv) is included in the repository.
@@ -94,6 +122,7 @@ A sample of the first 20 rows of the [2000 Sample Data](Sample_2000_First_20.csv
 Based on the feature select function in PiML, the following features were chosen. 
 
 **_Numerical variables_**
+* Credit Score
 * Current Interest Rate
 * Estimated Loan-to-Value (ELTV)
 * Original Interest Rate
@@ -103,7 +132,6 @@ Based on the feature select function in PiML, the following features were chosen
 * % change in UPB
 
 **_Categorical variables_**
-* Credit Score
 * First-Time Homebuyer Flag
 * Occupancy Status
 * Property Type
@@ -227,29 +255,6 @@ Effect importance refers to the impact of each feature on individual predictions
 
 The consistent prominence of % Change in UPB and Estimated Loan-to-Value (ELTV) across both feature importance and effect importance analyses underscores their critical roles in the model. These insights can guide further investigations into the underlying mechanisms driving these features' influence on predictions, aiding in model refinement and decision-making processes.
 
-
-
-### Local Interpretability 
-
-
-<table>
-  <tr>
-    <td>
-      <img src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/03a2191f-b109-419f-b652-93e31f6392d5" alt="Feature Importance" width="450"/>
-    </td>
-    <td>
-      <img src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/92ead311-69ea-4fd8-b196-29abfee20014" alt="Effect Importance" width="450"/>
-    </td>
-  </tr>
-</table>
-
-Its local interpretation consists of two parts: local feature contribution and local effect contribution. The local interpretation shows how the predicted value is formed by the main effects and pairwise interactions.
-
-Firstly, the local effect contribution displays the outputs of each main effect and pairwise interaction. The predictor value of each effect is shown on the right axis, and the corresponding effect names are shown on the left axis. From the title, it can be observed that the predicted value of this sample is 0.1270, which is significantly different from the actual response of 1. The main effect of the _CURRENT INTEREST RATE_ contributes the most to the final prediction, with a positive contribution (around 1). This is followed by the _CURRENT INTEREST RATE_, _% CHANGE IN UPB_, _CREDIT SCORE_, _ORIGINATION INTEREST RATE_, and _ELTV_, all of which have a positive contribution. _INDEX_SA_ and the pairwise effect of _INDEX_SA_ and _% CHANGE IN UPB_ have a negative contribution to the final prediction.
-
-The interpretation of the feature contribution plot is simliar to that of the local effect contribution plot, but instead of displaying the effects, it shows the individual impact of each feature. For our sample, the main effects of _CURRENT INTEREST RATE_ and _CREDIT SCORE_ both have a positive contribution to the final prediction. Additionally, the _UNEMPLOYMENT RATE_ shows a negative impact on the final prediction at the feature level, even though it did not appear in the top 10 list of the local effect importance plot.
-
-
 ### Interaction Effect: Four interaction effects with the highest percentages
 The interaction plots show how the interaction between two features affect the probability of default. The top 3 interactions were selected based on the highest percentage values.
 
@@ -274,14 +279,14 @@ The interaction of a lower Home Price Index with a higher unemployment rate demo
 ## Results
 ### Accuracy Descriptions of XGB2_v2 Model
 
-<img width="1000" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/c735e21e-2594-43ec-a400-800ae7912702">
+<img width="700" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/c735e21e-2594-43ec-a400-800ae7912702">
 
-<img width="1078" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/73bc97aa-549b-4e28-b583-99dcbede946d">
+<img width="778" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/73bc97aa-549b-4e28-b583-99dcbede946d">
 
 
 ### Residual Box Plot of Predicted Default Variable from XGB2_v2 Model
 
-![PHOTO-2024-04-22-17-24-33](https://github.com/celinawong21/WF-ML-Model/assets/159848729/75fec3ba-b91c-4370-8669-fd30e97c5847)
+<img width= "700" alt = "image" src= "https://github.com/celinawong21/WF-ML-Model/assets/159848729/75fec3ba-b91c-4370-8669-fd30e97c5847">
 
 
 ### Resilience Test - Worst Sample for Top 4 Most Important Features from XGB2_v2
@@ -354,3 +359,25 @@ This section contains visualizations of the distribution shifts for various feat
 <img width="1114" alt="Screenshot 2024-04-16 at 5 55 01 PM" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/ee3a2f74-f2af-4bca-b42a-6f4a78a3968e">
 
 A sample of the first 48 rows of the [2000 Stacked Data](Stacked_2000_First_48.csv) is included in the repository.
+
+### Local Interpretability 
+
+
+<table>
+  <tr>
+    <td>
+      <img src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/03a2191f-b109-419f-b652-93e31f6392d5" alt="Feature Importance" width="450"/>
+    </td>
+    <td>
+      <img src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/92ead311-69ea-4fd8-b196-29abfee20014" alt="Effect Importance" width="450"/>
+    </td>
+  </tr>
+</table>
+
+Its local interpretation consists of two parts: local feature contribution and local effect contribution. The local interpretation shows how the predicted value is formed by the main effects and pairwise interactions.
+
+Firstly, the local effect contribution displays the outputs of each main effect and pairwise interaction. The predictor value of each effect is shown on the right axis, and the corresponding effect names are shown on the left axis. From the title, it can be observed that the predicted value of this sample is 0.1270, which is significantly different from the actual response of 1. The main effect of the _CURRENT INTEREST RATE_ contributes the most to the final prediction, with a positive contribution (around 1). This is followed by the _CURRENT INTEREST RATE_, _% CHANGE IN UPB_, _CREDIT SCORE_, _ORIGINATION INTEREST RATE_, and _ELTV_, all of which have a positive contribution. _INDEX_SA_ and the pairwise effect of _INDEX_SA_ and _% CHANGE IN UPB_ have a negative contribution to the final prediction.
+
+The interpretation of the feature contribution plot is simliar to that of the local effect contribution plot, but instead of displaying the effects, it shows the individual impact of each feature. For our sample, the main effects of _CURRENT INTEREST RATE_ and _CREDIT SCORE_ both have a positive contribution to the final prediction. Additionally, the _UNEMPLOYMENT RATE_ shows a negative impact on the final prediction at the feature level, even though it did not appear in the top 10 list of the local effect importance plot.
+
+
