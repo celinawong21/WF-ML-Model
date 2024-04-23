@@ -41,10 +41,10 @@ Wall Street heavily relies on the success of this market, with banks strategical
      * To address this, ELTV was independently calculated by dividing _CURRENT UNPAID BALANCE_ by the adjusted housing price. The adjusted housing price is determined by applying the change in the House Price Index from the loan's origination date to the month of prediction, to the original unpaid balance.
 
 ### Variable Selection
-* **Target variable**: the probability of default rate
+* **Target variable**: the probability of default
 * 3 types of input variables
   * **Variables that don't change over time**: Credit Score, Original Interest Rate, Property Type, Loan Purpose, Seller Name, First Time Homebuyer Flag, Occupancy Status
-  * **Variables that change over time**: Current Actual UPB, Current Loan Delinquency Status, Loan Age, Estimated Loan to Value (ELTV)
+  * **Variables that change over time**: Current Actual UPB, Current Loan Delinquency Status, Loan Age, Estimated Loan-to-Value (ELTV)
   * **Variables that change over time and predict the future**: Current Interest Rate, Unemployment Rate, Inflation Rate, House Price Index
     * Macroeconomic variables such as inflation, House Price Index (HPI), and unemployment are loaded from third-party sources.
     * HPI is used nationally to accommodate null values at the state level.
@@ -68,7 +68,7 @@ Wall Street heavily relies on the success of this market, with banks strategical
 | Unemployment Rate| Macroeconomic| Numeric| Input| The number of unemployed as a percentage of the labor force, reported monthly|
 | House Price Index| Macroeconomic| Numeric| Input| A broad measure of single-family house prices that measures average price changes over a period of time, reported quarterly.|
 | Inflation| Macroeconomic| Numeric| Input| The rate of increase in prices over a given period of time, reported monthly| 
-| Default| Target| Binary| Input| Describes whether a loan is 6 months late on payment|
+| Default| Target| Binary| | Describes whether a loan is 6 months late on payment|
  
 ## Sampling
 ### Methodology
@@ -78,7 +78,7 @@ Wall Street heavily relies on the success of this market, with banks strategical
   * **True_Default**: For clarity in classification, loans meeting the default criteria at any point in time are tagged as "true_default". This distinction allows for precise identification and analysis of loans that default versus those that do not.
   * **Sampling Proportion**: to ensure a balanced representation of default and non-default loans across the 24 years of our dataset, a selective sampling approach was adopted. The following are the main criteria.
     * 3,000 loans were selected from each year and sampled an equal amount of 350 defaults and 350 non-defaults for each quarter, to ensure that the analysis accurately reflects the dynamics of loan performance over time.
-    * Then, three time variables were added (_OrigData_, _OrigYear_, and _OrigQuarter_), to track the effect of the quarter for modeling purposes.
+    * Then, three time variables were added (_OrigDate_, _OrigYear_, and _OrigQuarter_), to track the effect of the quarter for modeling purposes.
     * The sampling faced limitations due to a shortage of defaults in certain periods. Specifically, for the fourth quarter of 2022, only 264 defaulted loans were sampled. In 2023, only 32 defaults in the first quarter were sampled and zero defaulted loans were found in the second quarter. 
 
 #### Example from Sampled Data: 2003 Q1, Record 0 
@@ -121,7 +121,7 @@ Based on the feature select function in PiML, the following features were chosen
 
 **_Numerical variables_**
 * Current Interest Rate
-* Estimated Loan to Value (ELTV)
+* Estimated Loan-to-Value (ELTV)
 * Original Interest Rate
 * Index_sa
 * UNRATE(Unemployment rate)
@@ -173,20 +173,18 @@ result.data
 * SampleForParameter.csv  is then used to derive parameters for the XGB2 model through the grid search method. The parameters extracted from the first row of the grid search results, corresponding to Rank 1, will be employed in the XGB2 model and its versions.
 
 
+### Comparing XGB1 and XBG2
+Both of the esults are sorted by the highest Area Under the Curve (AUC) value, providing a comprehensive comparison of model performance.
+* **XGB**: Base model with default parameters and no monotonic variables.
+* **XGB_V2**: Variant of XGB with default parameters and incorporating two monotonic variables: "CURRENT INTEREST RATE" (monotonic increasing) and "CREDIT SCORE" (monotonic decreasing).
+* **XGB_V3**: Another variation of XGB1, maintaining default parameters and excluding monotonic variables.
+* **XGB_V4**: Similar to XGB_V2, featuring default parameters alongside the two monotonic variables: "CURRENT INTEREST RATE" (monotonic increasing) and "CREDIT SCORE" (monotonic decreasing).
+
 #### XGB1
-Both of Results are sorted by the highest Area Under the Curve (AUC) value, providing a comprehensive comparison of model performance.
 ![PHOTO-2024-04-22-16-22-03](https://github.com/celinawong21/WF-ML-Model/assets/159848729/d4b77fd8-c381-4a73-8d80-ba898b282a0c)
-* **XGB1**: Base model with default parameters and no monotonic variables.
-* **XGB1_V2**: Variant of XGB1 with default parameters and incorporating two monotonic variables: "CURRENT INTEREST RATE" (monotonic increasing) and "CREDIT SCORE" (monotonic decreasing).
-* **XGB1_V3**: Another variation of XGB1, maintaining default parameters and excluding monotonic variables.
-* **XGB1_V4**: A model akin to XGB1_V2, featuring default parameters alongside the two monotonic variables: "CURRENT INTEREST RATE" (monotonic increasing) and "CREDIT SCORE" (monotonic decreasing).
 
 #### XGB2
 ![PHOTO-2024-04-22-16-22-22](https://github.com/celinawong21/WF-ML-Model/assets/159848729/90875872-5992-408f-8f35-a593e053d3fd)
-* **XGB2**: Base model with default parameters and no monotonic variables.
-* **XGB2_V2**: Variant of XGB2 with default parameters and incorporating two monotonic variables: "CURRENT INTEREST RATE" (monotonic increasing) and "CREDIT SCORE" (monotonic decreasing).
-* **XGB2_V3**: Another variation of XGB2, maintaining default parameters and excluding monotonic variables.
-* **XGB2_V4**: A model akin to XGB2_V2, featuring default parameters alongside the two monotonic variables: "CURRENT INTEREST RATE" (monotonic increasing) and "CREDIT SCORE" (monotonic decreasing).
 
 ## Model Interpretation: XGB2_v2
 
@@ -247,11 +245,11 @@ Regarding the Current Interest Rate, it has a positive relationship with the tar
 </table>
 
 
-There are two main plots: feature importance and effect importance. Feature importance refers to the relative importance of each feature in the model based on how frequently it is used to split the data across all trees in the ensemble. This plot only shows the aggregate effect of each top 10 features. As you can see from the plot, % change in UPB and index take a critical role in the model’s decision-making process, followed by Estimated Loan to Value (ELTV) and UNRATE, which refers to the unemployment rate.
+There are two main plots: feature importance and effect importance. Feature importance refers to the relative importance of each feature in the model based on how frequently it is used to split the data across all trees in the ensemble. This plot only shows the aggregate effect of each top 10 features. As you can see from the plot, % change in UPB and index take a critical role in the model’s decision-making process, followed by Estimated Loan-to-Value (ELTV) and UNRATE, which refers to the unemployment rate.
 
-Effect importance refers to the impact of each feature on individual predictions made by the model. It measures how much each feature contributes to the final prediction for a specific data point. We can observe that % Change in UPB and Estimated Loan to Value (ELTV) are dominant features, followed by index_sa and Credit Score.
+Effect importance refers to the impact of each feature on individual predictions made by the model. It measures how much each feature contributes to the final prediction for a specific data point. We can observe that % Change in UPB and Estimated Loan-to-Value (ELTV) are dominant features, followed by index_sa and Credit Score.
 
-The consistent prominence of % Change in UPB and Estimated Loan to Value (ELTV) across both feature importance and effect importance analyses underscores their critical roles in the model. These insights can guide further investigations into the underlying mechanisms driving these features' influence on predictions, aiding in model refinement and decision-making processes.
+The consistent prominence of % Change in UPB and Estimated Loan-to-Value (ELTV) across both feature importance and effect importance analyses underscores their critical roles in the model. These insights can guide further investigations into the underlying mechanisms driving these features' influence on predictions, aiding in model refinement and decision-making processes.
 
 
 
@@ -276,14 +274,13 @@ Firstly, the local effect contribution displays the outputs of each main effect 
 The interpretation of the feature contribution plot is simliar to that of the local effect contribution plot, but instead of displaying the effects, it shows the individual impact of each feature. For our sample, the main effects of "current interest rate" and "credit score" both have a positive contribution to the final prediction. Additionally, the "unemployment rate" shows a negative impact on the final prediction at the feature level, even though it did not appear in the top 10 list of the local effect importance plot.
 
 
-
 ### Interaction Effect: Four interaction effects with the highest percentages
 The interaction plots show how the interaction between two features affect the probability of default. We picked the the top 3 interactions based on the highest percentage values.
 
 * **ELTV x % Change in UPB**
 <img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/e94e0fe8-bd39-4294-b62d-35e31982718d">
 
-This plot shows that when the Estimated Loan to Value ratio is high, and there's a lower percentage change in the Unpaid Principal Balance, there is a significant interaction effect. This could indicate a higher probability of default in scenarios where LTV is high but the UPB isn't reducing quickly. It could imply that borrowers with high LTVs who are not paying down their loan principal rapidly are at a higher risk of default.
+This plot shows that when the Estimated Loan-to-Value ratio is high, and there's a lower percentage change in the Unpaid Principal Balance, there is a significant interaction effect. This could indicate a higher probability of default in scenarios where LTV is high but the UPB isn't reducing quickly. It could imply that borrowers with high LTVs who are not paying down their loan principal rapidly are at a higher risk of default.
 
 
 * **% Change in UPB x Credit Score** 
@@ -296,7 +293,6 @@ A high credit score combined with a lower percentage change in UPB is indicative
 <img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/7e18ed24-0972-4143-8dc2-7e28e9d6ddfc">
 
 The interaction of a lower Home Price Index with a higher unemployment rate demonstrates a significant effect, indicating that when housing prices are decreasing and the unemployment rate is high, it could lead to an increased risk of default.
-
 
 
 ## Results
@@ -325,8 +321,8 @@ This section contains visualizations of the distribution shifts for various feat
       <p style="margin-top: 10px; font-weight: bold;">Distribution Shift: % Change in UPB</p>
     </td>
     <td style="text-align:center;">
-      <img src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/7c5111dd-e2a2-48e2-8d61-45838e83d1b1" alt="Distribution Shift: Estimated Loan to Value (ELTV)" style="width:100%;" />
-      <p style="margin-top: 10px; font-weight: bold;">Distribution Shift: Estimated Loan to Value (ELTV)</p>
+      <img src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/7c5111dd-e2a2-48e2-8d61-45838e83d1b1" alt="Distribution Shift: Estimated Loan-to-Value (ELTV)" style="width:100%;" />
+      <p style="margin-top: 10px; font-weight: bold;">Distribution Shift: Estimated Loan-to-Value (ELTV)</p>
     </td>
   </tr>
   <tr>
