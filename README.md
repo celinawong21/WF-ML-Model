@@ -319,16 +319,15 @@ This section contains visualizations of the distribution shifts for various feat
 <table>
   <tr>
     <td>
-      <img src="https://github.com/celinawong21/WF-ML-Model/raw/main/assets/Screenshot_1.png"  alt="Distribution Shift: % Change in UPB" width="100%"/></td>
-      <img src="https://github.com/celinawong21/WF-ML-Model/raw/main/assets/Screenshot_2.png" alt="Distribution Shift: Estimated Loan to Value (ELTV)" width="100%"/></td>
+      <img src="https://github.com/celinawong21/WF-ML-Model/raw/main/assets/158225115/2d60a8a6-4089-4d43-9f74-96ec096d0bdd" alt="Distribution Shift: % Change in UPB" width="100%"/></td>
+      <img src="https://github.com/celinawong21/WF-ML-Model/raw/main/assets/158225115/4d3b0845-8c9e-4d5f-9e26-dbab9a9d4bfb" alt="Distribution Shift: Estimated Loan to Value (ELTV)" width="100%"/></td>
     </td>
     <td>
-      <img src="https://github.com/celinawong21/WF-ML-Model/raw/main/assets/Screenshot_3.png" alt="Distribution Shift: Index Seasonally Adjusted (index_sa)" width="100%"/></td>
-      <img src="https://github.com/celinawong21/WF-ML-Model/raw/main/assets/Screenshot_4.png" alt="Distribution Shift: Unemployment Rate (UNRATE)" width="100%"/></td>
+      <img src="https://github.com/celinawong21/WF-ML-Model/raw/main/assets/158225115/170c7f79-25c5-4e55-afff-8f7e34c5d297" alt="Distribution Shift: Index Seasonally Adjusted (index_sa)" width="100%"/></td>
+      <img src="https://github.com/celinawong21/WF-ML-Model/raw/main/assets/158225115/9d3c1700-d855-48d3-bd8c-ab18d9624f7d"  alt="Distribution Shift: Unemployment Rate (UNRATE)" width="100%"/></td>
     </td>
   </tr>
 </table>
-
 
 
 ## Risk Considerations
