@@ -304,6 +304,57 @@ The interaction of a lower Home Price Index with a higher unemployment rate demo
 
 <img width="1000" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/c735e21e-2594-43ec-a400-800ae7912702">
 
+#### Confusion Matrix
+<img width="550" alt="Screenshot 2024-04-23 at 1 18 17 PM" src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/c0ded5db-59f3-4594-9cda-b587f91334ac">
+
+<table>
+  <tr>
+    <td>
+      <img src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/2745c93b-3b2e-425d-b970-7c8528ed569d" alt="ROC Curve" width="450"/>
+    </td>
+    <td>
+      <img src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/62fb8a83-52d5-415d-aca7-f013e044c604" alt="Recall-Precision Curve" width="450"/>
+    </td>
+  </tr>
+  <tr>
+    <td style="text-align:center;">ROC Curve</td>
+    <td style="text-align:center;">Recall-Precision Curve</td>
+  </tr>
+</table>
+
+### Residual Box Plot of Predicted Default Variable from XGB2_v2 Model
+![PHOTO-2024-04-22-17-24-33](https://github.com/celinawong21/WF-ML-Model/assets/159848729/75fec3ba-b91c-4370-8669-fd30e97c5847)
+
+### Resilience Test - Worst Sample for Top 4 Most Important Features from XGB2_v2
+
+#### Distribution Shift Analysis
+
+This section contains visualizations of the distribution shifts for various features.
+
+<table style="width:100%;">
+  <tr>
+    <td style="text-align:center;">
+      <img src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/c41919c9-d5fd-4dc6-931a-a384b8dbd7bf" alt="Distribution Shift: % Change in UPB" style="width:100%;" />
+      <p style="margin-top: 10px; font-weight: bold;">Distribution Shift: % Change in UPB</p>
+    </td>
+    <td style="text-align:center;">
+      <img src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/7c5111dd-e2a2-48e2-8d61-45838e83d1b1" alt="Distribution Shift: Estimated Loan to Value (ELTV)" style="width:100%;" />
+      <p style="margin-top: 10px; font-weight: bold;">Distribution Shift: Estimated Loan to Value (ELTV)</p>
+    </td>
+  </tr>
+  <tr>
+    <td style="text-align:center;">
+      <img src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/a1477a64-eb0d-4f15-bd18-f247779831dc" alt="Distribution Shift: Index Seasonally Adjusted (index_sa)" style="width:100%;" />
+      <p style="margin-top: 10px; font-weight: bold;">Distribution Shift: Index Seasonally Adjusted (index_sa)</p>
+    </td>
+    <td style="text-align:center;">
+      <img src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/3007bd03-9495-40a5-ab00-5b4559b0ca84" alt="Distribution Shift: Unemployment Rate (UNRATE)" style="width:100%;" />
+      <p style="margin-top: 10px; font-weight: bold;">Distribution Shift: Unemployment Rate (UNRATE)</p>
+    </td>
+  </tr>
+</table>
+
+
 #### Confusion Matrix 
 </p>
 <img width="550" alt="Screenshot 2024-04-23 at 1 18 17 PM" src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/c0ded5db-59f3-4594-9cda-b587f91334ac">
