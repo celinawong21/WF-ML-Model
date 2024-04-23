@@ -1,15 +1,15 @@
 # Wells Fargo Mortgage Default Predictive Model
 ## Basic Information
-* Organization or People Developing Model: GWU Wells Fargo Predictive Mortgage Default Team (Members: Anukshan Ghosh, Allison Ko, Andrew Renga, and Celina Wong)
-* Model Date: May, 2023
-* Model Version: 1.0
-* Model Implementation Code: [Main Code - PySpark_0412.ipynb](https://github.com/celinawong21/WF-ML-Model/blob/main/Main%20Code%20-%20PySpark_0412.ipynb)
-* Data Obtained from Freddie Mac Database: https://freddiemac.embs.com/FLoan/secure/login.php?pagename=download 
+* **Organization or People Developing Model**: GWU Wells Fargo Predictive Mortgage Default Team (Members: Anukshan Ghosh, Allison Ko, Andrew Renga, and Celina Wong)
+* **Model Date**: May, 2023
+* **Model Version**: 1.0
+* **Model Implementation Code**: [Main Code - PySpark_0412.ipynb](https://github.com/celinawong21/WF-ML-Model/blob/main/Main%20Code%20-%20PySpark_0412.ipynb)
+* **Freddie Mac Database**: [Single-family home loan data](https://freddiemac.embs.com/FLoan/secure/login.php?pagename=download) 
 
 ## Intended Use
-* Primary intended uses: This model is an example of a predictive model for mortgage lenders, financial institutions, and investors to assess and mitigate mortgage lending portfolio risks.
-* Primary intended users: Wells Fargo Team, Patrick Hall, Miguel Maldonado de Santillana, and GWU Students in DNSC 4289/6317
-* Out-of-scope use cases: Any use beyond an educational example is out-of-scope.
+* **Primary intended uses**: This model is an example of a predictive model for mortgage lenders, financial institutions, and investors to assess and mitigate mortgage lending portfolio risks.
+* **Primary intended users**: Wells Fargo Team, Patrick Hall, Miguel Maldonado de Santillana, and GWU Students in DNSC 4289/6317
+* **Out-of-scope use cases**: Any use beyond an educational example is out-of-scope.
 
 ## Executive Summary
 * The mortgage market is a pivotal component, ranking as the second-largest market globally after interest rates. Banks strategically allocate capital through mortgage bonds, underscoring the industry's immense significance. The desired business outcomes for mortgage models encompass achieving interpretability and accuracy, predicting default and repayment patterns over an extended period, and ensuring adaptability to changing market dynamics. Interpretability is crucial in fostering trust and understanding among related parties, as decisions derived from the model need to be transparent and meaningful. Additionally, predicting the likelihood of default and repayment over the next 24 months is a key objective. This predictive capability is essential for risk management, enabling banks to anticipate potential challenges in mortgage repayments and take proactive measures to mitigate default risks.
@@ -40,15 +40,15 @@ Wall Street heavily relies on the success of this market, with banks strategical
   * **Merging Origination and Performance Datasets**: to construct a comprehensive analytical framework, the Performance and Origination datasets were joined using the _LOAN SEQUENCE NUMBER_ as a key identifier.
     * The merging process ensures that each record in the Origination dataset is subsequently paired with monthly activities from the Performance dataset, providing a complete overview of the loan's lifecycle from origination to maturity.
   * **Lack of Estimated Loan-to-Value (ELTV) ratio**: ELTV is crucial for modeling to incorporate the financial risk associated with each loan, but there were a significant number of null values present within the Performance dataset.
-     * To address this, ELTV was independently calculated by dividing _CURRENT UNPAID BALANCE_ by the adjusted housing price. The adjusted housing price is determined by applying the change in the Housing Price Index from the loan's origination date to the month of prediction, to the original unpaid balance.
+     * To address this, ELTV was independently calculated by dividing _CURRENT UNPAID BALANCE_ by the adjusted housing price. The adjusted housing price is determined by applying the change in the House Price Index from the loan's origination date to the month of prediction, to the original unpaid balance.
 
 ### Variable Selection
 * **Target variable**: the probability of default rate
 * 3 types of input variables
   * **Variables that don't change over time**: CREDIT SCORE, CURRENT LOAN DELINQUENCY STATUS, ORIGINAL INTEREST RATE, PROPERTY TYPE, LOAN PURPOSE, SELLER NAME, FIRST TIME HOMEBUYER FLAG, OCCUPANCY STATUS
   * **Variables that change over time**: CURRENT ACTUAL UPB, LOAN AGE, ESTIMATED LOAN TO VALUE (ELTV)
-  * **Variables that change over time and predict the future**: CURRENT INTEREST RATE, UNEMPLOYMENT RATE, INFLATION RATE, HOUSING PRICE INDEX
-    * Macroeconomic variables such as inflation, Home Price Index (HPI), and unemployment are loaded from third-party sources.
+  * **Variables that change over time and predict the future**: CURRENT INTEREST RATE, UNEMPLOYMENT RATE, INFLATION RATE, HOUSE PRICE INDEX
+    * Macroeconomic variables such as inflation, House Price Index (HPI), and unemployment are loaded from third-party sources.
     * HPI is used nationally to accommodate null values at the state level.
    
 ### Data Dictionary 
@@ -78,39 +78,20 @@ Wall Street heavily relies on the success of this market, with banks strategical
   * **Criteria for a Defaulted Loan**: if _LOAN DELINQUENCY STATUS_ is equal to 6 or marked as "RA", payment on the loan is at least 6 months late.
     * Loans not meeting these conditions are classified as non-default.
   * **True_Default**: For clarity in classification, loans meeting the default criteria at any point in time are tagged as "true_default". This distinction allows for precise identification and analysis of loans that default versus those that do not.
-  * **Sampling Proportion**: To ensure a balanced representation of default and non-default loans across the 24 years of our dataset, a selective sampling approach was adopted. The following are the main criteria.
+  * **Sampling Proportion**: to ensure a balanced representation of default and non-default loans across the 24 years of our dataset, a selective sampling approach was adopted. The following are the main criteria.
     * 3,000 loans were selected from each year and sampled an equal amount of 350 defaults and 350 non-defaults for each quarter, to ensure that the analysis accurately reflects the dynamics of loan performance over time.
-    * Then, three "quarter" variables were added (_OrigData_, _OrigYear_, and _OrigQuarter_), to track the effect of the quarter for modeling purposes.
+    * Then, three time variables were added (_OrigData_, _OrigYear_, and _OrigQuarter_), to track the effect of the quarter for modeling purposes.
     * The sampling faced limitations due to a shortage of defaults in certain periods. Specifically, for the fourth quarter of 2022, only 264 defaulted loans were sampled. In 2023, only 32 defaults in the first quarter were sampled and zero defaulted loans were found in the second quarter. 
 
-### Example from Sampled Data: 2003, Record 0 
+#### Example from Sampled Data: 2003 Q1, Record 0 
   
-| **Variables**                           |     **Record 0**                      |
-|---------------------------|---------------------------|
-| LOAN SEQUENCE NUMBER      | F03Q10000272              |
-| MONTHLY REPORTING PERIOD  | 2003-02                   |
-| CURRENT ACTUAL UPB        | 51000.0000                |
-| CURRENT LOAN DELINQUENCY STATUS | 0                   |
-| LOAN AGE                  | 0                         |
-| CURRENT INTEREST RATE     | 6.1250000                 |
-| ESTIMATED LOAN TO VALUE (ELTV) | Undefined             |
-| DEFAULT                   | 0                         |
-| CREDIT SCORE              | 745                       |
-| FIRST-TIME HOMEBUYER FLAG | N                         |
-| OCCUPANCY STATUS          | P                         |
-| ORIGINAL INTEREST RATE    | 6.1250000                 |
-| PROPERTY TYPE             | SF                        |
-| LOAN PURPOSE              | P                         |
-| SELLER NAME               | Other sellers             |
-| OrigYear                  | 2003                      |
-| OrigQuarter               | Q1                        |
-| OrigDate                  | 2003Q1                    |
-| index_sa                  | 168.86                    |
-| UNRATE                    | 5.9                       |
-| inflation                 | 3.0                       |
-| % Change in UPB           | 0.0000                    |
+<img width="385" alt="Screenshot 2024-04-16 at 5 58 06 PM" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/b11f7a26-9c58-4a83-a345-9da4e893d608">
+
+
+A sample of the first 20 rows of the [2000 Sample Data](Sample_2000_First_20.csv) is included in the repository.
  
 ## Modeling
+### Overview of Time Series Horizon
 * The predictive loan default model utilizes a time series horizon approach.
   * The model aims to forecast the probability of a loan defaulting at a future time (t) based on historical information available up to a snapshot time (s), where s < t.
   * All available information up to time s is utilized, resulting in pairs of snapshots and forecasts, which constitute stacked data.
@@ -118,19 +99,24 @@ Wall Street heavily relies on the success of this market, with banks strategical
 * The decision to opt for a time series horizon model over a traditional time series model was driven by the latter's diminishing predictive power with increasing time duration.
 * Traditional time series models tend to overly emphasize initial lagged time periods, potentially overlooking valuable insights from earlier years.
 
-### Sample Stacked Data
-| age | amount | FICO | delinquency | unemployment | horizon to y | default (y) |
-|-----|--------|------|-------------|--------------|--------------|-------------|
-| 1   | 125000 | 675  | Current     | 6.2          | 0            | 0           |
-| 2   | 125000 | 666  | Current     | 6.2          | 0            | 0           |
-| 1   | 125000 | 675  | Current     | 6.2          | 1            | 0           |
-| 3   | 125000 | 630  | 30          | 6.2          | 0            | 0           |
-| 2   | 125000 | 666  | Current     | 6.2          | 1            | 0           |
-| 1   | 125000 | 675  | Current     | 6.2          | 2            | 0           |
-| 4   | 125000 | 620  | 60          | 6.1          | 0            | 0           |
-| 3   | 125000 | 630  | 30          | 6.2          | 1            | 0           |
-| 2   | 125000 | 666  | Current     | 6.2          | 2            | 0           |
-| 1   | 125000 | 675  | Current     | 6.2          | 3            | 0           |
+### Creating a Stacked Dataset
+#### Vectorized Process to Create the Stacked Dataset
+* The process begins with obtaining a sample file containing 3,000 loans from each of the 24 years. Subsequently, the data undergoes a vectorized transformation to generate a time series dataframe.
+* Then, the minimum _LOAN AGE_ for each _LOAN SEQUENCE NUMBER_ group is identified, which is the starting point for each loan.
+    * During the vectorization process, the combination of _LOAN SEQUENCE NUMBER_ and _LOAN AGE_ is documented for each iteration of the horizons.
+    * In cases where multiple _LOAN SEQUENCE NUMBERS_ exhibit the same LOAN AGE throughout the duration of a HORIZON, adjustments are made to ensure chronological order within each _LOAN SEQUENCE NUMBER_. This involves recalculating loan ages for duplicate rows, thus preserving the sequential progression of loan ages. 
+* Each row in the merged dataset is replicated 24 times to project loan information for 24 months into the future. This duplication enables forecasting loan behavior over an extended period.
+* To enhance analysis, two new columns, _HORIZON_ and _SOURCE_, are introduced.
+    * **HORIZON**: tracks past information, with each horizon representing a month in the past.
+        * For instance, if a loan's monthly reporting period is "2013-06", HORIZON(1) corresponds to duplicated data from "2013-05", and HORIZON(2) corresponds to duplicated data from "2013-04".
+    * **SOURCE**: distinguishes between original sample rows ("orig") and those generated through the vectorized process ("Duplicated").
+* The process will continue, incrementing the 'LOAN AGE' by one consistently until the loan reaches the end of its lifecycle.
+
+#### Example of Stacked Data
+
+<img width="1114" alt="Screenshot 2024-04-16 at 5 55 01 PM" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/ee3a2f74-f2af-4bca-b42a-6f4a78a3968e">
+
+A sample of the first 48 rows of the [2000 Stacked Data](Stacked_2000_First_48.csv) is included in the repository.
 
 ## Results
 * insert heatmap pertaining to the correlations of all variables
@@ -138,9 +124,9 @@ Wall Street heavily relies on the success of this market, with banks strategical
 * insert graphs or tables displaying the model's within and out of sample fit.
 
 ## Risk Considerations
-* **Automation Risk**: Discussion on the consequences of relying solely on predictive models for decision-making without human oversight.
+* **Automation Risk**: discussion on the consequences of relying solely on predictive models for decision-making without human oversight.
 * careful consideration of how sampling a minuscule proportion of the overall data may lead to biases or an inability to fully predict default during periods of crisis.
-* * consider how data during times of crisis is inherently biased (because loans will be only given out to customers with great finances who won't default). Rather, it is equally important to predict when a crisis may occur so that proper actions can be taken before it is too late.
+* consider how data during times of crisis is inherently biased (because loans will be only given out to customers with great finances who won't default). Rather, it is equally important to predict when a crisis may occur so that proper actions can be taken before it is too late.
 
 ## Potential Next Steps 
 * **Larger Dataset**: apply the modeling techniques to all Freddie Mac single-family home loan data to further incorporate the changes in the economic scenario over time.
