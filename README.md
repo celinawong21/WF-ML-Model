@@ -190,6 +190,25 @@ Results are sorted by the highest Area Under the Curve (AUC) value, providing a 
 
 ## Model Interpretation: XGB2_v2
 
+### Effect Plot
+* Monotonicity adjustments for two variables: 
+    * **Monotonic increasing**: Current Interest Rate
+    * **Monotonic decreasing**: Credit Score 
+
+#### Before Monotonic Adjustment - Credit Score
+<img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/06c29bf4-bd66-4732-9050-581b31339c2f">
+
+#### After Monotonic Adjustment - Credit Score
+<img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/430f4f78-bdf8-48c7-8569-eded2b04df22">
+
+#### Before Monotonic Adjustment - Current Interest Rate
+
+<img width="384" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/155c04d0-1f89-438f-bed4-e8867ef80fcf">
+
+#### After Monotonic Adjustment - Current Interest Rate
+<img width="380" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/0f264303-37ce-4904-a3c9-5b4608dd7560">
+
+
 ### Global Interpretability
 
 <img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/a0014bbd-a75b-48d7-ac78-feee2c4ab4b7">
@@ -214,29 +233,6 @@ Firstly, the local effect contribution displays the outputs of each main effect 
 
 The interpretation of the feature contribution plot is simliar to that of the local effect contribution plot, but instead of displaying the effects, it shows the individual impact of each feature. For our sample, the main effects of "current interest rate" and "credit score" both have a positive contribution to the final prediction. Additionally, the "unemployment rate" shows a negative impact on the final prediction at the feature level, even though it did not appear in the top 10 list of the local effect importance plot.
 
-### Effect Plot
-* Monotonicity adjustments for two variables: 
-    * **Monotonic increasing**: Current Interest Rate
-    * **Monotonic decreasing**: Credit Score 
-
-#### Before Monotonic Adjustment - Credit Score
-<img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/06c29bf4-bd66-4732-9050-581b31339c2f">
-
-#### After Monotonic Adjustment - Credit Score
-<img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/430f4f78-bdf8-48c7-8569-eded2b04df22">
-
-#### Before Monotonic Adjustment - Current Interest Rate
-
-<img width="384" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/155c04d0-1f89-438f-bed4-e8867ef80fcf">
-
-#### After Monotonic Adjustment - Current Interest Rate
-<img width="380" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/0f264303-37ce-4904-a3c9-5b4608dd7560">
-
-#### Percent Change in UPB
-<img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/312f5003-03c4-4fa2-bb97-6c7fc552e79b">
-
-#### ELTV
-<img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/1e45f3e0-277f-4e8e-b5fd-8934676bc81e">
 
 ### Interaction Effect: Four interaction effects with the highest percentages
 
