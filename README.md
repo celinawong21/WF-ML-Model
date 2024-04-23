@@ -255,7 +255,7 @@ The interaction plots show how the interaction between two features affect the p
 * **ELTV x % Change in UPB**
 <img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/e94e0fe8-bd39-4294-b62d-35e31982718d">
 
-This plot shows that when the Estimated Loan-to-Value ratio is high, and there's a lower percentage change in the Unpaid Principal Balance, there is a significant interaction effect. This could indicate a higher probability of default in scenarios where LTV is high but the UPB isn't reducing quickly. It could imply that borrowers with high LTVs who are not paying down their loan principal rapidly are at a higher risk of default.
+This plot shows that when the Estimated Loan-to-Value ratio is high, and there's a lower percentage change in the Unpaid Principal Balance, there is a significant interaction effect. This could indicate a higher probability of default in scenarios where ELTV is high but the UPB isn't reducing quickly. It could imply that borrowers with high ELTVs who are not paying down their loan principal rapidly are at a higher risk of default.
 
 
 * **% Change in UPB x Credit Score** 
