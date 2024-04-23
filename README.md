@@ -161,9 +161,12 @@ Both of the esults are sorted by the highest Area Under the Curve (AUC) value, p
 ## Model Interpretation: XGB2_v2
 
 ### Effect Plot
+
 * Monotonicity adjustments for two variables: 
     * **Monotonic increasing**: Current Interest Rate
-    * **Monotonic decreasing**: Credit Score 
+    * **Monotonic decreasing**: Credit Score
+
+Monotonicity adjustments were made to two variables to enhance interpretability: Current Interest Rate for a increasing monotonicity, and Credit Score for a decreasing monotonically. 
 
 <table>
   <tr>
@@ -180,7 +183,7 @@ Both of the esults are sorted by the highest Area Under the Curve (AUC) value, p
   </tr>
 </table>
 
-Monotonicity adjustments were made to two variables to enhance interpretability: Current Interest Rate for a increasing monotonicity, and Credit Score for a decreasing monotonically. Specifically, for the Credit Score, it can be observed that it has a negative relationship with the target value, indicating that as the credit score increases, the probability of default decreases. After the monotonicity adjustment, the effect of the credit score on the model's predictions increased from 4.5% to 6.6%. 
+For the Credit Score, it can be observed that it has a negative relationship with the target value, indicating that as the credit score increases, the probability of default decreases. After the monotonicity adjustment, the effect of the credit score on the model's predictions increased from 4.5% to 6.6%. 
 
 
 
