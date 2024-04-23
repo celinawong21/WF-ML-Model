@@ -31,6 +31,7 @@ Wall Street heavily relies on the success of this market, with banks strategical
 
 ## Data Preprocessing 
 ### Data Cleaning 
+* Before any data preprocessing begun, there were 64 variables across both datasets and over 50 million loans within the original data.
 * PySpark is employed to handle the large dataset, spanning the last 24 years.
 * Key strategies implemented in our data preprocessing include:
   * **Handling Missing Data**: columns that contain 95% or more null values across both datasets have been removed.
