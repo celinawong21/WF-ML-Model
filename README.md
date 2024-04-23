@@ -308,7 +308,6 @@ The interaction of a lower Home Price Index with a higher unemployment rate demo
 ![PHOTO-2024-04-22-17-24-33](https://github.com/celinawong21/WF-ML-Model/assets/159848729/75fec3ba-b91c-4370-8669-fd30e97c5847)
 
 ### Resilience Test - Worst Sample for Top 4 Most Important Features from XGB2_v2
-![PHOTO-2024-04-22-17-35-26](https://github.com/celinawong21/WF-ML-Model/assets/159848729/02f77299-d204-4b50-a68b-fc4e5ca6694e)
 
 #### Distribution Shift Analysis
 
@@ -336,15 +335,6 @@ This section contains visualizations of the distribution shifts for various feat
     </td>
   </tr>
 </table>
-
-
-
-<img width="363" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/c41919c9-d5fd-4dc6-931a-a384b8dbd7bf">
-<img width="360" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/7c5111dd-e2a2-48e2-8d61-45838e83d1b1">
-<img width="356" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/a1477a64-eb0d-4f15-bd18-f247779831dc">
-<img width="361" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/3007bd03-9495-40a5-ab00-5b4559b0ca84">
-
-
 
 
 
