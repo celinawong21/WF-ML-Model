@@ -278,18 +278,25 @@ The interpretation of the feature contribution plot is simliar to that of the lo
 
 
 ### Interaction Effect: Four interaction effects with the highest percentages
+The interaction plots show how the interaction between two features affect the probability of default. We picked the the top 3 interactions based on the highest percentage values.
 
 * **ELTV x % Change in UPB**
 <img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/e94e0fe8-bd39-4294-b62d-35e31982718d">
 
+This plot shows that when the Estimated Loan to Value ratio is high, and there's a lower percentage change in the Unpaid Principal Balance, there is a significant interaction effect. This could indicate a higher probability of default in scenarios where LTV is high but the UPB isn't reducing quickly. It could imply that borrowers with high LTVs who are not paying down their loan principal rapidly are at a higher risk of default.
+
+
 * **% Change in UPB x Credit Score** 
 <img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/81626caa-ecd2-4fe7-b29a-25f16d1e6719">
+
+A high credit score combined with a lower percentage change in UPB is indicative of a significant interaction effect. It implies that even if borrowers have good credit scores, if their UPB isn’t decreasing, it might raise flags about their ability to keep up with payments, thus potentially increasing the risk of default
+
 
 * **HPI x Unemployment Rate**
 <img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/7e18ed24-0972-4143-8dc2-7e28e9d6ddfc">
 
-* **ELTV x HPI**
-<img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/32560490-63ae-4b46-be4c-a9d396ad65bb">
+The interaction of a lower Home Price Index with a higher unemployment rate demonstrates a significant effect, indicating that when housing prices are decreasing and the unemployment rate is high, it could lead to an increased risk of default.
+
 
 
 ## Results
