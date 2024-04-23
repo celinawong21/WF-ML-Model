@@ -274,7 +274,7 @@ Results are sorted by the highest Area Under the Curve (AUC) value, providing a 
 
 ## Potential Next Steps 
 * **Larger Dataset**: apply the modeling techniques to all Freddie Mac single-family home loan data to further incorporate the changes in the economic scenario over time.
-* * **Dynamic Feature Selection**: develop adaptive feature selection mechanisms to prioritize relevant features and adjust the model's feature set over time based on their importance.
+* **Dynamic Feature Selection**: develop adaptive feature selection mechanisms to prioritize relevant features and adjust the model's feature set over time based on their importance.
 * **Integration of Additional Data Sources**: consider incorporating regional economic indicators or property market data alongside existing sources like Freddie Mac to enhance predictive accuracy.
 * **Government Intervention**: consider any regulatory compliance and ethical implications in future iterations of the project.
 * **User Interface**: create a front-end development to input certain specifics about a loan and/or macroeconomic variables to output a potential rate of default. This application will take user input, visually explain the impact of each variable, and attempt to boost the interpretability of the model. 
