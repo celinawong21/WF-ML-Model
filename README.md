@@ -118,15 +118,159 @@ A sample of the first 20 rows of the [2000 Sample Data](Sample_2000_First_20.csv
 
 A sample of the first 48 rows of the [2000 Stacked Data](Stacked_2000_First_48.csv) is included in the repository.
 
+### Features Selection 
+Based on the feature select function in PiML, the following features were chose. 
+
+**_Numerical variables_**
+* Current Interest Rate
+* Estimated Loan to Value (ELTV)
+* Original Interest Rate
+* Index_sa
+* UNRATE(Unemployment rate)
+* Inflation
+* % change in UPB
+
+**_Categorical variables_**
+* Credit Score
+* First-Time Homebuyer Flag
+* Occupancy Status
+* Property Type
+* Loan Purpose
+* Seller Name
+* OrigYear
+* OrigDate
+
+### Sampling for Parameters
+
+* [SampleForParameter.csv](https://github.com/celinawong21/WF-ML-Model/blob/main/sampleforparameter.csv) is a smaller sample, which is used to obtain hyperparameters for both the XGB1 and XGB2 models. Subsequently, these parameters, along with the monotonic variables, are utilized to train four different models for both XGB1 and XGB2.
+
+### XGBoost 
+
+```python
+np.random.seed(12345)
+
+parameters = {'n_estimators': [100, 500, 1000],
+              'eta': [0.01, 0.1, 0.5],
+              'reg_lambda': [0.0, 0.5, 1.0],
+              'reg_alpha': [0.01, 0.5, .99]}
+result = exp.model_tune("XGB1", method="grid", parameters=parameters, metric=['MSE', 'MAE'], test_ratio=0.2, random_state = 12345)
+result.data
+```
+![PHOTO-2024-04-22-16-21-26](https://github.com/celinawong21/WF-ML-Model/assets/159848729/7159d9e7-5cac-4f9b-857c-a4c237a8e5e2)
+
+* SampleForParameter.csv is used to obtain parameters for the XGB1 model through the grid search method. The parameters obtained from the first row of the grid search results will be utilized in the XGB1 model and its versions.
+
+```python
+np.random.seed(12345)
+
+parameters = {'n_estimators': [100, 500, 1000],
+              'eta': [0.01, 0.1, 0.5],
+              'reg_lambda': [0.0, 0.5, 1.0],
+              'reg_alpha': [0.01, 0.5, .99]}
+result = exp.model_tune("XGB1", method="grid", parameters=parameters, metric=['MSE', 'MAE'], test_ratio=0.2, random_state = 12345)
+result.data
+```
+![PHOTO-2024-04-22-16-21-50](https://github.com/celinawong21/WF-ML-Model/assets/159848729/c3590d4f-7608-4c46-b98d-880d5154572c)
+* SampleForParameter.csv  is then used to derive parameters for the XGB2 model through the grid search method. The parameters extracted from the first row of the grid search results will be employed in the XGB2 model and its versions.
+
+![PHOTO-2024-04-22-16-22-03](https://github.com/celinawong21/WF-ML-Model/assets/159848729/d4b77fd8-c381-4a73-8d80-ba898b282a0c)
+* **XGB1**: Base model with default parameters and no monotonic variables.
+* **XGB1_V2**: Variant of XGB1 with default parameters and incorporating two monotonic variables: "CURRENT INTEREST RATE" (monotonic increasing) and "CREDIT SCORE" (monotonic decreasing).
+* **XGB1_V3**: Another variation of XGB1, maintaining default parameters and excluding monotonic variables.
+* **XGB1_V4**: A model akin to XGB1_V2, featuring default parameters alongside the two monotonic variables: "CURRENT INTEREST RATE" (monotonic increasing) and "CREDIT SCORE" (monotonic decreasing).
+
+For the models integrating monotonic adjustments, "CURRENT INTEREST RATE" serves as the monotonic increasing variable, while "CREDIT SCORE" functions as the monotonic decreasing variable.
+
+Results are sorted by the highest Area Under the Curve (AUC) value, providing a comprehensive comparison of model performance.
+
+![PHOTO-2024-04-22-16-22-22](https://github.com/celinawong21/WF-ML-Model/assets/159848729/90875872-5992-408f-8f35-a593e053d3fd)
+* **XGB2**: Base model with default parameters and no monotonic variables.
+* **XGB2_V2**: Variant of XGB2 with default parameters and incorporating two monotonic variables: "CURRENT INTEREST RATE" (monotonic increasing) and "CREDIT SCORE" (monotonic decreasing).
+* **XGB2_V3**: Another variation of XGB2, maintaining default parameters and excluding monotonic variables.
+* **XGB2_V4**: A model akin to XGB2_V2, featuring default parameters alongside the two monotonic variables: "CURRENT INTEREST RATE" (monotonic increasing) and "CREDIT SCORE" (monotonic decreasing).
+
+## Model Comparison: XGB1 and XGB2 
+### **XGB1**
+<img width="660" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/0fa740b5-a80d-48e7-a589-0619a99a12b7">
+
+ 
+### **XGB2**
+ <img width="660" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/502bc173-fc63-4698-b8be-8d21abc29b4f">
+
+
+## Model Interpretation: XGB2_v2
+
+### Global Interpretability
+
+<img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/a0014bbd-a75b-48d7-ac78-feee2c4ab4b7">
+
+<img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/1faee4b7-0ad6-4795-b11f-cf47c1162340">
+
+### Local Interpretability 
+
+<img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/92ead311-69ea-4fd8-b196-29abfee20014">
+
+<img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/03a2191f-b109-419f-b652-93e31f6392d5">
+
+### Effect Plot
+* Monotonicity adjustments for two variables: 
+    * **Monotonic increasing**: Current Interest Rate
+    * **Monotonic decreasing**: Credit Score 
+
+#### Before Monotonic Adjustment - Credit Score
+<img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/06c29bf4-bd66-4732-9050-581b31339c2f">
+
+#### After Monotonic Adjustment - Credit Score
+<img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/430f4f78-bdf8-48c7-8569-eded2b04df22">
+
+#### Before Monotonic Adjustment - Current Interest Rate
+
+<img width="384" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/155c04d0-1f89-438f-bed4-e8867ef80fcf">
+
+#### After Monotonic Adjustment - Current Interest Rate
+<img width="380" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/0f264303-37ce-4904-a3c9-5b4608dd7560">
+
+#### Percent Change in UPB
+<img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/312f5003-03c4-4fa2-bb97-6c7fc552e79b">
+
+#### ELTV
+<img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/1e45f3e0-277f-4e8e-b5fd-8934676bc81e">
+
+#### HPI
+<img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/1a82cd81-b5c2-4486-a7f2-fe2bab40025d">
+#### Unemployment Rate
+![PHOTO-2024-04-22-21-24-41](https://github.com/celinawong21/WF-ML-Model/assets/159848729/3294367c-cf2e-4470-b5e9-968a1f8ecea4)
+
+### Interaction Effect: Four interaction effects with the highest percentages
+
+* **ELTV x % Change in UPB**
+<img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/e94e0fe8-bd39-4294-b62d-35e31982718d">
+
+* **% Change in UPB x Credit Score** 
+<img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/81626caa-ecd2-4fe7-b29a-25f16d1e6719">
+
+* **HPI x Unemployment Rate**
+<img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/7e18ed24-0972-4143-8dc2-7e28e9d6ddfc">
+
+* **ELTV x HPI**
+<img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/32560490-63ae-4b46-be4c-a9d396ad65bb">
+
+
 ## Results
-* insert heatmap pertaining to the correlations of all variables
-* show basic stats of variables (if any stand out) to help the client gauge the data format and better understand the modeling process
-* insert graphs or tables displaying the model's within and out of sample fit.
+### Accuracy Descriptions of XGB2_v2 Model
+![PHOTO-2024-04-22-17-23-54](https://github.com/celinawong21/WF-ML-Model/assets/159848729/8293a99e-0857-4db1-b7e8-cd242c3a9e89)
+
+ 
+### Residual Box Plot of Predicted Default Variable from XGB2_v2 Model
+![PHOTO-2024-04-22-17-24-33](https://github.com/celinawong21/WF-ML-Model/assets/159848729/75fec3ba-b91c-4370-8669-fd30e97c5847)
+
+### Resilience Test - Worst Sample for Top 4 Most Important Features from XGB2_v2
+![PHOTO-2024-04-22-17-35-26](https://github.com/celinawong21/WF-ML-Model/assets/159848729/02f77299-d204-4b50-a68b-fc4e5ca6694e)
 
 ## Risk Considerations
-* **Automation Risk**: discussion on the consequences of relying solely on predictive models for decision-making without human oversight.
-* careful consideration of how sampling a minuscule proportion of the overall data may lead to biases or an inability to fully predict default during periods of crisis.
-* consider how data during times of crisis is inherently biased (because loans will be only given out to customers with great finances who won't default). Rather, it is equally important to predict when a crisis may occur so that proper actions can be taken before it is too late.
+* **Automation Risk**: Potential consequences of solely relying on predictive models for decision-making without human oversight. 
+* **Sampling Bias**: Careful consideration is given to the implications of sampling a minuscule proportion of the overall data, which may introduce biases or limit the model's ability to accurately predict defaults during periods of crisis. 
+* **Biased Data during Crisis**: Inherent biases in data collected during times of crisis, as loans may predominantly be issued to customers with strong financial profiles, skewing the dataset. It underscores the significance of not only predicting defaults but also anticipating and mitigating crises beforehand. By identifying early warning signs, proactive measures can be implemented to avert potential crises and minimize their impact.
 
 ## Potential Next Steps 
 * **Larger Dataset**: apply the modeling techniques to all Freddie Mac single-family home loan data to further incorporate the changes in the economic scenario over time.
@@ -134,7 +278,3 @@ A sample of the first 48 rows of the [2000 Stacked Data](Stacked_2000_First_48.c
 * **Integration of Additional Data Sources**: consider incorporating regional economic indicators or property market data alongside existing sources like Freddie Mac to enhance predictive accuracy.
 * **Government Intervention**: consider any regulatory compliance and ethical implications in future iterations of the project.
 * **User Interface**: create a front-end development to input certain specifics about a loan and/or macroeconomic variables to output a potential rate of default. This application will take user input, visually explain the impact of each variable, and attempt to boost the interpretability of the model. 
-
-## Author Contributions
-* NOTE - deciding whether or not to keep this section
-* NOTE - still learning how to commit a folder to the repo, instead of .zip if need be
