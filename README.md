@@ -306,11 +306,12 @@ The interaction of a lower Home Price Index with a higher unemployment rate demo
 <img width="1000" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/c735e21e-2594-43ec-a400-800ae7912702">
 
 <div style="position: relative; width: 314px;">
-  <img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/8ccd2975-bfc0-4730-9960-493f010f2f97">
+  <img width="314" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/8ccd2975-bfc0-4730-9960-493f010f2f97">
   <p style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; font-weight: bold; color: white;">Confusion Matrix</p>
 </div>
 
- 
+
+
 ### Residual Box Plot of Predicted Default Variable from XGB2_v2 Model
 ![PHOTO-2024-04-22-17-24-33](https://github.com/celinawong21/WF-ML-Model/assets/159848729/75fec3ba-b91c-4370-8669-fd30e97c5847)
 
