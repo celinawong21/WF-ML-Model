@@ -291,6 +291,19 @@ The interpretation of the feature contribution plot is simliar to that of the lo
 * **ELTV x HPI**
 <img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/32560490-63ae-4b46-be4c-a9d396ad65bb">
 
+<h3>Interaction Effect: ELTV x % Change in UPB</h3>
+<img src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/e94e0fe8-bd39-4294-b62d-35e31982718d" alt="ELTV x % Change in UPB" width="600"/>
+
+<h3>Interaction Effect: % Change in UPB x Credit Score</h3>
+<img src="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/81626caa-ecd2-4fe7-b29a-25f16d1e6719" alt="% Change in UPB x Credit Score" width="600"/>
+
+<h3>Interaction Effect: HP Index x Unemployment Rate</h3>
+<img src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/7e18ed24-0972-4143-8dc2-7e28e9d6ddfc" alt="HP Index x Unemployment Rate" width="600"/>
+
+<h3>Interaction Effect: ELTV x HP Index</h3>
+<img src="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/32560490-63ae-4b46-be4c-a9d396ad65bb" alt="ELTV x HP Index" width="600"/>
+
+
 
 ## Results
 ### Accuracy Descriptions of XGB2_v2 Model
