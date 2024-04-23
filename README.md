@@ -213,6 +213,7 @@ Results are sorted by the highest Area Under the Curve (AUC) value, providing a 
 We made monotonicity adjustments to two variables to enhance interpretability: Current Interest Rate for a increasing monotonicity, and Credit Score for a decreasing monotonically. Specifically, for the Credit Score, we can observe that it has a negative relationship with the target value, indicating that as the credit score increases, the probability of default decreases. After the monotonicity adjustment, the effect of the credit score on the model's predictions increased from 4.5% to 6.6%. 
 
 
+
 <table>
   <tr>
     <td>
@@ -230,11 +231,24 @@ We made monotonicity adjustments to two variables to enhance interpretability: C
 
 Regarding the Current Interest Rate, it has a positive relationship with the target variable, implying that as the current interest rate increases, the probability of default also increases. Following the monotonicity adjustment, the influence of the current interest rate on the predictions rose from 3.7% to 4.5%.
 
+
 ### Global Interpretability
 
 <img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/a0014bbd-a75b-48d7-ac78-feee2c4ab4b7">
 
 <img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/1faee4b7-0ad6-4795-b11f-cf47c1162340">
+
+<table>
+  <tr>
+    <td>
+      <img src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/a0014bbd-a75b-48d7-ac78-feee2c4ab4b7" alt="Feature Importance" width="350"/>
+    </td>
+    <td>
+      <img src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/1faee4b7-0ad6-4795-b11f-cf47c1162340" alt="Effect Importance" width="350"/>
+    </td>
+  </tr>
+</table>
+
 
 There are two main plots: feature importance and effect importance. Feature importance refers to the relative importance of each feature in the model based on how frequently it is used to split the data across all trees in the ensemble. This plot only shows the aggregate effect of each top 10 features. As you can see from the plot, % change in UPB and index take a critical role in the model’s decision-making process, followed by Estimated Loan to Value (ELTV) and UNRATE, which refers to the unemployment rate.
 
