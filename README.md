@@ -43,9 +43,9 @@ Wall Street heavily relies on the success of this market, with banks strategical
 ### Variable Selection
 * **Target variable**: the probability of default rate
 * 3 types of input variables
-  * **Variables that don't change over time**: CREDIT SCORE, CURRENT LOAN DELINQUENCY STATUS, ORIGINAL INTEREST RATE, PROPERTY TYPE, LOAN PURPOSE, SELLER NAME, FIRST TIME HOMEBUYER FLAG, OCCUPANCY STATUS
-  * **Variables that change over time**: CURRENT ACTUAL UPB, LOAN AGE, ESTIMATED LOAN TO VALUE (ELTV)
-  * **Variables that change over time and predict the future**: CURRENT INTEREST RATE, UNEMPLOYMENT RATE, INFLATION RATE, HOUSE PRICE INDEX
+  * **Variables that don't change over time**: Credit Score, Original Interest Rate, Property Type, Loan Purpose, Seller Name, First Time Homebuyer Flag, Occupancy Status
+  * **Variables that change over time**: Current Actual UPB, Current Loan Delinquency Status, Loan Age, Estimated Loan to Value (ELTV)
+  * **Variables that change over time and predict the future**: Current Interest Rate, Unemployment Rate, Inflation Rate, House Price Index
     * Macroeconomic variables such as inflation, House Price Index (HPI), and unemployment are loaded from third-party sources.
     * HPI is used nationally to accommodate null values at the state level.
    
