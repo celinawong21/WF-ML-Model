@@ -262,6 +262,17 @@ The consistent prominence of % Change in UPB and Estimated Loan to Value (ELTV) 
 
 <img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/92ead311-69ea-4fd8-b196-29abfee20014">
 
+<table>
+  <tr>
+    <td>
+      <img src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/03a2191f-b109-419f-b652-93e31f6392d5" alt="Feature Importance" width="450"/>
+    </td>
+    <td>
+      <img src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/92ead311-69ea-4fd8-b196-29abfee20014" alt="Effect Importance" width="450"/>
+    </td>
+  </tr>
+</table>
+
 Its local interpretation consists of two parts: local feature contribution and local effect contribution. The local interpretation shows how the predicted value is formed by the main effects and pairwise interactions.
 
 Firstly, the local effect contribution displays the outputs of each main effect and pairwise interaction. The predictor value of each effect is shown on the right axis, and the corresponding effect names are shown on the left axis. From the title, we can observe that the predicted value of this sample is 0.1270, which is significantly different from the actual response of 1. The main effect of the current interest rate contributes the most to the final prediction, with a positive contribution (around 1). This is followed by the current interest rate, % change in UPB, credit score, origination interest rate, and ELTV, all of which have a positive contribution. Index_sa and the pairwise effect of index_sa and change in UPB have a negative contribution to the final prediction.
