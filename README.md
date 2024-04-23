@@ -221,7 +221,7 @@ Regarding the Current Interest Rate, it has a positive relationship with the tar
 </table>
 
 
-There are two main plots: feature importance and effect importance. Feature importance refers to the relative importance of each feature in the model based on how frequently it is used to split the data across all trees in the ensemble. This plot only shows the aggregate effect of each top 10 features. As you can see from the plot, % change in UPB and index take a critical role in the model’s decision-making process, followed by Estimated Loan-to-Value (ELTV) and UNRATE, which refers to the unemployment rate.
+There are two main plots: feature importance and effect importance. Feature importance refers to the relative importance of each feature in the model based on how frequently it is used to split the data across all trees in the ensemble. This plot only shows the aggregate effect of each top 10 features. As you can see from the plot, % change in UPB and HPI index take a critical role in the model’s decision-making process, followed by Estimated Loan-to-Value (ELTV) and UNRATE, which refers to the unemployment rate.
 
 Effect importance refers to the impact of each feature on individual predictions made by the model. It measures how much each feature contributes to the final prediction for a specific data point. It can be observed that % Change in UPB and Estimated Loan-to-Value (ELTV) are dominant features, followed by index_sa and Credit Score.
 
@@ -303,8 +303,8 @@ This section contains visualizations of the distribution shifts for various feat
   </tr>
   <tr>
     <td style="text-align:center;">
-      <img src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/a1477a64-eb0d-4f15-bd18-f247779831dc" alt="Distribution Shift: Index Seasonally Adjusted (index_sa)" style="width:100%;" />
-      <p style="margin-top: 10px; font-weight: bold;">Distribution Shift: Index Seasonally Adjusted (index_sa)</p>
+      <img src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/a1477a64-eb0d-4f15-bd18-f247779831dc" alt="Distribution Shift: Housing Price Index Seasonally Adjusted (index_sa)" style="width:100%;" />
+      <p style="margin-top: 10px; font-weight: bold;">Distribution Shift: Housing Price Index Seasonally Adjusted (index_sa)</p>
     </td>
     <td style="text-align:center;">
       <img src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/3007bd03-9495-40a5-ab00-5b4559b0ca84" alt="Distribution Shift: Unemployment Rate (UNRATE)" style="width:100%;" />
