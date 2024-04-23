@@ -89,32 +89,6 @@ Wall Street heavily relies on the success of this market, with banks strategical
 A sample of the first 20 rows of the [2000 Sample Data](Sample_2000_First_20.csv) is included in the repository.
  
 ## Modeling
-### Overview of Time Series Horizon
-* The predictive loan default model utilizes a time series horizon approach.
-  * The model aims to forecast the probability of a loan defaulting at a future time (t) based on historical information available up to a snapshot time (s), where s < t.
-  * All available information up to time s is utilized, resulting in pairs of snapshots and forecasts, which constitute stacked data.
-  * Each row is duplicated 24 times to predict default probability over the subsequent 24-month period (sample table below).
-* The decision to opt for a time series horizon model over a traditional time series model was driven by the latter's diminishing predictive power with increasing time duration.
-* Traditional time series models tend to overly emphasize initial lagged time periods, potentially overlooking valuable insights from earlier years.
-
-### Creating a Stacked Dataset
-#### Vectorized Process to Create the Stacked Dataset
-* The process begins with obtaining a sample file containing 3,000 loans from each of the 24 years. Subsequently, the data undergoes a vectorized transformation to generate a time series dataframe.
-* Then, the minimum _LOAN AGE_ for each _LOAN SEQUENCE NUMBER_ group is identified, which is the starting point for each loan.
-    * During the vectorization process, the combination of _LOAN SEQUENCE NUMBER_ and _LOAN AGE_ is documented for each iteration of the horizons.
-    * In cases where multiple _LOAN SEQUENCE NUMBERS_ exhibit the same LOAN AGE throughout the duration of a HORIZON, adjustments are made to ensure chronological order within each _LOAN SEQUENCE NUMBER_. This involves recalculating loan ages for duplicate rows, thus preserving the sequential progression of loan ages. 
-* Each row in the merged dataset is replicated 24 times to project loan information for 24 months into the future. This duplication enables forecasting loan behavior over an extended period.
-* To enhance analysis, two new columns, _HORIZON_ and _SOURCE_, are introduced.
-    * **HORIZON**: tracks past information, with each horizon representing a month in the past.
-        * For instance, if a loan's monthly reporting period is "2013-06", HORIZON(1) corresponds to duplicated data from "2013-05", and HORIZON(2) corresponds to duplicated data from "2013-04".
-    * **SOURCE**: distinguishes between original sample rows ("orig") and those generated through the vectorized process ("Duplicated").
-* The process will continue, incrementing the 'LOAN AGE' by one consistently until the loan reaches the end of its lifecycle.
-
-#### Example of Stacked Data
-
-<img width="1114" alt="Screenshot 2024-04-16 at 5 55 01 PM" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/ee3a2f74-f2af-4bca-b42a-6f4a78a3968e">
-
-A sample of the first 48 rows of the [2000 Stacked Data](Stacked_2000_First_48.csv) is included in the repository.
 
 ### Features Selection 
 Based on the feature select function in PiML, the following features were chosen. 
@@ -344,8 +318,9 @@ This section contains visualizations of the distribution shifts for various feat
 * **Biased Data during Crisis**: Inherent biases in data collected during times of crisis, as loans may predominantly be issued to customers with strong financial profiles, skewing the dataset. It underscores the significance of not only predicting defaults but also anticipating and mitigating crises beforehand. By identifying early warning signs, proactive measures can be implemented to avert potential crises and minimize their impact.
 
 ## Potential Next Steps 
-* **Larger Dataset**: apply the modeling techniques to all Freddie Mac single-family home loan data to further incorporate the changes in the economic scenario over time.
-* **Dynamic Feature Selection**: develop adaptive feature selection mechanisms to prioritize relevant features and adjust the model's feature set over time based on their importance.
-* **Integration of Additional Data Sources**: consider incorporating regional economic indicators or property market data alongside existing sources like Freddie Mac to enhance predictive accuracy.
-* **Government Intervention**: consider any regulatory compliance and ethical implications in future iterations of the project.
-* **User Interface**: create a front-end development to input certain specifics about a loan and/or macroeconomic variables to output a potential rate of default. This application will take user input, visually explain the impact of each variable, and attempt to boost the interpretability of the model. 
+* **Larger Dataset**: Apply the modeling techniques to all Freddie Mac single-family home loan data to further incorporate the changes in the economic scenario over time.
+* **Apply the Time Series Horizon Model**: The stacked dataset is 1.4 terabytes large, which was out-of-scope for the resources allocated to the project. Future iterations of the project should take the stacked data and perform a Time Series Horizon Model to utilize all historical data to predict 24 months ahead of default.
+* **Dynamic Feature Selection**: Develop adaptive feature selection mechanisms to prioritize relevant features and adjust the model's feature set over time based on their importance.
+* **Integration of Additional Data Sources**: Consider incorporating regional economic indicators or property market data alongside existing sources like Freddie Mac to enhance predictive accuracy.
+* **Government Intervention**: Consider any regulatory compliance and ethical implications in future iterations of the project.
+* **User Interface**: Create a front-end development to input certain specifics about a loan and/or macroeconomic variables to output a potential rate of default. This application will take user input, visually explain the impact of each variable, and attempt to boost the interpretability of the model.
