@@ -1,8 +1,7 @@
 # Wells Fargo Mortgage Default Predictive Model
 ## Basic Information
 * **Organization or People Developing Model**: GWU Wells Fargo Predictive Mortgage Default Team (Members: Anukshan Ghosh, Allison Ko, Andrew Renga, and Celina Wong)
-* **Model Date**: May, 2023
-* **Model Version**: 1.0
+* **Model Date**: April, 2024
 * **Model Implementation Code**: [Main Code - PySpark_0412.ipynb](https://github.com/celinawong21/WF-ML-Model/blob/main/Main%20Code%20-%20PySpark_0412.ipynb)
 * **Freddie Mac Database**: [Single-family home loan data](https://freddiemac.embs.com/FLoan/secure/login.php?pagename=download) 
 
@@ -32,6 +31,7 @@ Wall Street heavily relies on the success of this market, with banks strategical
 
 ## Data Preprocessing 
 ### Data Cleaning 
+* Before any data preprocessing begun, there were 64 variables across both datasets and over 50 million loans within the original data.
 * PySpark is employed to handle the large dataset, spanning the last 24 years.
 * Key strategies implemented in our data preprocessing include:
   * **Handling Missing Data**: columns that contain 95% or more null values across both datasets have been removed.
@@ -41,10 +41,10 @@ Wall Street heavily relies on the success of this market, with banks strategical
      * To address this, ELTV was independently calculated by dividing _CURRENT UNPAID BALANCE_ by the adjusted housing price. The adjusted housing price is determined by applying the change in the House Price Index from the loan's origination date to the month of prediction, to the original unpaid balance.
 
 ### Variable Selection
-* **Target variable**: the probability of default rate
-* 3 types of input variables
+* **Target variable**: the probability of default
+* Three types of input variables
   * **Variables that don't change over time**: Credit Score, Original Interest Rate, Property Type, Loan Purpose, Seller Name, First Time Homebuyer Flag, Occupancy Status
-  * **Variables that change over time**: Current Actual UPB, Current Loan Delinquency Status, Loan Age, Estimated Loan to Value (ELTV)
+  * **Variables that change over time**: Current Actual UPB, Current Loan Delinquency Status, Loan Age, Estimated Loan-to-Value (ELTV)
   * **Variables that change over time and predict the future**: Current Interest Rate, Unemployment Rate, Inflation Rate, House Price Index
     * Macroeconomic variables such as inflation, House Price Index (HPI), and unemployment are loaded from third-party sources.
     * HPI is used nationally to accommodate null values at the state level.
@@ -68,7 +68,7 @@ Wall Street heavily relies on the success of this market, with banks strategical
 | Unemployment Rate| Macroeconomic| Numeric| Input| The number of unemployed as a percentage of the labor force, reported monthly|
 | House Price Index| Macroeconomic| Numeric| Input| A broad measure of single-family house prices that measures average price changes over a period of time, reported quarterly.|
 | Inflation| Macroeconomic| Numeric| Input| The rate of increase in prices over a given period of time, reported monthly| 
-| Default| Target| Binary| Input| Describes whether a loan is 6 months late on payment|
+| Default| Target| Binary| | Describes whether a loan is 6 months late on payment|
  
 ## Sampling
 ### Methodology
@@ -78,7 +78,7 @@ Wall Street heavily relies on the success of this market, with banks strategical
   * **True_Default**: For clarity in classification, loans meeting the default criteria at any point in time are tagged as "true_default". This distinction allows for precise identification and analysis of loans that default versus those that do not.
   * **Sampling Proportion**: to ensure a balanced representation of default and non-default loans across the 24 years of our dataset, a selective sampling approach was adopted. The following are the main criteria.
     * 3,000 loans were selected from each year and sampled an equal amount of 350 defaults and 350 non-defaults for each quarter, to ensure that the analysis accurately reflects the dynamics of loan performance over time.
-    * Then, three time variables were added (_OrigData_, _OrigYear_, and _OrigQuarter_), to track the effect of the quarter for modeling purposes.
+    * Then, three time variables were added (_OrigDate_, _OrigYear_, and _OrigQuarter_), to track the effect of the quarter for modeling purposes.
     * The sampling faced limitations due to a shortage of defaults in certain periods. Specifically, for the fourth quarter of 2022, only 264 defaulted loans were sampled. In 2023, only 32 defaults in the first quarter were sampled and zero defaulted loans were found in the second quarter. 
 
 #### Example from Sampled Data: 2003 Q1, Record 0 
@@ -89,6 +89,245 @@ Wall Street heavily relies on the success of this market, with banks strategical
 A sample of the first 20 rows of the [2000 Sample Data](Sample_2000_First_20.csv) is included in the repository.
  
 ## Modeling
+
+### Features Selection 
+Based on the feature select function in PiML, the following features were chosen. 
+
+**_Numerical variables_**
+* Current Interest Rate
+* Estimated Loan-to-Value (ELTV)
+* Original Interest Rate
+* Index_sa
+* UNRATE(Unemployment rate)
+* Inflation
+* % change in UPB
+
+**_Categorical variables_**
+* Credit Score
+* First-Time Homebuyer Flag
+* Occupancy Status
+* Property Type
+* Loan Purpose
+* Seller Name
+* OrigYear
+* OrigDate
+
+### Sampling for Parameters
+
+* [SampleForParameter.csv](https://github.com/celinawong21/WF-ML-Model/blob/main/sampleforparameter.csv) is a smaller sample that shows the merged data, which is then used to obtain hyperparameters for both the XGB1 and XGB2 models. Subsequently, these parameters, along with the monotonic variables, are utilized to train four different models for both XGB1 and XGB2. 
+
+### XGBoost 
+
+```python
+np.random.seed(12345)
+
+parameters = {'n_estimators': [100, 500, 1000],
+              'eta': [0.01, 0.1, 0.5],
+              'reg_lambda': [0.0, 0.5, 1.0],
+              'reg_alpha': [0.01, 0.5, .99]}
+result = exp.model_tune("XGB1", method="grid", parameters=parameters, metric=['MSE', 'MAE'], test_ratio=0.2, random_state = 12345)
+result.data
+```
+![PHOTO-2024-04-22-16-21-26](https://github.com/celinawong21/WF-ML-Model/assets/159848729/7159d9e7-5cac-4f9b-857c-a4c237a8e5e2)
+
+* SampleForParameter.csv is used to obtain parameters for the XGB1 model through the grid search method. The parameters obtained from the first row of the grid search results, corresponding to Rank 1, will be utilized in the XGB1 model and its versions.
+
+```python
+np.random.seed(12345)
+
+parameters = {'n_estimators': [100, 500, 1000],
+              'eta': [0.01, 0.1, 0.5],
+              'reg_lambda': [0.0, 0.5, 1.0],
+              'reg_alpha': [0.01, 0.5, .99]}
+result = exp.model_tune("XGB2", method="grid", parameters=parameters, metric=['MSE', 'MAE'], test_ratio=0.2, random_state = 12345)
+result.data
+```
+![PHOTO-2024-04-22-16-21-50](https://github.com/celinawong21/WF-ML-Model/assets/159848729/c3590d4f-7608-4c46-b98d-880d5154572c)
+* SampleForParameter.csv  is then used to derive parameters for the XGB2 model through the grid search method. The parameters extracted from the first row of the grid search results, corresponding to Rank 1, will be employed in the XGB2 model and its versions.
+
+
+### Comparing XGB1 and XBG2
+Both of the esults are sorted by the highest Area Under the Curve (AUC) value, providing a comprehensive comparison of model performance.
+* **XGB**: Base model with default parameters and no monotonic variables.
+* **XGB_V2**: Variant of XGB with default parameters and incorporating two monotonic variables: "CURRENT INTEREST RATE" (monotonic increasing) and "CREDIT SCORE" (monotonic decreasing).
+* **XGB_V3**: Another variation of XGB1, maintaining default parameters and excluding monotonic variables.
+* **XGB_V4**: Similar to XGB_V2, featuring default parameters alongside the two monotonic variables: "CURRENT INTEREST RATE" (monotonic increasing) and "CREDIT SCORE" (monotonic decreasing).
+
+#### XGB1
+![PHOTO-2024-04-22-16-22-03](https://github.com/celinawong21/WF-ML-Model/assets/159848729/d4b77fd8-c381-4a73-8d80-ba898b282a0c)
+
+#### XGB2
+![PHOTO-2024-04-22-16-22-22](https://github.com/celinawong21/WF-ML-Model/assets/159848729/90875872-5992-408f-8f35-a593e053d3fd)
+
+## Model Interpretation: XGB2_v2
+
+### Effect Plot
+
+* Monotonicity adjustments for two variables: 
+    * **Monotonic increasing**: Current Interest Rate
+    * **Monotonic decreasing**: Credit Score
+
+Monotonicity adjustments were made to two variables to enhance interpretability: Current Interest Rate for a increasing monotonicity, and Credit Score for a decreasing monotonically. 
+
+<table>
+  <tr>
+    <td>
+      <img src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/06c29bf4-bd66-4732-9050-581b31339c2f" alt="Before Monotonic Adjustment - Credit Score" width="450"/>
+    </td>
+    <td>
+      <img src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/430f4f78-bdf8-48c7-8569-eded2b04df22" alt="After Monotonic Adjustment - Credit Score" width="450"/>
+    </td>
+  </tr>
+  <tr>
+    <td>Before Monotonic Adjustment - Credit Score</td>
+    <td>After Monotonic Adjustment - Credit Score</td>
+  </tr>
+</table>
+
+For the Credit Score, it can be observed that it has a negative relationship with the target value, indicating that as the credit score increases, the probability of default decreases. After the monotonicity adjustment, the effect of the credit score on the model's predictions increased from 4.5% to 6.6%. 
+
+
+
+<table>
+  <tr>
+    <td>
+      <img src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/155c04d0-1f89-438f-bed4-e8867ef80fcf" alt="Before Monotonic Adjustment - Current Interest Rate" width="450"/>
+    </td>
+    <td>
+      <img src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/0f264303-37ce-4904-a3c9-5b4608dd7560" alt="After Monotonic Adjustment - Current Interest Rate" width="450"/>
+    </td>
+  </tr>
+  <tr>
+    <td>Before Monotonic Adjustment - Current Interest Rate</td>
+    <td>After Monotonic Adjustment - Current Interest Rate</td>
+  </tr>
+</table>
+
+Regarding the Current Interest Rate, it has a positive relationship with the target variable, implying that as the current interest rate increases, the probability of default also increases. Following the monotonicity adjustment, the influence of the current interest rate on the predictions rose from 3.7% to 4.5%.
+
+
+
+### Global Interpretability
+
+<table>
+  <tr>
+    <td>
+      <img src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/a0014bbd-a75b-48d7-ac78-feee2c4ab4b7" alt="Feature Importance" width="450"/>
+    </td>
+    <td>
+      <img src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/1faee4b7-0ad6-4795-b11f-cf47c1162340" alt="Effect Importance" width="450"/>
+    </td>
+  </tr>
+</table>
+
+
+There are two main plots: feature importance and effect importance. Feature importance refers to the relative importance of each feature in the model based on how frequently it is used to split the data across all trees in the ensemble. This plot only shows the aggregate effect of each top 10 features. As you can see from the plot, % change in UPB and HPI index take a critical role in the model’s decision-making process, followed by Estimated Loan-to-Value (ELTV) and UNRATE, which refers to the unemployment rate.
+
+Effect importance refers to the impact of each feature on individual predictions made by the model. It measures how much each feature contributes to the final prediction for a specific data point. It can be observed that % Change in UPB and Estimated Loan-to-Value (ELTV) are dominant features, followed by index_sa and Credit Score.
+
+The consistent prominence of % Change in UPB and Estimated Loan-to-Value (ELTV) across both feature importance and effect importance analyses underscores their critical roles in the model. These insights can guide further investigations into the underlying mechanisms driving these features' influence on predictions, aiding in model refinement and decision-making processes.
+
+
+
+### Local Interpretability 
+
+
+<table>
+  <tr>
+    <td>
+      <img src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/03a2191f-b109-419f-b652-93e31f6392d5" alt="Feature Importance" width="450"/>
+    </td>
+    <td>
+      <img src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/92ead311-69ea-4fd8-b196-29abfee20014" alt="Effect Importance" width="450"/>
+    </td>
+  </tr>
+</table>
+
+Its local interpretation consists of two parts: local feature contribution and local effect contribution. The local interpretation shows how the predicted value is formed by the main effects and pairwise interactions.
+
+Firstly, the local effect contribution displays the outputs of each main effect and pairwise interaction. The predictor value of each effect is shown on the right axis, and the corresponding effect names are shown on the left axis. From the title, it can be observed that the predicted value of this sample is 0.1270, which is significantly different from the actual response of 1. The main effect of the _CURRENT INTEREST RATE_ contributes the most to the final prediction, with a positive contribution (around 1). This is followed by the _CURRENT INTEREST RATE_, _% CHANGE IN UPB_, _CREDIT SCORE_, _ORIGINATION INTEREST RATE_, and _ELTV_, all of which have a positive contribution. _INDEX_SA_ and the pairwise effect of _INDEX_SA_ and _% CHANGE IN UPB_ have a negative contribution to the final prediction.
+
+The interpretation of the feature contribution plot is simliar to that of the local effect contribution plot, but instead of displaying the effects, it shows the individual impact of each feature. For our sample, the main effects of _CURRENT INTEREST RATE_ and _CREDIT SCORE_ both have a positive contribution to the final prediction. Additionally, the _UNEMPLOYMENT RATE_ shows a negative impact on the final prediction at the feature level, even though it did not appear in the top 10 list of the local effect importance plot.
+
+
+### Interaction Effect: Four interaction effects with the highest percentages
+The interaction plots show how the interaction between two features affect the probability of default. The top 3 interactions were selected based on the highest percentage values.
+
+* **ELTV x % Change in UPB**
+<img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/e94e0fe8-bd39-4294-b62d-35e31982718d">
+
+This plot shows that when the Estimated Loan-to-Value ratio is high, and there's a lower percentage change in the Unpaid Principal Balance, there is a significant interaction effect. This could indicate a higher probability of default in scenarios where ELTV is high but the UPB isn't reducing quickly. It could imply that borrowers with high ELTVs who are not paying down their loan principal rapidly are at a higher risk of default.
+
+
+* **% Change in UPB x Credit Score** 
+<img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/81626caa-ecd2-4fe7-b29a-25f16d1e6719">
+
+A high credit score combined with a lower percentage change in UPB is indicative of a significant interaction effect. It implies that even if borrowers have good credit scores, if their UPB isn’t decreasing, it might raise flags about their ability to keep up with payments, thus potentially increasing the risk of default
+
+
+* **HPI x Unemployment Rate**
+<img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/7e18ed24-0972-4143-8dc2-7e28e9d6ddfc">
+
+The interaction of a lower Home Price Index with a higher unemployment rate demonstrates a significant effect, indicating that when housing prices are decreasing and the unemployment rate is high, it could lead to an increased risk of default.
+
+
+## Results
+### Accuracy Descriptions of XGB2_v2 Model
+
+<img width="1000" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/c735e21e-2594-43ec-a400-800ae7912702">
+
+<img width="1078" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/73bc97aa-549b-4e28-b583-99dcbede946d">
+
+
+### Residual Box Plot of Predicted Default Variable from XGB2_v2 Model
+
+![PHOTO-2024-04-22-17-24-33](https://github.com/celinawong21/WF-ML-Model/assets/159848729/75fec3ba-b91c-4370-8669-fd30e97c5847)
+
+
+### Resilience Test - Worst Sample for Top 4 Most Important Features from XGB2_v2
+
+#### Distribution Shift Analysis
+
+This section contains visualizations of the distribution shifts for various features.
+
+<table style="width:100%;">
+  <tr>
+    <td style="text-align:center;">
+      <img src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/c41919c9-d5fd-4dc6-931a-a384b8dbd7bf" alt="Distribution Shift: % Change in UPB" style="width:100%;" />
+      <p style="margin-top: 10px; font-weight: bold;">Distribution Shift: % Change in UPB</p>
+    </td>
+    <td style="text-align:center;">
+      <img src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/7c5111dd-e2a2-48e2-8d61-45838e83d1b1" alt="Distribution Shift: Estimated Loan-to-Value (ELTV)" style="width:100%;" />
+      <p style="margin-top: 10px; font-weight: bold;">Distribution Shift: Estimated Loan-to-Value (ELTV)</p>
+    </td>
+  </tr>
+  <tr>
+    <td style="text-align:center;">
+      <img src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/a1477a64-eb0d-4f15-bd18-f247779831dc" alt="Distribution Shift: Housing Price Index Seasonally Adjusted (index_sa)" style="width:100%;" />
+      <p style="margin-top: 10px; font-weight: bold;">Distribution Shift: Housing Price Index Seasonally Adjusted (index_sa)</p>
+    </td>
+    <td style="text-align:center;">
+      <img src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/3007bd03-9495-40a5-ab00-5b4559b0ca84" alt="Distribution Shift: Unemployment Rate (UNRATE)" style="width:100%;" />
+      <p style="margin-top: 10px; font-weight: bold;">Distribution Shift: Unemployment Rate (UNRATE)</p>
+    </td>
+  </tr>
+</table>
+
+
+## Risk Considerations
+* **Automation Risk**: Potential consequences of solely relying on predictive models for decision-making without human oversight. 
+* **Sampling Bias**: Careful consideration is given to the implications of sampling a minuscule proportion of the overall data, which may introduce biases or limit the model's ability to accurately predict defaults during periods of crisis. 
+* **Biased Data during Crisis**: Inherent biases in data collected during times of crisis, as loans may predominantly be issued to customers with strong financial profiles, skewing the dataset. It underscores the significance of not only predicting defaults but also anticipating and mitigating crises beforehand. By identifying early warning signs, proactive measures can be implemented to avert potential crises and minimize their impact.
+
+## Potential Next Steps 
+* **Larger Dataset**: Apply the modeling techniques to all Freddie Mac single-family home loan data to further incorporate the changes in the economic scenario over time.
+* **Apply the Time Series Horizon Model**: Future iterations of the project should take the stacked data and perform a Time Series Horizon Model to utilize all historical data to predict 24 months ahead of default.
+* **Integration of Additional Data Sources**: Consider incorporating regional economic indicators or property market data alongside existing sources like Freddie Mac to enhance predictive accuracy.
+* **Government Intervention**: Consider any regulatory compliance and ethical implications in future iterations of the project.
+* **User Interface**: Create a front-end development to input certain specifics about a loan and/or macroeconomic variables to output a potential rate of default. This application will take user input, visually explain the impact of each variable, and attempt to boost the interpretability of the model.
+
+## Appendix: Time Series Horizon Model and Stacked Dataset
+
 ### Overview of Time Series Horizon
 * The predictive loan default model utilizes a time series horizon approach.
   * The model aims to forecast the probability of a loan defaulting at a future time (t) based on historical information available up to a snapshot time (s), where s < t.
@@ -115,157 +354,3 @@ A sample of the first 20 rows of the [2000 Sample Data](Sample_2000_First_20.csv
 <img width="1114" alt="Screenshot 2024-04-16 at 5 55 01 PM" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/ee3a2f74-f2af-4bca-b42a-6f4a78a3968e">
 
 A sample of the first 48 rows of the [2000 Stacked Data](Stacked_2000_First_48.csv) is included in the repository.
-
-### Features Selection 
-Based on the feature select function in PiML, the following features were chosen. 
-
-**_Numerical variables_**
-* Current Interest Rate
-* Estimated Loan to Value (ELTV)
-* Original Interest Rate
-* Index_sa
-* UNRATE(Unemployment rate)
-* Inflation
-* % change in UPB
-
-**_Categorical variables_**
-* Credit Score
-* First-Time Homebuyer Flag
-* Occupancy Status
-* Property Type
-* Loan Purpose
-* Seller Name
-* OrigYear
-* OrigDate
-
-### Sampling for Parameters
-
-* [SampleForParameter.csv](https://github.com/celinawong21/WF-ML-Model/blob/main/sampleforparameter.csv) is a smaller sample that shows the merged data, which is then used to obtain hyperparameters for both the XGB1 and XGB2 models. Subsequently, these parameters, along with the monotonic variables, are utilized to train four different models for both XGB1 and XGB2.
-* Note, the time series stacked data was not used in building the model. 
-
-### XGBoost 
-
-```python
-np.random.seed(12345)
-
-parameters = {'n_estimators': [100, 500, 1000],
-              'eta': [0.01, 0.1, 0.5],
-              'reg_lambda': [0.0, 0.5, 1.0],
-              'reg_alpha': [0.01, 0.5, .99]}
-result = exp.model_tune("XGB1", method="grid", parameters=parameters, metric=['MSE', 'MAE'], test_ratio=0.2, random_state = 12345)
-result.data
-```
-![PHOTO-2024-04-22-16-21-26](https://github.com/celinawong21/WF-ML-Model/assets/159848729/7159d9e7-5cac-4f9b-857c-a4c237a8e5e2)
-
-* SampleForParameter.csv is used to obtain parameters for the XGB1 model through the grid search method. The parameters obtained from the first row of the grid search results will be utilized in the XGB1 model and its versions.
-
-```python
-np.random.seed(12345)
-
-parameters = {'n_estimators': [100, 500, 1000],
-              'eta': [0.01, 0.1, 0.5],
-              'reg_lambda': [0.0, 0.5, 1.0],
-              'reg_alpha': [0.01, 0.5, .99]}
-result = exp.model_tune("XGB1", method="grid", parameters=parameters, metric=['MSE', 'MAE'], test_ratio=0.2, random_state = 12345)
-result.data
-```
-![PHOTO-2024-04-22-16-21-50](https://github.com/celinawong21/WF-ML-Model/assets/159848729/c3590d4f-7608-4c46-b98d-880d5154572c)
-* SampleForParameter.csv  is then used to derive parameters for the XGB2 model through the grid search method. The parameters extracted from the first row of the grid search results will be employed in the XGB2 model and its versions.
-
-![PHOTO-2024-04-22-16-22-03](https://github.com/celinawong21/WF-ML-Model/assets/159848729/d4b77fd8-c381-4a73-8d80-ba898b282a0c)
-* **XGB1**: Base model with default parameters and no monotonic variables.
-* **XGB1_V2**: Variant of XGB1 with default parameters and incorporating two monotonic variables: "CURRENT INTEREST RATE" (monotonic increasing) and "CREDIT SCORE" (monotonic decreasing).
-* **XGB1_V3**: Another variation of XGB1, maintaining default parameters and excluding monotonic variables.
-* **XGB1_V4**: A model akin to XGB1_V2, featuring default parameters alongside the two monotonic variables: "CURRENT INTEREST RATE" (monotonic increasing) and "CREDIT SCORE" (monotonic decreasing).
-
-For the models integrating monotonic adjustments, "CURRENT INTEREST RATE" serves as the monotonic increasing variable, while "CREDIT SCORE" functions as the monotonic decreasing variable.
-
-Results are sorted by the highest Area Under the Curve (AUC) value, providing a comprehensive comparison of model performance.
-
-![PHOTO-2024-04-22-16-22-22](https://github.com/celinawong21/WF-ML-Model/assets/159848729/90875872-5992-408f-8f35-a593e053d3fd)
-* **XGB2**: Base model with default parameters and no monotonic variables.
-* **XGB2_V2**: Variant of XGB2 with default parameters and incorporating two monotonic variables: "CURRENT INTEREST RATE" (monotonic increasing) and "CREDIT SCORE" (monotonic decreasing).
-* **XGB2_V3**: Another variation of XGB2, maintaining default parameters and excluding monotonic variables.
-* **XGB2_V4**: A model akin to XGB2_V2, featuring default parameters alongside the two monotonic variables: "CURRENT INTEREST RATE" (monotonic increasing) and "CREDIT SCORE" (monotonic decreasing).
-
-## Model Interpretation: XGB2_v2
-
-### Global Interpretability
-
-<img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/a0014bbd-a75b-48d7-ac78-feee2c4ab4b7">
-
-<img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/1faee4b7-0ad6-4795-b11f-cf47c1162340">
-
-There are two main plots: feature importance and effect importance. Feature importance refers to the relative importance of each feature in the model based on how frequently it is used to split the data across all trees in the ensemble. This plot only shows the aggregate effect of each top 10 features. As you can see from the plot, % change in UPB and index take a critical role in the model’s decision-making process, followed by Estimated Loan to Value (ELTV) and UNRATE, which refers to the unemployment rate.
-
-Effect importance refers to the impact of each feature on individual predictions made by the model. It measures how much each feature contributes to the final prediction for a specific data point. We can observe that % Change in UPB and Estimated Loan to Value (ELTV) are dominant features, followed by index_sa and Credit Score.
-
-The consistent prominence of % Change in UPB and Estimated Loan to Value (ELTV) across both feature importance and effect importance analyses underscores their critical roles in the model. These insights can guide further investigations into the underlying mechanisms driving these features' influence on predictions, aiding in model refinement and decision-making processes.
-
-### Local Interpretability 
-
-<img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/92ead311-69ea-4fd8-b196-29abfee20014">
-
-<img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/03a2191f-b109-419f-b652-93e31f6392d5">
-
-### Effect Plot
-* Monotonicity adjustments for two variables: 
-    * **Monotonic increasing**: Current Interest Rate
-    * **Monotonic decreasing**: Credit Score 
-
-#### Before Monotonic Adjustment - Credit Score
-<img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/06c29bf4-bd66-4732-9050-581b31339c2f">
-
-#### After Monotonic Adjustment - Credit Score
-<img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/430f4f78-bdf8-48c7-8569-eded2b04df22">
-
-#### Before Monotonic Adjustment - Current Interest Rate
-
-<img width="384" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/155c04d0-1f89-438f-bed4-e8867ef80fcf">
-
-#### After Monotonic Adjustment - Current Interest Rate
-<img width="380" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/0f264303-37ce-4904-a3c9-5b4608dd7560">
-
-#### Percent Change in UPB
-<img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/312f5003-03c4-4fa2-bb97-6c7fc552e79b">
-
-#### ELTV
-<img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/1e45f3e0-277f-4e8e-b5fd-8934676bc81e">
-
-### Interaction Effect: Four interaction effects with the highest percentages
-
-* **ELTV x % Change in UPB**
-<img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/e94e0fe8-bd39-4294-b62d-35e31982718d">
-
-* **% Change in UPB x Credit Score** 
-<img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/81626caa-ecd2-4fe7-b29a-25f16d1e6719">
-
-* **HPI x Unemployment Rate**
-<img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/7e18ed24-0972-4143-8dc2-7e28e9d6ddfc">
-
-* **ELTV x HPI**
-<img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/32560490-63ae-4b46-be4c-a9d396ad65bb">
-
-
-## Results
-### Accuracy Descriptions of XGB2_v2 Model
-![PHOTO-2024-04-22-17-23-54](https://github.com/celinawong21/WF-ML-Model/assets/159848729/8293a99e-0857-4db1-b7e8-cd242c3a9e89)
-
- 
-### Residual Box Plot of Predicted Default Variable from XGB2_v2 Model
-![PHOTO-2024-04-22-17-24-33](https://github.com/celinawong21/WF-ML-Model/assets/159848729/75fec3ba-b91c-4370-8669-fd30e97c5847)
-
-### Resilience Test - Worst Sample for Top 4 Most Important Features from XGB2_v2
-![PHOTO-2024-04-22-17-35-26](https://github.com/celinawong21/WF-ML-Model/assets/159848729/02f77299-d204-4b50-a68b-fc4e5ca6694e)
-
-## Risk Considerations
-* **Automation Risk**: Potential consequences of solely relying on predictive models for decision-making without human oversight. 
-* **Sampling Bias**: Careful consideration is given to the implications of sampling a minuscule proportion of the overall data, which may introduce biases or limit the model's ability to accurately predict defaults during periods of crisis. 
-* **Biased Data during Crisis**: Inherent biases in data collected during times of crisis, as loans may predominantly be issued to customers with strong financial profiles, skewing the dataset. It underscores the significance of not only predicting defaults but also anticipating and mitigating crises beforehand. By identifying early warning signs, proactive measures can be implemented to avert potential crises and minimize their impact.
-
-## Potential Next Steps 
-* **Larger Dataset**: apply the modeling techniques to all Freddie Mac single-family home loan data to further incorporate the changes in the economic scenario over time.
-* **Dynamic Feature Selection**: develop adaptive feature selection mechanisms to prioritize relevant features and adjust the model's feature set over time based on their importance.
-* **Integration of Additional Data Sources**: consider incorporating regional economic indicators or property market data alongside existing sources like Freddie Mac to enhance predictive accuracy.
-* **Government Intervention**: consider any regulatory compliance and ethical implications in future iterations of the project.
-* **User Interface**: create a front-end development to input certain specifics about a loan and/or macroeconomic variables to output a potential rate of default. This application will take user input, visually explain the impact of each variable, and attempt to boost the interpretability of the model. 
