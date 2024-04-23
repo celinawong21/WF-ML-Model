@@ -321,7 +321,7 @@ This section contains visualizations of the distribution shifts for various feat
 
 ## Potential Next Steps 
 * **Larger Dataset**: Apply the modeling techniques to all Freddie Mac single-family home loan data to further incorporate the changes in the economic scenario over time.
-* **Apply the Time Series Horizon Model**: The stacked dataset is 1.4 terabytes large, which was out-of-scope for the resources allocated to the project. Future iterations of the project should take the stacked data and perform a Time Series Horizon Model to utilize all historical data to predict 24 months ahead of default.
+* **Apply the Time Series Horizon Model**: Future iterations of the project should take the stacked data and perform a Time Series Horizon Model to utilize all historical data to predict 24 months ahead of default.
 * **Integration of Additional Data Sources**: Consider incorporating regional economic indicators or property market data alongside existing sources like Freddie Mac to enhance predictive accuracy.
 * **Government Intervention**: Consider any regulatory compliance and ethical implications in future iterations of the project.
 * **User Interface**: Create a front-end development to input certain specifics about a loan and/or macroeconomic variables to output a potential rate of default. This application will take user input, visually explain the impact of each variable, and attempt to boost the interpretability of the model.
