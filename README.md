@@ -308,6 +308,8 @@ The interaction of a lower Home Price Index with a higher unemployment rate demo
 
 
 ### Residual Box Plot of Predicted Default Variable from XGB2_v2 Model
+
+<img width="1078" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/75fec3ba-b91c-4370-8669-fd30e97c5847">
 ![PHOTO-2024-04-22-17-24-33](https://github.com/celinawong21/WF-ML-Model/assets/159848729/75fec3ba-b91c-4370-8669-fd30e97c5847)
 
 ### Resilience Test - Worst Sample for Top 4 Most Important Features from XGB2_v2
