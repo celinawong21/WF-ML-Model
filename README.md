@@ -117,7 +117,7 @@ A sample of the first 20 rows of the [2000 Sample Data](Sample_2000_First_20.csv
 A sample of the first 48 rows of the [2000 Stacked Data](Stacked_2000_First_48.csv) is included in the repository.
 
 ### Features Selection 
-Based on the feature select function in PiML, the following features were chose. 
+Based on the feature select function in PiML, the following features were chosen. 
 
 **_Numerical variables_**
 * Current Interest Rate
@@ -140,7 +140,8 @@ Based on the feature select function in PiML, the following features were chose.
 
 ### Sampling for Parameters
 
-* [SampleForParameter.csv](https://github.com/celinawong21/WF-ML-Model/blob/main/sampleforparameter.csv) is a smaller sample, which is used to obtain hyperparameters for both the XGB1 and XGB2 models. Subsequently, these parameters, along with the monotonic variables, are utilized to train four different models for both XGB1 and XGB2.
+* [SampleForParameter.csv](https://github.com/celinawong21/WF-ML-Model/blob/main/sampleforparameter.csv) is a smaller sample that shows the merged data, which is then used to obtain hyperparameters for both the XGB1 and XGB2 models. Subsequently, these parameters, along with the monotonic variables, are utilized to train four different models for both XGB1 and XGB2.
+* Note, the time series stacked data was not used in building the model. 
 
 ### XGBoost 
 
