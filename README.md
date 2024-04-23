@@ -157,7 +157,7 @@ result.data
 ```
 ![PHOTO-2024-04-22-16-21-26](https://github.com/celinawong21/WF-ML-Model/assets/159848729/7159d9e7-5cac-4f9b-857c-a4c237a8e5e2)
 
-* SampleForParameter.csv is used to obtain parameters for the XGB1 model through the grid search method. The parameters obtained from the first row of the grid search results will be utilized in the XGB1 model and its versions.
+* SampleForParameter.csv is used to obtain parameters for the XGB1 model through the grid search method. The parameters obtained from the first row of the grid search results, corresponding to Rank 1, will be utilized in the XGB1 model and its versions.
 
 ```python
 np.random.seed(12345)
@@ -170,7 +170,7 @@ result = exp.model_tune("XGB2", method="grid", parameters=parameters, metric=['M
 result.data
 ```
 ![PHOTO-2024-04-22-16-21-50](https://github.com/celinawong21/WF-ML-Model/assets/159848729/c3590d4f-7608-4c46-b98d-880d5154572c)
-* SampleForParameter.csv  is then used to derive parameters for the XGB2 model through the grid search method. The parameters extracted from the first row of the grid search results will be employed in the XGB2 model and its versions.
+* SampleForParameter.csv  is then used to derive parameters for the XGB2 model through the grid search method. The parameters extracted from the first row of the grid search results, corresponding to Rank 1, will be employed in the XGB2 model and its versions.
 
 ![PHOTO-2024-04-22-16-22-03](https://github.com/celinawong21/WF-ML-Model/assets/159848729/d4b77fd8-c381-4a73-8d80-ba898b282a0c)
 * **XGB1**: Base model with default parameters and no monotonic variables.
