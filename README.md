@@ -232,12 +232,6 @@ The consistent prominence of % Change in UPB and Estimated Loan to Value (ELTV) 
 #### ELTV
 <img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/1e45f3e0-277f-4e8e-b5fd-8934676bc81e">
 
-#### HPI
-<img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/1a82cd81-b5c2-4486-a7f2-fe2bab40025d">
-
-#### Unemployment Rate
-![PHOTO-2024-04-22-21-24-41](https://github.com/celinawong21/WF-ML-Model/assets/159848729/3294367c-cf2e-4470-b5e9-968a1f8ecea4)
-
 ### Interaction Effect: Four interaction effects with the highest percentages
 
 * **ELTV x % Change in UPB**
