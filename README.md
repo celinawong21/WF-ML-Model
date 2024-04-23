@@ -236,6 +236,7 @@ Results are sorted by the highest Area Under the Curve (AUC) value, providing a 
 
 #### HPI
 <img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/1a82cd81-b5c2-4486-a7f2-fe2bab40025d">
+
 #### Unemployment Rate
 ![PHOTO-2024-04-22-21-24-41](https://github.com/celinawong21/WF-ML-Model/assets/159848729/3294367c-cf2e-4470-b5e9-968a1f8ecea4)
 
