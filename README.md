@@ -310,6 +310,30 @@ The interaction of a lower Home Price Index with a higher unemployment rate demo
 ### Resilience Test - Worst Sample for Top 4 Most Important Features from XGB2_v2
 ![PHOTO-2024-04-22-17-35-26](https://github.com/celinawong21/WF-ML-Model/assets/159848729/02f77299-d204-4b50-a68b-fc4e5ca6694e)
 
+### Resilience Test - Worst Sample for Top 4 Most Important Features from XGB2_v2
+
+#### Distribution Shift Analysis
+
+This section contains visualizations of the distribution shifts for various features.
+
+<table>
+  <tr>
+    <td><img src="Screenshot 2024-04-23 at 11 57 42 AM" src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/2d60a8a6-4089-4d43-9f74-96ec096d0bdd" alt="Distribution Shift: % Change in UPB" width="100%"/></td>
+    <td><img src="Screenshot 2024-04-23 at 11 57 42 AM" src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/2d60a8a6-4089-4d43-9f74-96ec096d0bdd" alt="Distribution Shift: Estimated Loan to Value (ELTV)" width="100%"/></td>
+  </tr>
+  <tr>
+    <td><img src="Screenshot 2024-04-23 at 11 58 01 AM" src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/170c7f79-25c5-4e55-afff-8f7e34c5d297" alt="Distribution Shift: Index Seasonally Adjusted (index_sa)" width="100%"/></td>
+    <td><img src="Screenshot 2024-04-23 at 11 58 10 AM" src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/9d3c1700-d855-48d3-bd8c-ab18d9624f7d" alt="Distribution Shift: Unemployment Rate (UNRATE)" width="100%"/></td>
+  </tr>
+</table>
+
+
+<img width="380" alt="Screenshot 2024-04-23 at 11 57 42 AM" src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/2d60a8a6-4089-4d43-9f74-96ec096d0bdd">
+<img width="373" alt="Screenshot 2024-04-23 at 11 57 52 AM" src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/f0e5bddd-3cdb-4f42-aa6f-c920c5c8a598">
+<img width="351" alt="Screenshot 2024-04-23 at 11 58 01 AM" src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/170c7f79-25c5-4e55-afff-8f7e34c5d297">
+<img width="367" alt="Screenshot 2024-04-23 at 11 58 10 AM" src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/9d3c1700-d855-48d3-bd8c-ab18d9624f7d">
+
+
 ## Risk Considerations
 * **Automation Risk**: Potential consequences of solely relying on predictive models for decision-making without human oversight. 
 * **Sampling Bias**: Careful consideration is given to the implications of sampling a minuscule proportion of the overall data, which may introduce biases or limit the model's ability to accurately predict defaults during periods of crisis. 
