@@ -172,16 +172,16 @@ result.data
 ![PHOTO-2024-04-22-16-21-50](https://github.com/celinawong21/WF-ML-Model/assets/159848729/c3590d4f-7608-4c46-b98d-880d5154572c)
 * SampleForParameter.csv  is then used to derive parameters for the XGB2 model through the grid search method. The parameters extracted from the first row of the grid search results, corresponding to Rank 1, will be employed in the XGB2 model and its versions.
 
+
+#### XGB1
+Both of Results are sorted by the highest Area Under the Curve (AUC) value, providing a comprehensive comparison of model performance.
 ![PHOTO-2024-04-22-16-22-03](https://github.com/celinawong21/WF-ML-Model/assets/159848729/d4b77fd8-c381-4a73-8d80-ba898b282a0c)
 * **XGB1**: Base model with default parameters and no monotonic variables.
 * **XGB1_V2**: Variant of XGB1 with default parameters and incorporating two monotonic variables: "CURRENT INTEREST RATE" (monotonic increasing) and "CREDIT SCORE" (monotonic decreasing).
 * **XGB1_V3**: Another variation of XGB1, maintaining default parameters and excluding monotonic variables.
 * **XGB1_V4**: A model akin to XGB1_V2, featuring default parameters alongside the two monotonic variables: "CURRENT INTEREST RATE" (monotonic increasing) and "CREDIT SCORE" (monotonic decreasing).
 
-For the models integrating monotonic adjustments, "CURRENT INTEREST RATE" serves as the monotonic increasing variable, while "CREDIT SCORE" functions as the monotonic decreasing variable.
-
-Results are sorted by the highest Area Under the Curve (AUC) value, providing a comprehensive comparison of model performance.
-
+#### XGB2
 ![PHOTO-2024-04-22-16-22-22](https://github.com/celinawong21/WF-ML-Model/assets/159848729/90875872-5992-408f-8f35-a593e053d3fd)
 * **XGB2**: Base model with default parameters and no monotonic variables.
 * **XGB2_V2**: Variant of XGB2 with default parameters and incorporating two monotonic variables: "CURRENT INTEREST RATE" (monotonic increasing) and "CREDIT SCORE" (monotonic decreasing).
