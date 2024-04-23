@@ -318,27 +318,17 @@ This section contains visualizations of the distribution shifts for various feat
 
 <table>
   <tr>
-    <td><img src="https://github.com/celinawong21/WF-ML-Model/raw/main/assets/Screenshot_1.png" alt="Distribution Shift: % Change in UPB" width="100%"/></td>
-    <td><img src="https://github.com/celinawong21/WF-ML-Model/raw/main/assets/Screenshot_2.png" alt="Distribution Shift: Estimated Loan to Value (ELTV)" width="100%"/></td>
-  </tr>
-  <tr>
-    <td><img src="https://github.com/celinawong21/WF-ML-Model/raw/main/assets/Screenshot_3.png" alt="Distribution Shift: Index Seasonally Adjusted (index_sa)" width="100%"/></td>
-    <td><img src="https://github.com/celinawong21/WF-ML-Model/raw/main/assets/Screenshot_4.png" alt="Distribution Shift: Unemployment Rate (UNRATE)" width="100%"/></td>
+    <td>
+      <img src="https://github.com/celinawong21/WF-ML-Model/raw/main/assets/Screenshot_1.png"  alt="Distribution Shift: % Change in UPB" width="100%"/></td>
+      <img src="https://github.com/celinawong21/WF-ML-Model/raw/main/assets/Screenshot_2.png" alt="Distribution Shift: Estimated Loan to Value (ELTV)" width="100%"/></td>
+    </td>
+    <td>
+      <img src="https://github.com/celinawong21/WF-ML-Model/raw/main/assets/Screenshot_3.png" alt="Distribution Shift: Index Seasonally Adjusted (index_sa)" width="100%"/></td>
+      <img src="https://github.com/celinawong21/WF-ML-Model/raw/main/assets/Screenshot_4.png" alt="Distribution Shift: Unemployment Rate (UNRATE)" width="100%"/></td>
+    </td>
   </tr>
 </table>
 
-
-
-# Title of Your Project
-
-## Distribution Shift Analysis
-
-This section contains visualizations of the distribution shifts for various features.
-
-![Distribution Shift: % Change in UPB](https://github.com/yourusername/yourrepository/raw/main/images/Screenshot_1.png)
-![Distribution Shift: Estimated Loan to Value (ELTV)](https://github.com/yourusername/yourrepository/raw/main/images/Screenshot_2.png)
-![Distribution Shift: Index Seasonally Adjusted (index_sa)](https://github.com/yourusername/yourrepository/raw/main/images/Screenshot_3.png)
-![Distribution Shift: Unemployment Rate (UNRATE)](https://github.com/yourusername/yourrepository/raw/main/images/Screenshot_4.png)
 
 
 ## Risk Considerations
