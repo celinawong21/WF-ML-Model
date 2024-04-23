@@ -304,9 +304,11 @@ The interaction of a lower Home Price Index with a higher unemployment rate demo
 
 <img width="1000" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/c735e21e-2594-43ec-a400-800ae7912702">
 
+#### Confusion Matrix 
 <p>
-  <img src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/bbeae456-5ab7-4c23-aae3-46bafc06c967" alt="Confusion Matrix" title="Confusion Matrix" width="550" />
+  <img src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/c0ded5db-59f3-4594-9cda-b587f91334ac" alt="Confusion Matrix" title="Confusion Matrix" width="550" />
 </p>
+<img width="354" alt="Screenshot 2024-04-23 at 1 18 17 PM" src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/c0ded5db-59f3-4594-9cda-b587f91334ac">
 
 <table>
   <tr>
@@ -322,21 +324,6 @@ The interaction of a lower Home Price Index with a higher unemployment rate demo
     <td>Recall-Precision Curve</td>
   </tr>
 </table>
-
-<figure>
-  <img src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/a53840d7-1446-4ef7-9386-516f0e1be8e7" alt="ROC Curve" title="ROC Curve" width="340" />
-  <figcaption>ROC Curve</figcaption>
-</figure>
-<figure>
-  <img src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/3bff02ab-cd39-4e56-b9e9-f7e4c5f1c352" alt="Recall-Precision Curve" title="Recall-Precision Curve" width="340" />
-  <figcaption>Recall-Precision Curve</figcaption>
-</figure>
-
-<p align="left">
-  <img src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/a53840d7-1446-4ef7-9386-516f0e1be8e7" alt="ROC Curve" title="ROC Curve" width="370" />
-  <img src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/3bff02ab-cd39-4e56-b9e9-f7e4c5f1c352" alt="Recall-Precision Curve" title="Recall-Precision Curve" width="370" />
-</p>
-
 
 
 ### Residual Box Plot of Predicted Default Variable from XGB2_v2 Model
