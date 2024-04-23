@@ -166,7 +166,7 @@ parameters = {'n_estimators': [100, 500, 1000],
               'eta': [0.01, 0.1, 0.5],
               'reg_lambda': [0.0, 0.5, 1.0],
               'reg_alpha': [0.01, 0.5, .99]}
-result = exp.model_tune("XGB1", method="grid", parameters=parameters, metric=['MSE', 'MAE'], test_ratio=0.2, random_state = 12345)
+result = exp.model_tune("XGB2", method="grid", parameters=parameters, metric=['MSE', 'MAE'], test_ratio=0.2, random_state = 12345)
 result.data
 ```
 ![PHOTO-2024-04-22-16-21-50](https://github.com/celinawong21/WF-ML-Model/assets/159848729/c3590d4f-7608-4c46-b98d-880d5154572c)
