@@ -318,16 +318,15 @@ This section contains visualizations of the distribution shifts for various feat
 
 <table>
   <tr>
-    <td>
-      <img src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/89afc95d-4243-4370-861d-9e4a09fdce5c" alt="Distribution Shift: % Change in UPB" width="100%"/></td>
-      <img src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/6853bc57-ceb8-4d6a-8e03-31e5860f39b9" alt="Distribution Shift: Estimated Loan to Value (ELTV)" width="100%"/></td>
-    </td>
-    <td>
-      <img src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/ab37ff1f-f502-4eb4-a636-2c7d6febdc59" alt="Distribution Shift: Index Seasonally Adjusted (index_sa)" width="100%"/></td>
-      <img src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/64268b94-f207-4094-ba55-e8abe4b95f88" alt="Distribution Shift: Unemployment Rate (UNRATE)" width="100%"/></td>
-    </td>
+    <td><img src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/89afc95d-4243-4370-861d-9e4a09fdce5c" alt="Distribution Shift: % Change in UPB" width="100%"/></td>
+    <td><img src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/6853bc57-ceb8-4d6a-8e03-31e5860f39b9" alt="Distribution Shift: Estimated Loan to Value (ELTV)" width="100%"/></td>
+  </tr>
+  <tr>
+    <td><img src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/ab37ff1f-f502-4eb4-a636-2c7d6febdc59" alt="Distribution Shift: Index Seasonally Adjusted (index_sa)" width="100%"/></td>
+    <td><img src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/64268b94-f207-4094-ba55-e8abe4b95f88" alt="Distribution Shift: Unemployment Rate (UNRATE)" width="100%"/></td>
   </tr>
 </table>
+
 
 <img width="351" alt="Screenshot 2024-04-23 at 11 58 01 AM" src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/6853bc57-ceb8-4d6a-8e03-31e5860f39b9">
 <img width="373" alt="Screenshot 2024-04-23 at 11 57 52 AM" src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/ab37ff1f-f502-4eb4-a636-2c7d6febdc59">
