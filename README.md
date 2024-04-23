@@ -201,6 +201,21 @@ Results are sorted by the highest Area Under the Curve (AUC) value, providing a 
 #### After Monotonic Adjustment - Credit Score
 <img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/430f4f78-bdf8-48c7-8569-eded2b04df22">
 
+<table>
+  <tr>
+    <td>
+      <img src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/06c29bf4-bd66-4732-9050-581b31339c2f" alt="Before Monotonic Adjustment - Current Interest Rate" width="450"/>
+    </td>
+    <td>
+      <img src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/430f4f78-bdf8-48c7-8569-eded2b04df22" alt="After Monotonic Adjustment - Current Interest Rate" width="450"/>
+    </td>
+  </tr>
+  <tr>
+    <td>Before Monotonic Adjustment - Current Interest Rate</td>
+    <td>After Monotonic Adjustment - Current Interest Rate</td>
+  </tr>
+</table>
+
 
 We made monotonicity adjustments to two variables to enhance interpretability: Current Interest Rate for a increasing monotonicity, and Credit Score for a decreasing monotonically. Specifically, for the Credit Score, we can observe that it has a negative relationship with the target value, indicating that as the credit score increases, the probability of default decreases. After the monotonicity adjustment, the effect of the credit score on the model's predictions increased from 4.5% to 6.6%. 
 
