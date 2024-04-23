@@ -309,7 +309,7 @@ The interaction of a lower Home Price Index with a higher unemployment rate demo
   <img src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/bbeae456-5ab7-4c23-aae3-46bafc06c967" alt="Confusion Matrix" title="Confusion Matrix" width="550" />
 </p>
 
-<p align="Left">
+<p align="Center">
   <img src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/a53840d7-1446-4ef7-9386-516f0e1be8e7" alt="ROC Curve" title="ROC Curve" width="550" />
   <img src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/3bff02ab-cd39-4e56-b9e9-f7e4c5f1c352" alt="Recall-Precision Curve" title="Recall-Precision Curve" width="550" />
 </p>
