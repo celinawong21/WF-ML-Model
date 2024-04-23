@@ -310,52 +310,38 @@ The interaction of a lower Home Price Index with a higher unemployment rate demo
 ### Resilience Test - Worst Sample for Top 4 Most Important Features from XGB2_v2
 ![PHOTO-2024-04-22-17-35-26](https://github.com/celinawong21/WF-ML-Model/assets/159848729/02f77299-d204-4b50-a68b-fc4e5ca6694e)
 
-### Resilience Test - Worst Sample for Top 4 Most Important Features from XGB2_v2
-
 #### Distribution Shift Analysis
 
 This section contains visualizations of the distribution shifts for various features.
 
-<table>
+<table style="width:100%;">
   <tr>
-    <td><img src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/89afc95d-4243-4370-861d-9e4a09fdce5c" alt="Distribution Shift: % Change in UPB" width="100%"/></td>
-    <td><img src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/6853bc57-ceb8-4d6a-8e03-31e5860f39b9" alt="Distribution Shift: Estimated Loan to Value (ELTV)" width="100%"/></td>
-  </tr>
-  <tr>
-    <td><img src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/ab37ff1f-f502-4eb4-a636-2c7d6febdc59" alt="Distribution Shift: Index Seasonally Adjusted (index_sa)" width="100%"/></td>
-    <td><img src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/64268b94-f207-4094-ba55-e8abe4b95f88" alt="Distribution Shift: Unemployment Rate (UNRATE)" width="100%"/></td>
-  </tr>
-</table>
-
-
-<table>
-  <tr>
-    <td>
-      <img src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/89afc95d-4243-4370-861d-9e4a09fdce5c" alt="Distribution Shift: % Change in UPB" width="100%"/>
-      <p style="text-align: center;">Distribution Shift: % Change in UPB</p>
+    <td style="text-align:center;">
+      <img src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/c41919c9-d5fd-4dc6-931a-a384b8dbd7bf" alt="Distribution Shift: % Change in UPB" style="width:100%;" />
+      <p style="margin-top: 10px; font-weight: bold;">Distribution Shift: % Change in UPB</p>
     </td>
-    <td>
-      <img src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/6853bc57-ceb8-4d6a-8e03-31e5860f39b9" alt="Distribution Shift: Estimated Loan to Value (ELTV)" width="100%"/>
-      <p style="text-align: center;">Distribution Shift: Estimated Loan to Value (ELTV)</p>
+    <td style="text-align:center;">
+      <img src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/7c5111dd-e2a2-48e2-8d61-45838e83d1b1" alt="Distribution Shift: Estimated Loan to Value (ELTV)" style="width:100%;" />
+      <p style="margin-top: 10px; font-weight: bold;">Distribution Shift: Estimated Loan to Value (ELTV)</p>
     </td>
   </tr>
   <tr>
-    <td>
-      <img src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/ab37ff1f-f502-4eb4-a636-2c7d6febdc59" alt="Distribution Shift: Index Seasonally Adjusted (index_sa)" width="100%"/>
-      <p style="text-align: center;">Distribution Shift: Index Seasonally Adjusted (index_sa)</p>
+    <td style="text-align:center;">
+      <img src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/ab37ff1f-f502-4eb4-a636-2c7d6febdc59" alt="Distribution Shift: Index Seasonally Adjusted (index_sa)" style="width:100%;" />
+      <p style="margin-top: 10px; font-weight: bold;">Distribution Shift: Index Seasonally Adjusted (index_sa)</p>
     </td>
-    <td>
-      <img src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/64268b94-f207-4094-ba55-e8abe4b95f88" alt="Distribution Shift: Unemployment Rate (UNRATE)" width="100%"/>
-      <p style="text-align: center;">Distribution Shift: Unemployment Rate (UNRATE)</p>
+    <td style="text-align:center;">
+      <img src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/64268b94-f207-4094-ba55-e8abe4b95f88" alt="Distribution Shift: Unemployment Rate (UNRATE)" style="width:100%;" />
+      <p style="margin-top: 10px; font-weight: bold;">Distribution Shift: Unemployment Rate (UNRATE)</p>
     </td>
   </tr>
 </table>
 
 
 
-<img width="351" alt="Screenshot 2024-04-23 at 11 58 01 AM" src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/6853bc57-ceb8-4d6a-8e03-31e5860f39b9">
-<img width="373" alt="Screenshot 2024-04-23 at 11 57 52 AM" src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/ab37ff1f-f502-4eb4-a636-2c7d6febdc59">
-<img width="380" alt="Screenshot 2024-04-23 at 11 57 42 AM" src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/64268b94-f207-4094-ba55-e8abe4b95f88">
+<img width="363" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/c41919c9-d5fd-4dc6-931a-a384b8dbd7bf">
+<img width="360" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/7c5111dd-e2a2-48e2-8d61-45838e83d1b1">
+
 
 
 
