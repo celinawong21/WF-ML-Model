@@ -117,6 +117,33 @@ A sample of the first 20 rows of the [2000 Sample Data](Sample_2000_First_20.csv
  
 ## Modeling
 
+### Overview of Time Series Horizon
+* The predictive loan default model utilizes a time series horizon approach.
+  * The model aims to forecast the probability of a loan defaulting at a future time (t) based on historical information available up to a snapshot time (s), where s < t.
+  * All available information up to time s is utilized, resulting in pairs of snapshots and forecasts, which constitute stacked data.
+  * Each row is duplicated 24 times to predict default probability over the subsequent 24-month period (sample table below).
+* The decision to opt for a time series horizon model over a traditional time series model was driven by the latter's diminishing predictive power with increasing time duration.
+* Traditional time series models tend to overly emphasize initial lagged time periods, potentially overlooking valuable insights from earlier years.
+
+### Creating a Stacked Dataset
+#### Vectorized Process to Create the Stacked Dataset
+* The process begins with obtaining a sample file containing 3,000 loans from each of the 24 years. Subsequently, the data undergoes a vectorized transformation to generate a time series dataframe.
+* Then, the minimum _LOAN AGE_ for each _LOAN SEQUENCE NUMBER_ group is identified, which is the starting point for each loan.
+    * During the vectorization process, the combination of _LOAN SEQUENCE NUMBER_ and _LOAN AGE_ is documented for each iteration of the horizons.
+    * In cases where multiple _LOAN SEQUENCE NUMBERS_ exhibit the same LOAN AGE throughout the duration of a HORIZON, adjustments are made to ensure chronological order within each _LOAN SEQUENCE NUMBER_. This involves recalculating loan ages for duplicate rows, thus preserving the sequential progression of loan ages. 
+* Each row in the merged dataset is replicated 24 times to project loan information for 24 months into the future. This duplication enables forecasting loan behavior over an extended period.
+* To enhance analysis, two new columns, _HORIZON_ and _SOURCE_, are introduced.
+    * **HORIZON**: tracks past information, with each horizon representing a month in the past.
+        * For instance, if a loan's monthly reporting period is "2013-06", HORIZON(1) corresponds to duplicated data from "2013-05", and HORIZON(2) corresponds to duplicated data from "2013-04".
+    * **SOURCE**: distinguishes between original sample rows ("orig") and those generated through the vectorized process ("Duplicated").
+* The process will continue, incrementing the 'LOAN AGE' by one consistently until the loan reaches the end of its lifecycle.
+
+#### Example of Stacked Data
+
+<img width="1114" alt="Screenshot 2024-04-16 at 5 55 01 PM" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/ee3a2f74-f2af-4bca-b42a-6f4a78a3968e">
+
+A sample of the first 48 rows of the [2000 Stacked Data](Stacked_2000_First_48.csv) is included in the repository.
+
 ### Features Selection 
 Based on the feature select function in PiML, the following features were chosen. 
 
@@ -155,7 +182,14 @@ parameters = {'n_estimators': [100, 500, 1000],
 result = exp.model_tune("XGB1", method="grid", parameters=parameters, metric=['MSE', 'MAE'], test_ratio=0.2, random_state = 12345)
 result.data
 ```
-![PHOTO-2024-04-22-16-21-26](https://github.com/celinawong21/WF-ML-Model/assets/159848729/7159d9e7-5cac-4f9b-857c-a4c237a8e5e2)
+
+| Params                                        | Rank(by MSE) | MSE     | MAE     | Time      |
+|-----------------------------------------------|--------------|---------|---------|-----------|
+| {'eta': 0.01, 'n_estimators': 100, 'reg_alpha': 0.01, 'reg_lambda': 0.0} | 1            | 0.337091 | 0.337091 | 7.993272  |
+| {'eta': 0.01, 'n_estimators': 100, 'reg_alpha': 0.01, 'reg_lambda': 0.5}  | 1            | 0.337091 | 0.337091 | 9.407335 |
+| {'eta': 0.01, 'n_estimators': 100, 'reg_alpha': 0.01, 'reg_lambda': 1.0}   | 1            | 0.337091 | 0.337091 | 13.715970 |
+| {'eta': 0.01, 'n_estimators': 100, 'reg_alpha': 0.5, 'reg_lambda': 0.0}   | 1            | 0.337091 | 0.337091 | 13.8588046 |
+| {'eta': 0.01, 'n_estimators': 100, 'reg_alpha': 0.5, 'reg_lambda': 0.5}   | 1            | 0.337091 | 0.337091 | 12.984432 |
 
 * SampleForParameter.csv is used to obtain parameters for the XGB1 model through the grid search method. The parameters obtained from the first row of the grid search results, corresponding to Rank 1, will be utilized in the XGB1 model and its versions.
 
@@ -169,32 +203,52 @@ parameters = {'n_estimators': [100, 500, 1000],
 result = exp.model_tune("XGB2", method="grid", parameters=parameters, metric=['MSE', 'MAE'], test_ratio=0.2, random_state = 12345)
 result.data
 ```
-![PHOTO-2024-04-22-16-21-50](https://github.com/celinawong21/WF-ML-Model/assets/159848729/c3590d4f-7608-4c46-b98d-880d5154572c)
+| Params                                        | Rank(by MSE) | MSE     | MAE     | Time      |
+|-----------------------------------------------|--------------|---------|---------|-----------|
+| {'eta': 0.5, 'n_estimators': 1000, 'reg_alpha': 0.01, 'reg_lambda': 0.5} | 1            | 0.146026 | 0.146026 | 6.809227  |
+| {'eta': 0.5, 'n_estimators': 1000, 'reg_alpha': 0.5, 'reg_lambda': 0.5}  | 1            | 0.146080 | 0.146080 | 6.445565 |
+| {'eta': 0.5, 'n_estimators': 1000, 'reg_alpha': 0.99, 'reg_lambda': 0.0}   | 1            | 0.146803 | 0.146803 | 5.550786 |
+| {'eta': 0.5, 'n_estimators': 1000, 'reg_alpha': 0.5, 'reg_lambda': 0.0}   | 1            | 0.146856 | 0.146856 | 5.722547 |
+| {'eta': 0.5, 'n_estimators': 1000, 'reg_alpha': 0.99, 'reg_lambda': 0.5}   | 1            | 0.146937 | 0.146937 | 5.495173 |
+
 * SampleForParameter.csv  is then used to derive parameters for the XGB2 model through the grid search method. The parameters extracted from the first row of the grid search results, corresponding to Rank 1, will be employed in the XGB2 model and its versions.
 
 
 ### Comparing XGB1 and XBG2
-Both of the esults are sorted by the highest Area Under the Curve (AUC) value, providing a comprehensive comparison of model performance.
+Both of the results are sorted by the highest Area Under the Curve (AUC) value, providing a comprehensive comparison of model performance.
 * **XGB**: Base model with default parameters and no monotonic variables.
-* **XGB_V2**: Variant of XGB with default parameters and incorporating three monotonic variables: "CURRENT INTEREST RATE" and "ORIGINAL INTEREST RATE" (monotonic increasing), and "CREDIT SCORE" (monotonic decreasing).
+* **XGB_V2**: Variant of XGB with default parameters and incorporating two monotonic variables: "CURRENT INTEREST RATE" (monotonic increasing) and "CREDIT SCORE" (monotonic decreasing).
 * **XGB_V3**: Another variation of XGB1, maintaining default parameters and excluding monotonic variables.
-* **XGB_V4**: Similar to XGB_V2, featuring default parameters alongside the three monotonic variables: "CURRENT INTEREST RATE" and "ORIGINAL INTEREST RATE" (monotonic increasing), and "CREDIT SCORE" (monotonic decreasing).
+* **XGB_V4**: Similar to XGB_V2, featuring default parameters alongside the two monotonic variables: "CURRENT INTEREST RATE" (monotonic increasing) and "CREDIT SCORE" (monotonic decreasing).
 
 #### XGB1
-![PHOTO-2024-04-22-16-22-03](https://github.com/celinawong21/WF-ML-Model/assets/159848729/d4b77fd8-c381-4a73-8d80-ba898b282a0c)
+|   | Model   | test_ACC | test_AUC | test_F1 | test_LogLoss | test_Brier | train_ACC | train_AUC | train_F1 | train_LogLoss | train+Brier |
+|---|---------|----------|----------|---------|--------------|------------|-----------|-----------|----------|---------------|-------------|
+| 0  | XBG1    | 0.6963   | 0.7698   | 0.7170  | 0.5875       | 0.1993     | 0.6903    | 0.7617    | 0.7242   | 0.5965        | 0.2037      |
+| 1 | XBG1_v2 | 0.6963   | 0.7698   | 0.7170  | 0.5875       | 0.1993     | 0.6903    | 0.7617    | 0.7242   | 0.5965        | 0.2037      |
+| 3 | XBG1_v4 | 0.6410   | 0.7473   | 0.7235  | 0.6456       | 0.2256     | 0.6054    | 0.6548    | 0.6542   | 0.6666        | 0.2365      |
+| 2 | XBG1_v3 | 0.6410   | 0.7452   | 0.7235  | 0.6417       | 0.2243     | 0.6054    | 0.6535    | 0.6542   | 0.6659        | 0.2364      |
+
+
 
 #### XGB2
-![PHOTO-2024-04-22-16-22-22](https://github.com/celinawong21/WF-ML-Model/assets/159848729/90875872-5992-408f-8f35-a593e053d3fd)
+|   | Model   | test_ACC | test_AUC | test_F1 | test_LogLoss | test_Brier | train_ACC | train_AUC | train_F1 | train_LogLoss | train_Brier |
+|---|---------|----------|----------|---------|--------------|------------|-----------|-----------|----------|---------------|-------------|
+| 0  | XBG2    | 0.7278   | 0.8284   | 0.7549  | 0.5281       | 0.1768     | 0.7496    | 0.8270    | 0.7559   | 0.5150        | 0.1709      |
+| 1 | XBG2_v2 | 0.7333   | 0.8143   | 0.7401  | 0.5288       | 0.1768     | 0.7500    | 0.8280    | 0.7551   | 0.5151        | 0.1707      |
+| 3 | XBG2_v4 | 0.6635   | 0.7199   | 0.6405  | 0.8378       | 0.2521     | 0.8241    | 0.9019    | 0.8246   | 0.4026        | 0.1262      |
+| 2 | XBG2_v3 | 0.6461   | 0.7145   | 0.6978  | 0.9345       | 0.2728     | 0.78305   | 0.9073    | 0.8311   | 0.3955        | 0.1234      |
+
 
 ## Model Interpretation: XGB2_v2
 
 ### Effect Plot
 
-* Monotonicity adjustments for three variables: 
-    * **Monotonic increasing**: Current Interest Rate and Original Interest Rate
+* Monotonicity adjustments for two variables: 
+    * **Monotonic increasing**: Current Interest Rate
     * **Monotonic decreasing**: Credit Score
 
-Monotonicity adjustments were made to three variables to enhance interpretability: Current Interest Rate for a increasing monotonicity, and Credit Score for a decreasing monotonically. 
+Monotonicity adjustments were made to two variables to enhance interpretability: Current Interest Rate for a increasing monotonicity, and Credit Score for a decreasing monotonically. 
 
 <table>
   <tr>
@@ -287,6 +341,38 @@ The interaction of a lower Home Price Index with a higher unemployment rate demo
 
 <img width= "650" alt = "image" src= "https://github.com/celinawong21/WF-ML-Model/assets/159848729/75fec3ba-b91c-4370-8669-fd30e97c5847">
 
+## Risk Considerations
+* **Automation Risk**: Potential consequences of solely relying on predictive models for decision-making without human oversight. 
+* **Sampling Bias**: Careful consideration is given to the implications of sampling a minuscule proportion of the overall data, which may introduce biases or limit the model's ability to accurately predict defaults during periods of crisis. 
+* **Biased Data during Crisis**: Inherent biases in data collected during times of crisis, as loans may predominantly be issued to customers with strong financial profiles, skewing the dataset. It underscores the significance of not only predicting defaults but also anticipating and mitigating crises beforehand. By identifying early warning signs, proactive measures can be implemented to avert potential crises and minimize their impact.
+
+## Potential Next Steps 
+* **Larger Dataset**: Apply the modeling techniques to all Freddie Mac single-family home loan data to further incorporate the changes in the economic scenario over time.
+* **Apply the Time Series Horizon Model**: Future iterations of the project should take the stacked data and perform a Time Series Horizon Model to utilize all historical data to predict 24 months ahead of default.
+* **Integration of Additional Data Sources**: Consider incorporating regional economic indicators or property market data alongside existing sources like Freddie Mac to enhance predictive accuracy.
+* **Government Intervention**: Consider any regulatory compliance and ethical implications in future iterations of the project.
+* **User Interface**: Create a front-end development to input certain specifics about a loan and/or macroeconomic variables to output a potential rate of default. This application will take user input, visually explain the impact of each variable, and attempt to boost the interpretability of the model.
+
+## Appendix
+### Local Interpretability 
+
+
+<table>
+  <tr>
+    <td>
+      <img src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/03a2191f-b109-419f-b652-93e31f6392d5" alt="Feature Importance" width="450"/>
+    </td>
+    <td>
+      <img src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/92ead311-69ea-4fd8-b196-29abfee20014" alt="Effect Importance" width="450"/>
+    </td>
+  </tr>
+</table>
+
+Its local interpretation consists of two parts: local feature contribution and local effect contribution. The local interpretation shows how the predicted value is formed by the main effects and pairwise interactions.
+
+Firstly, the local effect contribution displays the outputs of each main effect and pairwise interaction. The predictor value of each effect is shown on the right axis, and the corresponding effect names are shown on the left axis. From the title, it can be observed that the predicted value of this sample is 0.1270, which is significantly different from the actual response of 1. The main effect of the _CURRENT INTEREST RATE_ contributes the most to the final prediction, with a positive contribution (around 1). This is followed by the _CURRENT INTEREST RATE_, _% CHANGE IN UPB_, _CREDIT SCORE_, _ORIGINATION INTEREST RATE_, and _ELTV_, all of which have a positive contribution. _INDEX_SA_ and the pairwise effect of _INDEX_SA_ and _% CHANGE IN UPB_ have a negative contribution to the final prediction.
+
+The interpretation of the feature contribution plot is simliar to that of the local effect contribution plot, but instead of displaying the effects, it shows the individual impact of each feature. For our sample, the main effects of _CURRENT INTEREST RATE_ and _CREDIT SCORE_ both have a positive contribution to the final prediction. Additionally, the _UNEMPLOYMENT RATE_ shows a negative impact on the final prediction at the feature level, even though it did not appear in the top 10 list of the local effect importance plot.
 
 ### Resilience Test - Worst Sample for Top 4 Most Important Features from XGB2_v2
 
@@ -316,67 +402,3 @@ This section contains visualizations of the distribution shifts for various feat
     </td>
   </tr>
 </table>
-
-
-## Risk Considerations
-* **Automation Risk**: Potential consequences of solely relying on predictive models for decision-making without human oversight. 
-* **Sampling Bias**: Careful consideration is given to the implications of sampling a minuscule proportion of the overall data, which may introduce biases or limit the model's ability to accurately predict defaults during periods of crisis. 
-* **Biased Data during Crisis**: Inherent biases in data collected during times of crisis, as loans may predominantly be issued to customers with strong financial profiles, skewing the dataset. It underscores the significance of not only predicting defaults but also anticipating and mitigating crises beforehand. By identifying early warning signs, proactive measures can be implemented to avert potential crises and minimize their impact.
-
-## Potential Next Steps 
-* **Larger Dataset**: Apply the modeling techniques to all Freddie Mac single-family home loan data to further incorporate the changes in the economic scenario over time.
-* **Apply the Time Series Horizon Model**: Future iterations of the project should take the stacked data and perform a Time Series Horizon Model to utilize all historical data to predict 24 months ahead of default.
-* **Integration of Additional Data Sources**: Consider incorporating regional economic indicators or property market data alongside existing sources like Freddie Mac to enhance predictive accuracy.
-* **Government Intervention**: Consider any regulatory compliance and ethical implications in future iterations of the project.
-* **User Interface**: Create a front-end development to input certain specifics about a loan and/or macroeconomic variables to output a potential rate of default. This application will take user input, visually explain the impact of each variable, and attempt to boost the interpretability of the model.
-
-## Appendix: Time Series Horizon Model and Stacked Dataset
-
-### Overview of Time Series Horizon
-* The predictive loan default model utilizes a time series horizon approach.
-  * The model aims to forecast the probability of a loan defaulting at a future time (t) based on historical information available up to a snapshot time (s), where s < t.
-  * All available information up to time s is utilized, resulting in pairs of snapshots and forecasts, which constitute stacked data.
-  * Each row is duplicated 24 times to predict default probability over the subsequent 24-month period (sample table below).
-* The decision to opt for a time series horizon model over a traditional time series model was driven by the latter's diminishing predictive power with increasing time duration.
-* Traditional time series models tend to overly emphasize initial lagged time periods, potentially overlooking valuable insights from earlier years.
-
-### Creating a Stacked Dataset
-#### Vectorized Process to Create the Stacked Dataset
-* The process begins with obtaining a sample file containing 3,000 loans from each of the 24 years. Subsequently, the data undergoes a vectorized transformation to generate a time series dataframe.
-* Then, the minimum _LOAN AGE_ for each _LOAN SEQUENCE NUMBER_ group is identified, which is the starting point for each loan.
-    * During the vectorization process, the combination of _LOAN SEQUENCE NUMBER_ and _LOAN AGE_ is documented for each iteration of the horizons.
-    * In cases where multiple _LOAN SEQUENCE NUMBERS_ exhibit the same LOAN AGE throughout the duration of a HORIZON, adjustments are made to ensure chronological order within each _LOAN SEQUENCE NUMBER_. This involves recalculating loan ages for duplicate rows, thus preserving the sequential progression of loan ages. 
-* Each row in the merged dataset is replicated 24 times to project loan information for 24 months into the future. This duplication enables forecasting loan behavior over an extended period.
-* To enhance analysis, two new columns, _HORIZON_ and _SOURCE_, are introduced.
-    * **HORIZON**: tracks past information, with each horizon representing a month in the past.
-        * For instance, if a loan's monthly reporting period is "2013-06", HORIZON(1) corresponds to duplicated data from "2013-05", and HORIZON(2) corresponds to duplicated data from "2013-04".
-    * **SOURCE**: distinguishes between original sample rows ("orig") and those generated through the vectorized process ("Duplicated").
-* The process will continue, incrementing the 'LOAN AGE' by one consistently until the loan reaches the end of its lifecycle.
-
-#### Example of Stacked Data
-
-<img width="1114" alt="Screenshot 2024-04-16 at 5 55 01 PM" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/ee3a2f74-f2af-4bca-b42a-6f4a78a3968e">
-
-A sample of the first 48 rows of the [2000 Stacked Data](Stacked_2000_First_48.csv) is included in the repository.
-
-### Local Interpretability 
-
-
-<table>
-  <tr>
-    <td>
-      <img src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/03a2191f-b109-419f-b652-93e31f6392d5" alt="Feature Importance" width="450"/>
-    </td>
-    <td>
-      <img src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/92ead311-69ea-4fd8-b196-29abfee20014" alt="Effect Importance" width="450"/>
-    </td>
-  </tr>
-</table>
-
-Its local interpretation consists of two parts: local feature contribution and local effect contribution. The local interpretation shows how the predicted value is formed by the main effects and pairwise interactions.
-
-Firstly, the local effect contribution displays the outputs of each main effect and pairwise interaction. The predictor value of each effect is shown on the right axis, and the corresponding effect names are shown on the left axis. From the title, it can be observed that the predicted value of this sample is 0.1270, which is significantly different from the actual response of 1. The main effect of the _CURRENT INTEREST RATE_ contributes the most to the final prediction, with a positive contribution (around 1). This is followed by the _CURRENT INTEREST RATE_, _% CHANGE IN UPB_, _CREDIT SCORE_, _ORIGINATION INTEREST RATE_, and _ELTV_, all of which have a positive contribution. _INDEX_SA_ and the pairwise effect of _INDEX_SA_ and _% CHANGE IN UPB_ have a negative contribution to the final prediction.
-
-The interpretation of the feature contribution plot is simliar to that of the local effect contribution plot, but instead of displaying the effects, it shows the individual impact of each feature. For our sample, the main effects of _CURRENT INTEREST RATE_ and _CREDIT SCORE_ both have a positive contribution to the final prediction. Additionally, the _UNEMPLOYMENT RATE_ shows a negative impact on the final prediction at the feature level, even though it did not appear in the top 10 list of the local effect importance plot.
-
-
