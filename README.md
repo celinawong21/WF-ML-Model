@@ -176,9 +176,9 @@ result.data
 ### Comparing XGB1 and XBG2
 Both of the esults are sorted by the highest Area Under the Curve (AUC) value, providing a comprehensive comparison of model performance.
 * **XGB**: Base model with default parameters and no monotonic variables.
-* **XGB_V2**: Variant of XGB with default parameters and incorporating two monotonic variables: "CURRENT INTEREST RATE" (monotonic increasing) and "CREDIT SCORE" (monotonic decreasing).
+* **XGB_V2**: Variant of XGB with default parameters and incorporating three monotonic variables: "CURRENT INTEREST RATE" and "ORIGINAL INTEREST RATE" (monotonic increasing), and "CREDIT SCORE" (monotonic decreasing).
 * **XGB_V3**: Another variation of XGB1, maintaining default parameters and excluding monotonic variables.
-* **XGB_V4**: Similar to XGB_V2, featuring default parameters alongside the two monotonic variables: "CURRENT INTEREST RATE" (monotonic increasing) and "CREDIT SCORE" (monotonic decreasing).
+* **XGB_V4**: Similar to XGB_V2, featuring default parameters alongside the three monotonic variables: "CURRENT INTEREST RATE" and "ORIGINAL INTEREST RATE" (monotonic increasing), and "CREDIT SCORE" (monotonic decreasing).
 
 #### XGB1
 ![PHOTO-2024-04-22-16-22-03](https://github.com/celinawong21/WF-ML-Model/assets/159848729/d4b77fd8-c381-4a73-8d80-ba898b282a0c)
@@ -190,11 +190,11 @@ Both of the esults are sorted by the highest Area Under the Curve (AUC) value, p
 
 ### Effect Plot
 
-* Monotonicity adjustments for two variables: 
-    * **Monotonic increasing**: Current Interest Rate
+* Monotonicity adjustments for three variables: 
+    * **Monotonic increasing**: Current Interest Rate and Original Interest Rate
     * **Monotonic decreasing**: Credit Score
 
-Monotonicity adjustments were made to two variables to enhance interpretability: Current Interest Rate for a increasing monotonicity, and Credit Score for a decreasing monotonically. 
+Monotonicity adjustments were made to three variables to enhance interpretability: Current Interest Rate for a increasing monotonicity, and Credit Score for a decreasing monotonically. 
 
 <table>
   <tr>
