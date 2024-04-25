@@ -302,12 +302,6 @@ Regarding the Current Interest Rate, it has a positive relationship with the tar
 </table>
 
 
-There are two main plots: feature importance and effect importance. Feature importance refers to the relative importance of each feature in the model based on how frequently it is used to split the data across all trees in the ensemble. This plot only shows the aggregate effect of each top 10 features. As you can see from the plot, % change in UPB and HPI index take a critical role in the model’s decision-making process, followed by Estimated Loan-to-Value (ELTV) and UNRATE, which refers to the unemployment rate.
-
-Effect importance refers to the impact of each feature on individual predictions made by the model. It measures how much each feature contributes to the final prediction for a specific data point. It can be observed that % Change in UPB and Estimated Loan-to-Value (ELTV) are dominant features, followed by index_sa and Credit Score.
-
-The consistent prominence of % Change in UPB and Estimated Loan-to-Value (ELTV) across both feature importance and effect importance analyses underscores their critical roles in the model. These insights can guide further investigations into the underlying mechanisms driving these features' influence on predictions, aiding in model refinement and decision-making processes.
-
 ### Interaction Effect: Four interaction effects with the highest percentages
 The interaction plots show how the interaction between two features affect the probability of default. The top 3 interactions were selected based on the highest percentage values.
 
