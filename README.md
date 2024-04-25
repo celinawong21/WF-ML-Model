@@ -356,6 +356,8 @@ The interaction of a lower Home Price Index with a higher unemployment rate demo
 ## Appendix
 ### Local Interpretability 
 
+Its local interpretation consists of two parts: local feature contribution and local effect contribution. The local interpretation shows how the predicted value is formed by the main effects and pairwise interactions.
+Firstly, the local effect contribution displays the outputs of each main effect and pairwise interaction. The interpretation of the feature contribution plot is simliar to that of the local effect contribution plot, but instead of displaying the effects, it shows the individual impact of each feature. 
 
 <table>
   <tr>
@@ -368,11 +370,6 @@ The interaction of a lower Home Price Index with a higher unemployment rate demo
   </tr>
 </table>
 
-Its local interpretation consists of two parts: local feature contribution and local effect contribution. The local interpretation shows how the predicted value is formed by the main effects and pairwise interactions.
-
-Firstly, the local effect contribution displays the outputs of each main effect and pairwise interaction. The predictor value of each effect is shown on the right axis, and the corresponding effect names are shown on the left axis. From the title, it can be observed that the predicted value of this sample is 0.1270, which is significantly different from the actual response of 1. The main effect of the _CURRENT INTEREST RATE_ contributes the most to the final prediction, with a positive contribution (around 1). This is followed by the _CURRENT INTEREST RATE_, _% CHANGE IN UPB_, _CREDIT SCORE_, _ORIGINATION INTEREST RATE_, and _ELTV_, all of which have a positive contribution. _INDEX_SA_ and the pairwise effect of _INDEX_SA_ and _% CHANGE IN UPB_ have a negative contribution to the final prediction.
-
-The interpretation of the feature contribution plot is simliar to that of the local effect contribution plot, but instead of displaying the effects, it shows the individual impact of each feature. For our sample, the main effects of _CURRENT INTEREST RATE_ and _CREDIT SCORE_ both have a positive contribution to the final prediction. Additionally, the _UNEMPLOYMENT RATE_ shows a negative impact on the final prediction at the feature level, even though it did not appear in the top 10 list of the local effect importance plot.
 
 ### Resilience Test - Worst Sample for Top 4 Most Important Features from XGB2_v2
 
