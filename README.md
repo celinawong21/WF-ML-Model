@@ -388,7 +388,6 @@ The interaction effect between the housing price index and the unemployment rate
   <tr>
     <td>
       <img src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/22421870-f4a2-4ef2-acdd-c461e36c3811">
-"/>
     </td>
   </tr>
 </table>
