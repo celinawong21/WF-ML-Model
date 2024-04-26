@@ -222,13 +222,12 @@ Both of the results are sorted by the highest Area Under the Curve (AUC) value, 
 * **XGB_V4**: Similar to XGB_V2, featuring default parameters alongside the two monotonic variables: "CURRENT INTEREST RATE" (monotonic increasing) and "CREDIT SCORE" (monotonic decreasing).
 
 #### XGB1
-|   | Model   | test_ACC | test_AUC | test_F1 | test_LogLoss | test_Brier | train_ACC | train_AUC | train_F1 | train_LogLoss | train+Brier |
+|   | Model   | test_ACC | test_AUC | test_F1 | test_LogLoss | test_Brier | train_ACC | train_AUC | train_F1 | train_LogLoss | train_Brier |
 |---|---------|----------|----------|---------|--------------|------------|-----------|-----------|----------|---------------|-------------|
-| 0  | XBG1    | 0.6963   | 0.7698   | 0.7170  | 0.5875       | 0.1993     | 0.6903    | 0.7617    | 0.7242   | 0.5965        | 0.2037      |
+| 0 | XBG1    | 0.6963   | 0.7698   | 0.7170  | 0.5875       | 0.1993     | 0.6903    | 0.7617    | 0.7242   | 0.5965        | 0.2037      |
 | 1 | XBG1_v2 | 0.6963   | 0.7698   | 0.7170  | 0.5875       | 0.1993     | 0.6903    | 0.7617    | 0.7242   | 0.5965        | 0.2037      |
 | 3 | XBG1_v4 | 0.6410   | 0.7473   | 0.7235  | 0.6456       | 0.2256     | 0.6054    | 0.6548    | 0.6542   | 0.6666        | 0.2365      |
 | 2 | XBG1_v3 | 0.6410   | 0.7452   | 0.7235  | 0.6417       | 0.2243     | 0.6054    | 0.6535    | 0.6542   | 0.6659        | 0.2364      |
-
 
 
 #### XGB2
@@ -245,37 +244,18 @@ Both of the results are sorted by the highest Area Under the Curve (AUC) value, 
 ### Effect Plot
 
 * Monotonicity adjustments for two variables: 
-    * **Monotonic increasing**: Current Interest Rate
-    * **Monotonic decreasing**: Credit Score
+    * **Monotonic Increasing**: Current Interest Rate, Original Interest Rate
+    * **Monotonic Decreasing**: Credit Score
 
-Monotonicity adjustments were made to two variables to enhance interpretability: Current Interest Rate for a increasing monotonicity, and Credit Score for a decreasing monotonically. 
-
-<table>
-  <tr>
-    <td>
-      <img src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/06c29bf4-bd66-4732-9050-581b31339c2f" alt="Before Monotonic Adjustment - Credit Score" width="450"/>
-    </td>
-    <td>
-      <img src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/430f4f78-bdf8-48c7-8569-eded2b04df22" alt="After Monotonic Adjustment - Credit Score" width="450"/>
-    </td>
-  </tr>
-  <tr>
-    <td>Before Monotonic Adjustment - Credit Score</td>
-    <td>After Monotonic Adjustment - Credit Score</td>
-  </tr>
-</table>
-
-For the Credit Score, it can be observed that it has a negative relationship with the target value, indicating that as the credit score increases, the probability of default decreases. After the monotonicity adjustment, the effect of the credit score on the model's predictions increased from 4.5% to 6.6%. 
-
-
+Monotonicity adjustments were made to the model's feature to ensure that the relationship between the feature and the target variable follows a consistent trend, either always increasing or always decreasing, thereby improving the model's interpretability.
 
 <table>
   <tr>
     <td>
-      <img src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/155c04d0-1f89-438f-bed4-e8867ef80fcf" alt="Before Monotonic Adjustment - Current Interest Rate" width="450"/>
+      <img src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/349c32d1-4616-47df-b1e4-7098933a7439" alt="Before Monotonic Adjustment - Current Interest Rate" width="450"/>
     </td>
     <td>
-      <img src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/0f264303-37ce-4904-a3c9-5b4608dd7560" alt="After Monotonic Adjustment - Current Interest Rate" width="450"/>
+      <img src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/2144f137-2d7c-4116-b0f7-84c46e063296" alt="After Monotonic Adjustment - Current Interest Rate" width="450"/>
     </td>
   </tr>
   <tr>
@@ -284,19 +264,52 @@ For the Credit Score, it can be observed that it has a negative relationship wit
   </tr>
 </table>
 
-Regarding the Current Interest Rate, it has a positive relationship with the target variable, implying that as the current interest rate increases, the probability of default also increases. Following the monotonicity adjustment, the influence of the current interest rate on the predictions rose from 3.7% to 4.5%.
+Regarding the Current Interest Rate, it has a positive relationship with the target variable, implying that as the current interest rate increases, the probability of default also increases. Following the monotonicity adjustment, the influence of the current interest rate on the predictions slightly rose from 3.2% to 3.7%.
 
-
-
-### Global Interpretability
 
 <table>
   <tr>
     <td>
-      <img src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/a0014bbd-a75b-48d7-ac78-feee2c4ab4b7" alt="Feature Importance" width="450"/>
+      <img src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/91e05703-5530-4598-a64f-c761aabed586" alt="Before Monotonic Adjustment - Original Interest Rate" width="450"/>
     </td>
     <td>
-      <img src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/1faee4b7-0ad6-4795-b11f-cf47c1162340" alt="Effect Importance" width="450"/>
+      <img src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/f685db71-f82e-48a9-ad12-b391522a6f70" alt="After Monotonic Adjustment - Original Interest Rate" width="450"/>
+    </td>
+  </tr>
+  <tr>
+    <td>Before Monotonic Adjustment - Original Interest Rate</td>
+    <td>After Monotonic Adjustment - Original Interest Rate</td>
+  </tr>
+</table>
+
+The original interest rate has a positive relationship with the target variable, indicating that as the original interest rate increases, the probability of default increases. Following the monotonicity adjustments, the effect of the original interest rate on the predictions has not changed and remained at 0.9. This implies that the relationship between the original interest rate and the probability of default was already consistent with the expected behavior.
+
+<table>
+  <tr>
+    <td>
+      <img src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/1352fd58-136a-451d-a1b2-e57a33613133" alt="Before Monotonic Adjustment - Credit Score" width="450"/>
+    </td>
+    <td>
+      <img src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/3c51717e-77cb-46f2-94a3-c6248af1154d" alt="After Monotonic Adjustment - Credit Score" width="450"/>
+    </td>
+  </tr>
+  <tr>
+    <td>Before Monotonic Adjustment - Credit Score</td>
+    <td>After Monotonic Adjustment - Credit Score</td>
+  </tr>
+</table>
+
+For the Credit Score, a negative relationship with the target variable is observed, indicating that as the credit score increases, the probability of default decreases. After the monotonicity adjustment, the impact of the credit score on the model's predictions decreased slightly from 4.1% to 4.0%. This suggests that the adjustment may have smoothed out irregularities in the data that initially contributed to a stronger relationship.
+
+
+### Global Interpretability
+
+
+<table>
+  <tr>
+    <td>
+      <img src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/7341f155-1164-473d-a1ba-7033f8c3cc3c" alt="Feature Importance" width="450"/>
+    </td>
     </td>
   </tr>
 </table>
@@ -305,35 +318,41 @@ Regarding the Current Interest Rate, it has a positive relationship with the tar
 ### Interaction Effect: Four interaction effects with the highest percentages
 The interaction plots show how the interaction between two features affect the probability of default. The top 3 interactions were selected based on the highest percentage values.
 
+
 * **ELTV x % Change in UPB**
-<img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/e94e0fe8-bd39-4294-b62d-35e31982718d">
+<img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/ebf23807-4f55-4bca-8ef2-b0598b82883b">
 
-This plot shows that when the Estimated Loan-to-Value ratio is high, and there's a lower percentage change in the Unpaid Principal Balance, there is a significant interaction effect. This could indicate a higher probability of default in scenarios where ELTV is high but the UPB isn't reducing quickly. It could imply that borrowers with high ELTVs who are not paying down their loan principal rapidly are at a higher risk of default.
+This chart highlights a key point: when a loan amount is close to or more than the property's value, which we see with a high ELTV ratio, and the borrower isn't making much headway in paying back the loan, the risk of not being able to pay the loan back goes up significantly — by 3.2%. This situation often leads to a higher chance that the borrower might default, especially when the property itself can't cover the loan amount and the loan isn't getting smaller. On the flip side, when borrowers are steadily paying down the loan, it lessens the risk, even if the loan was quite high compared to the property's value to start with.
 
 
-* **% Change in UPB x Credit Score** 
-<img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/81626caa-ecd2-4fe7-b29a-25f16d1e6719">
+* **% ELTV x HPI** 
 
-A high credit score combined with a lower percentage change in UPB is indicative of a significant interaction effect. It implies that even if borrowers have good credit scores, if their UPB isn’t decreasing, it might raise flags about their ability to keep up with payments, thus potentially increasing the risk of default
+<img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/74a4a5a2-b682-4b0f-a933-35b1e8cb2598">
 
+The interaction plot reveals that the Estimated Loan to Value (ELTV) ratio exerts a considerable combined effect with the house index showing an interaction impact of 1.0%. Notably, the analysis suggests that loans with a higher ELTV—where the loan amount is approaching or surpassing the value of the property—are subject to heightened risk, particularly when the 'index_sa' is not at peak levels. This finding underscores a potential vulnerability: loans that are underwater or near-underwater, without the mitigating factor of a strong 'index_sa' reading, carry an increased likelihood of default.
 
 * **HPI x Unemployment Rate**
-<img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/7e18ed24-0972-4143-8dc2-7e28e9d6ddfc">
+<img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/e3a262c9-f70d-4a5b-a740-7e5b83b6933a">
 
-The interaction of a lower Home Price Index with a higher unemployment rate demonstrates a significant effect, indicating that when housing prices are decreasing and the unemployment rate is high, it could lead to an increased risk of default.
+The interaction effect between the housing price index and the unemployment rate is observed to be the second highest at 1.7%. The analysis of the plot suggests that a stagnant or declining housing market, combined with a rising unemployment rate, increase the risk of loan defaults. This correlation aligns with economic rationale: if individuals are unable to secure employment, their capacity to fulfill financial obligations, such as loan repayments, is compromised, thereby elevating the likelihood of default. In essence, the inability to find employment, coupled with depreciating housing values, significantly amplifies the probability of default.
+
 
 
 ## Results
 ### Accuracy Descriptions of XGB2_v2 Model
 
-<img width="700" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/c735e21e-2594-43ec-a400-800ae7912702">
+|         |  ACC   |  AUC   |   F1   | LogLoss |  Brier |
+|---------|--------|--------|--------|---------|--------|
+|  Train  | 0.7500 | 0.8280 | 0.7551 |  0.5151 | 0.1707 |
+|  Test   | 0.7333 | 0.8143 | 0.7401 |  0.5288 | 0.1768 |
+|   Gap   |-0.0168 |-0.0137 |-0.0150 |  0.0137 | 0.0060 |
 
-<img width="778" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/73bc97aa-549b-4e28-b583-99dcbede946d">
+<img width="500" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/5ea5dc31-3c8a-4d2d-b555-b84bc7cc1e87">
 
 
 ### Residual Box Plot of Predicted Default Variable from XGB2_v2 Model
 
-<img width= "650" alt = "image" src= "https://github.com/celinawong21/WF-ML-Model/assets/159848729/75fec3ba-b91c-4370-8669-fd30e97c5847">
+<img width= "650" alt = "image" src= "https://github.com/celinawong21/WF-ML-Model/assets/159848729/1d75d30a-eaab-4469-b1c3-a287e143dd61">
 
 ## Risk Considerations
 * **Automation Risk**: Potential consequences of solely relying on predictive models for decision-making without human oversight. 
@@ -350,16 +369,11 @@ The interaction of a lower Home Price Index with a higher unemployment rate demo
 ## Appendix
 ### Local Interpretability 
 
-Its local interpretation consists of two parts: local feature contribution and local effect contribution. The local interpretation shows how the predicted value is formed by the main effects and pairwise interactions.
-Firstly, the local effect contribution displays the outputs of each main effect and pairwise interaction. The interpretation of the feature contribution plot is simliar to that of the local effect contribution plot, but instead of displaying the effects, it shows the individual impact of each feature. 
-
 <table>
   <tr>
     <td>
-      <img src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/03a2191f-b109-419f-b652-93e31f6392d5" alt="Feature Importance" width="450"/>
-    </td>
-    <td>
-      <img src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/92ead311-69ea-4fd8-b196-29abfee20014" alt="Effect Importance" width="450"/>
+      <img src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/22421870-f4a2-4ef2-acdd-c461e36c3811">
+"/>
     </td>
   </tr>
 </table>
@@ -374,21 +388,22 @@ This section contains visualizations of the distribution shifts for various feat
 <table style="width:100%;">
   <tr>
     <td style="text-align:center;">
-      <img src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/c41919c9-d5fd-4dc6-931a-a384b8dbd7bf" alt="Distribution Shift: % Change in UPB" style="width:100%;" />
-      <p style="margin-top: 10px; font-weight: bold;">Distribution Shift: % Change in UPB</p>
+      <img src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/9939fb94-c6c7-4d0d-b14c-edc8ca5fa084" alt="Distribution Shift: % Change in UPB" style="width:100%;" />
+      <p style="margin-top: 10px; font-weight: bold;">Distribution Shift: Housing Price Index Seasonally Adjusted (index_sa)</p>
     </td>
     <td style="text-align:center;">
-      <img src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/7c5111dd-e2a2-48e2-8d61-45838e83d1b1" alt="Distribution Shift: Estimated Loan-to-Value (ELTV)" style="width:100%;" />
-      <p style="margin-top: 10px; font-weight: bold;">Distribution Shift: Estimated Loan-to-Value (ELTV)</p>
+      <img src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/66a3f567-2ce7-42d8-b823-3303dd2d956e" alt="Distribution Shift: Estimated Loan-to-Value (ELTV)" style="width:100%;" />
+      <p style="margin-top: 10px; font-weight: bold;">Distribution Shift: % Change in UPB
+</p>
     </td>
   </tr>
   <tr>
     <td style="text-align:center;">
-      <img src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/a1477a64-eb0d-4f15-bd18-f247779831dc" alt="Distribution Shift: Housing Price Index Seasonally Adjusted (index_sa)" style="width:100%;" />
-      <p style="margin-top: 10px; font-weight: bold;">Distribution Shift: Housing Price Index Seasonally Adjusted (index_sa)</p>
+      <img src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/a7f7df12-e9f4-4c5c-9290-3186ef2a02fe" alt="Distribution Shift: Housing Price Index Seasonally Adjusted (index_sa)" style="width:100%;" />
+      <p style="margin-top: 10px; font-weight: bold;">Distribution Shift: Estimated Loan-to-Value (ELTV)</p>
     </td>
     <td style="text-align:center;">
-      <img src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/3007bd03-9495-40a5-ab00-5b4559b0ca84" alt="Distribution Shift: Unemployment Rate (UNRATE)" style="width:100%;" />
+      <img src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/12eeb9b3-108c-4938-acb1-de5b58df6ee3" alt="Distribution Shift: Unemployment Rate (UNRATE)" style="width:100%;" />
       <p style="margin-top: 10px; font-weight: bold;">Distribution Shift: Unemployment Rate (UNRATE)</p>
     </td>
   </tr>
