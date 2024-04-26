@@ -1,4 +1,4 @@
-# Wells Fargo Mortgage Default Predictive Model
+# Wells Fargo Interpretable Machine Learning for Mortgage Default Prediction
 ## Basic Information
 * **Organization or People Developing Model**: GWU Wells Fargo Predictive Mortgage Default Team (Members: Anukshan Ghosh, Allison Ko, Andrew Renga, and Celina Wong)
 * **Model Date**: April, 2024
@@ -11,9 +11,13 @@
 * **Out-of-scope use cases**: Any use beyond an educational example is out-of-scope.
 
 ## Executive Summary
-* The mortgage market is ranked as the second-largest market globally after interest rates.
-* Banks strategically allocate capital through mortgage bonds, underscoring the industry's immense significance. The desired business outcomes for mortgage models encompass achieving interpretability and accuracy, predicting default and repayment patterns over an extended period, and ensuring adaptability to changing market dynamics. Interpretability is crucial in fostering trust and understanding among related parties, as decisions derived from the model need to be transparent and meaningful. Additionally, predicting the likelihood of default and repayment over the next 24 months is a key objective. This predictive capability is essential for risk management, enabling banks to anticipate potential challenges in mortgage repayments and take proactive measures to mitigate default risks.
-* The overarching goal is to identify key predictors that could lead to revenue loss for Wells Fargo and accurately forecast potential losses over the next 24 months. Through risk mitigation efforts, the model seeks to enhance the overall stability of their mortgage-backed securities, taking extra precautions to address potential downward trends that may emerge in the future. Moreover, the model's success is closely tied to its adaptability across diverse economic scenarios, with a specific emphasis on stress testing under various conditions such as crises or pandemics like COVID-19, thereby critically evaluating its robustness.
+* The mortgage market ranks as the second-largest globally, trailing only interest rates, emphasizing its immense scale and significance.
+* Banks allocate capital strategically through mortgage bonds, highlighting the industry's pivotal role in financial markets.
+* Business outcomes for mortgage models include achieving interpretability and accuracy to foster trust and understanding among stakeholders.
+* Predicting default and repayment patterns over an extended period is crucial for risk management and proactive mitigation of default risks.
+* Key objectives involve identifying predictors of revenue loss for Wells Fargo and forecasting potential losses over the next 24 months.
+* Risk mitigation efforts aim to enhance the stability of mortgage-backed securities, particularly addressing potential downward trends.
+* Adaptability across diverse economic scenarios, including stress testing during crises like COVID-19, is vital for evaluating the model's robustness.
   
 ## Problem Understanding
 
@@ -36,7 +40,7 @@
 ## Data Preprocessing 
 ### Data Cleaning 
 * Before any data preprocessing, there were 64 variables across both datasets and over 2.4 billion rows of data.
-* PySpark is employed to handle the large dataset, spanning the last 24 years.
+* PySpark is employed through GWU's High Power Computing system to handle the large dataset.
 * Key strategies implemented in our data preprocessing include:
   * **Handling Missing Data**: columns that contain 95% or more null values across both datasets have been removed.
   * **Merging Origination and Performance Datasets**: to construct a comprehensive analytical framework, the Performance and Origination datasets were joined using the _LOAN SEQUENCE NUMBER_ as a key identifier.
@@ -49,7 +53,7 @@
 * Three types of input variables
   * **Variables that don't change over time**: Credit Score, Original Interest Rate, Property Type, Loan Purpose, Seller Name, First-Time Homebuyer Flag, Occupancy Status
   * **Variables that change over time**: Current Actual UPB, Current Loan Delinquency Status, Loan Age, Estimated Loan-to-Value (ELTV)
-  * **Variables that change over time and predict the future**: Current Interest Rate, Unemployment Rate, Inflation Rate, House Price Index
+  * **Leading macroeconomic variables**: Current Interest Rate, Unemployment Rate, Inflation Rate, House Price Index
     * Macroeconomic variables such as inflation, House Price Index (HPI), and unemployment are loaded from third-party sources.
     * HPI is used nationally to accommodate null values at the state level.
    
@@ -140,7 +144,18 @@ A sample of the first 20 rows of the [2000 Sample Data](Sample_2000_First_20.csv
 
 #### Example of Stacked Data
 
-<img width="1114" alt="Screenshot 2024-04-16 at 5 55 01 PM" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/ee3a2f74-f2af-4bca-b42a-6f4a78a3968e">
+| Group | DEFAULT | Horizon | Source | LOAN SEQUENCE NUMBER | MONTHLY REPORTING PERIOD | CURRENT ACTUAL UPB | CURRENT LOAN DELINQUENCY STATUS | LOAN AGE | CURRENT INTEREST RATE |
+|-------|---------|---------|--------|-----------------------|---------------------------|---------------------|---------------------------------|----------|-----------------------|
+| 0     | 0       | 0       | orig   | F00Q10000066          | 2000-02                   | 132000.0            | 0                               | 0        | 8.0                   |
+| 1     | 0       | 0       | orig   | F00Q10000066          | 2000-03                   | 132000.0            | 0                               | 1        | 8.0                   |
+| 1     | 0       | 1       | Dupli… | F00Q10000066          | 2000-02                   | 132000.0            | 0                               | 0        | 8.0                   |
+| 2     | 0       | 0       | orig   | F00Q10000066          | 2000-04                   | 131000.0            | 0                               | 2        | 8.0                   |
+| 2     | 0       | 1       | Dupli… | F00Q10000066          | 2000-03                   | 132000.0            | 0                               | 1        | 8.0                   |
+| 2     | 0       | 2       | Dupli… | F00Q10000066          | 2000-02                   | 132000.0            | 0                               | 0        | 8.0                   |
+| 3     | 0       | 0       | orig   | F00Q10000066          | 2000-05                   | 131000.0            | 0                               | 3        | 8.0                   |
+| 3     | 0       | 1       | Dupli… | F00Q10000066          | 2000-04                   | 131000.0            | 0                               | 2        | 8.0                   |
+| 3     | 0       | 2       | Dupli… | F00Q10000066          | 2000-03                   | 132000.0            | 0                               | 1        | 8.0                   |
+| 3     | 0       | 3       | Dupli… | F00Q10000066          | 2000-02                   | 132000.0            | 0                               | 0        | 8.0                   |
 
 A sample of the first 48 rows of the [2000 Stacked Data](Stacked_2000_First_48.csv) is included in the repository.
 
