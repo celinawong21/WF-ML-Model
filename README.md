@@ -337,14 +337,13 @@ The interaction plots show how the interaction between two features affect the p
 * **ELTV x % Change in UPB**
 <img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/ebf23807-4f55-4bca-8ef2-b0598b82883b">
 
-This chart highlights a key point: when a loan amount is close to or more than the property's value, which we see with a high ELTV ratio, and the borrower isn't making much headway in paying back the loan, the risk of not being able to pay the loan back goes up significantly — by 3.2%. This situation often leads to a higher chance that the borrower might default, especially when the property itself can't cover the loan amount and the loan isn't getting smaller. On the flip side, when borrowers are steadily paying down the loan, it lessens the risk, even if the loan was quite high compared to the property's value to start with.
-
+The interaction plot shows that if a loan amount is nearly the same or more than what the property is worth, and the borrower isn't paying it off well, there's a much bigger risk (3.2% higher) that they won't be able to finish paying the loan. This can often lead to a situation where the borrower may not be able to pay back the loan at all, especially if the value of the property doesn't cover the loan and the remaining loan amount isn't dropping. But if the borrower is making regular payments and reducing the loan amount, the risk goes down, even if the loan started out big compared to the property's value. 
 
 * **% ELTV x HPI** 
 
 <img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/74a4a5a2-b682-4b0f-a933-35b1e8cb2598">
 
-The interaction plot reveals that the Estimated Loan to Value (ELTV) ratio exerts a considerable combined effect with the house index showing an interaction impact of 1.0%. Notably, the analysis suggests that loans with a higher ELTV—where the loan amount is approaching or surpassing the value of the property—are subject to heightened risk, particularly when the 'index_sa' is not at peak levels. This finding underscores a potential vulnerability: loans that are underwater or near-underwater, without the mitigating factor of a strong 'index_sa' reading, carry an increased likelihood of default.
+The intereaction plot shows that when the loan is as much as the property's worth or more, the risk that the borrower won't be able to pay back the loan is higher. This risk is even greater when the housing market isn't doing well. Basically, if a home loan is worth more than the house, and the market is weak, there's a bigger chance the loan won't be paid off.
 
 * **HPI x Unemployment Rate**
 <img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/e3a262c9-f70d-4a5b-a740-7e5b83b6933a">
