@@ -469,17 +469,53 @@ The interaction plot illustrates that the interaction between the housing market
 ### Property Type
 <img width="400" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/69b4f8fd-d7bb-4951-9cf9-13d7c2183314">
 
-|                 | (PROPERTY TYPE) | (PROPERTY TYPE) | #Test  | #Train | test_AUC | train |
-|-----------------|-----------------|-----------------|--------|--------|----------|-------|
-| 0               | 1.8             | 3.4             | 160040 | 128905 | 0.5946   | 0     |
+|   | (PROPERTY TYPE) | (PROPERTY TYPE) | #Test  | #Train | test_AUC | train_AUC | Gap     |
+|---|-----------------|-----------------|--------|--------|----------|-----------|---------|
+| 0 | 1.8             | 3.4             | 160040 | 128905 | 0.5946   | 0.7733    | -0.1787 |
 
-| PROPERTY TYPE | #Test  | #Train | train_AUC | test_AUC | Gap    |
-|---------------|--------|--------|-----------|----------|--------|
-| 3.4           | 160040 | 128905 | 0.5946    | 0.7733   | -0.1787 |
+
+
 
 ### Original Interest Rate
 <img width="400" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/ff3c011e-b8cd-4f66-ba63-cd15978575d2">
 
+|            | Original Interest Rate | Original Interest Rate | #Test   | #Train   | test_AUC | train_AUC | Gap     |
+|------------|------------------------|------------------------|---------|----------|----------|-----------|---------|
+| 0          | 0.3555                 | 0.5111                 | 260486  | 31852579 | 0.6115   | 0.7716    | -0.1601 |
+| 1          | -0.0334                | 0.1221                 | 5029161 | 3415691  | 0.6712   | 0.8478    | -0.1766 |
+
+
+### Seller Name
+<img width="400" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/5560d835-8e49-4d1e-b4fb-773a10bd8d84">
+
+|            | Seller Name | Seller Name | #Test  | #Train  | test_AUC | train_AUC | Gap     |
+|------------|-------------|-------------|--------|---------|----------|-----------|---------|
+| 0          | 34.8        | 40.1        | 105782 | 2151194 | 0.5421   | 0.727     | -0.1849 |
+
+
+### HPI
+<img width="400" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/37a7eb60-7b8e-4ddf-8437-74622059c0fa">
+
+|            | index_sa | index_sa | #Test   | #Train  | test_AUC | train_AUC | Gap     |
+|------------|----------|----------|---------|---------|----------|-----------|---------|
+| 0          | 0.854    | 1.0      | 2956998 | 1266981 | 0.5595   | 0.7434    | -0.1838 |
+
+
+### Inflation
+<img width="400" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/a02def46-2ad7-4fa4-a329-99d974854957">
+
+|            | Inflation | Inflation | #Test   | #Train  | test_AUC | train_AUC | Gap     |
+|------------|-----------|-----------|---------|---------|----------|-----------|---------|
+| 0          | 0.5018    | 0.5848    | 409544  | 7663750 | 0.6347   | 0.7874    | -0.1527 |
+| 1          | 0.7509    | 1.000     | 3235874 | 1474168 | 0.5695   | 0.7337    | -0.1642 |
+
+
+### % Change in UPB
+<img width="353" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/730233f9-56a4-4f1a-bd99-98cca36755da">
+
+|            | % Change in UPB | % Change in UPB | #Test   | #Train  | test_AUC | train_AUC | Gap     |
+|------------|-----------------|-----------------|---------|---------|----------|-----------|---------|
+|            | 0               | 0.0             | 0.0579  | 14883   | 0.6495   | 0.7812    | -0.1317 |
 
 
 
@@ -496,7 +532,7 @@ The interaction plot illustrates that the interaction between the housing market
 * **User Interface**: Create a front-end development to input certain specifics about a loan and/or macroeconomic variables to output a potential rate of default. This application will take user input, visually explain the impact of each variable, and attempt to boost the interpretability of the model.
 
 ## Appendix
-### Local Interpretability 
+### Local Interpretability: Non-stacked Data
 
 <table>
   <tr>
@@ -536,3 +572,8 @@ This section contains visualizations of the distribution shifts for various feat
     </td>
   </tr>
 </table>
+
+### Local Interpretability: Stacked Data
+
+<img width="900" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/308793a6-3dc2-4d72-9a3c-cb1a84fcbb2b">
+
