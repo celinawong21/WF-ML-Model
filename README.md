@@ -120,6 +120,27 @@
 A sample of the first 20 rows of the [2000 Sample Data](Sample_2000_First_20.csv) is included in the repository.
  
 ## Modeling Using Non-stacked Data
+### Features Selection 
+Based on the feature select function in PiML, the following features were chosen. 
+
+**_Numerical variables_**
+* Credit Score
+* Current Interest Rate
+* Estimated Loan-to-Value (ELTV)
+* Original Interest Rate
+* Index_sa
+* UNRATE(Unemployment rate)
+* Inflation
+* % change in UPB
+
+**_Categorical variables_**
+* First-Time Homebuyer Flag
+* Occupancy Status
+* Property Type
+* Loan Purpose
+* Seller Name
+* OrigYear
+* OrigDate
 
 ### Sampling for Parameters
 
@@ -342,28 +363,6 @@ The interaction effect between the housing price index and the unemployment rate
 | 3     | 0       | 3       | Dupli… | F00Q10000066          | 2000-02                   | 132000.0            | 0                               | 0        | 8.0                   |
 
 A sample of the first 48 rows of the [2000 Stacked Data](Stacked_2000_First_48.csv) is included in the repository.
-
-### Features Selection 
-Based on the feature select function in PiML, the following features were chosen. 
-
-**_Numerical variables_**
-* Credit Score
-* Current Interest Rate
-* Estimated Loan-to-Value (ELTV)
-* Original Interest Rate
-* Index_sa
-* UNRATE(Unemployment rate)
-* Inflation
-* % change in UPB
-
-**_Categorical variables_**
-* First-Time Homebuyer Flag
-* Occupancy Status
-* Property Type
-* Loan Purpose
-* Seller Name
-* OrigYear
-* OrigDate
 
 ### XGBoost2
 
