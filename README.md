@@ -119,71 +119,12 @@
 
 A sample of the first 20 rows of the [2000 Sample Data](Sample_2000_First_20.csv) is included in the repository.
  
-## Modeling
-
-### Overview of Time Series Horizon
-* The predictive loan default model utilizes a time series horizon approach.
-  * The model aims to forecast the probability of a loan defaulting at a future time (t) based on historical information available up to a snapshot time (s), where s < t.
-  * All available information up to time s is utilized, resulting in pairs of snapshots and forecasts, which constitute stacked data.
-  * Each row is duplicated 24 times to predict default probability over the subsequent 24-month period (sample table below).
-* The decision to opt for a time series horizon model over a traditional time series model was driven by the latter's diminishing predictive power with increasing time duration.
-* Traditional time series models tend to overly emphasize initial lagged time periods, potentially overlooking valuable insights from earlier years.
-
-### Creating a Stacked Dataset
-#### Vectorized Process to Create the Stacked Dataset
-* The process begins with obtaining a sample file containing 3,000 loans from each of the 24 years. Subsequently, the data undergoes a vectorized transformation to generate a time series dataframe.
-* Then, the minimum _LOAN AGE_ for each _LOAN SEQUENCE NUMBER_ group is identified, which is the starting point for each loan.
-    * During the vectorization process, the combination of _LOAN SEQUENCE NUMBER_ and _LOAN AGE_ is documented for each iteration of the horizons.
-    * In cases where multiple _LOAN SEQUENCE NUMBERS_ exhibit the same LOAN AGE throughout the duration of a HORIZON, adjustments are made to ensure chronological order within each _LOAN SEQUENCE NUMBER_. This involves recalculating loan ages for duplicate rows, thus preserving the sequential progression of loan ages. 
-* Each row in the merged dataset is replicated 24 times to project loan information for 24 months into the future. This duplication enables forecasting loan behavior over an extended period.
-* To enhance analysis, two new columns, _HORIZON_ and _SOURCE_, are introduced.
-    * **HORIZON**: tracks past information, with each horizon representing a month in the past.
-        * For instance, if a loan's monthly reporting period is "2013-06", HORIZON(1) corresponds to duplicated data from "2013-05", and HORIZON(2) corresponds to duplicated data from "2013-04".
-    * **SOURCE**: distinguishes between original sample rows ("orig") and those generated through the vectorized process ("Duplicated").
-* The process will continue, incrementing the 'LOAN AGE' by one consistently until the loan reaches the end of its lifecycle.
-
-#### Example of Stacked Data
-
-| Group | DEFAULT | Horizon | Source | LOAN SEQUENCE NUMBER | MONTHLY REPORTING PERIOD | CURRENT ACTUAL UPB | CURRENT LOAN DELINQUENCY STATUS | LOAN AGE | CURRENT INTEREST RATE |
-|-------|---------|---------|--------|-----------------------|---------------------------|---------------------|---------------------------------|----------|-----------------------|
-| 0     | 0       | 0       | orig   | F00Q10000066          | 2000-02                   | 132000.0            | 0                               | 0        | 8.0                   |
-| 1     | 0       | 0       | orig   | F00Q10000066          | 2000-03                   | 132000.0            | 0                               | 1        | 8.0                   |
-| 1     | 0       | 1       | Dupli… | F00Q10000066          | 2000-02                   | 132000.0            | 0                               | 0        | 8.0                   |
-| 2     | 0       | 0       | orig   | F00Q10000066          | 2000-04                   | 131000.0            | 0                               | 2        | 8.0                   |
-| 2     | 0       | 1       | Dupli… | F00Q10000066          | 2000-03                   | 132000.0            | 0                               | 1        | 8.0                   |
-| 2     | 0       | 2       | Dupli… | F00Q10000066          | 2000-02                   | 132000.0            | 0                               | 0        | 8.0                   |
-| 3     | 0       | 0       | orig   | F00Q10000066          | 2000-05                   | 131000.0            | 0                               | 3        | 8.0                   |
-| 3     | 0       | 1       | Dupli… | F00Q10000066          | 2000-04                   | 131000.0            | 0                               | 2        | 8.0                   |
-| 3     | 0       | 2       | Dupli… | F00Q10000066          | 2000-03                   | 132000.0            | 0                               | 1        | 8.0                   |
-| 3     | 0       | 3       | Dupli… | F00Q10000066          | 2000-02                   | 132000.0            | 0                               | 0        | 8.0                   |
-
-A sample of the first 48 rows of the [2000 Stacked Data](Stacked_2000_First_48.csv) is included in the repository.
-
-### Features Selection 
-Based on the feature select function in PiML, the following features were chosen. 
-
-**_Numerical variables_**
-* Credit Score
-* Current Interest Rate
-* Estimated Loan-to-Value (ELTV)
-* Original Interest Rate
-* Index_sa
-* UNRATE(Unemployment rate)
-* Inflation
-* % change in UPB
-
-**_Categorical variables_**
-* First-Time Homebuyer Flag
-* Occupancy Status
-* Property Type
-* Loan Purpose
-* Seller Name
-* OrigYear
-* OrigDate
+## Modeling Using Non-stacked Data
 
 ### Sampling for Parameters
 
-* [SampleForParameter.csv](https://github.com/celinawong21/WF-ML-Model/blob/main/sampleforparameter.csv) is a smaller sample that shows the merged data, which is then used to obtain hyperparameters for both the XGB1 and XGB2 models. Subsequently, these parameters, along with the monotonic variables, are utilized to train four different models for both XGB1 and XGB2. 
+* [SampleForParameter.csv](https://github.com/celinawong21/WF-ML-Model/blob/main/sampleforparameter.csv) is a smaller sample that shows the merged data, which is then used to obtain hyperparameters for both the XGB1 and XGB2 models. Subsequently, these parameters, along with the monotonic variables, are utilized to train four different models for both XGB1 and XGB2.
+* SampleForParameter.csv is used to obtain parameters for the XGB1 model through the grid search method. The parameters obtained from the first row of the grid search results, corresponding to Rank 1, will be utilized in the XGB1 model and its versions.
 
 ### XGBoost 
 
@@ -205,8 +146,6 @@ result.data
 | {'eta': 0.01, 'n_estimators': 100, 'reg_alpha': 0.01, 'reg_lambda': 1.0}   | 1            | 0.337091 | 0.337091 | 13.715970 |
 | {'eta': 0.01, 'n_estimators': 100, 'reg_alpha': 0.5, 'reg_lambda': 0.0}   | 1            | 0.337091 | 0.337091 | 13.8588046 |
 | {'eta': 0.01, 'n_estimators': 100, 'reg_alpha': 0.5, 'reg_lambda': 0.5}   | 1            | 0.337091 | 0.337091 | 12.984432 |
-
-* SampleForParameter.csv is used to obtain parameters for the XGB1 model through the grid search method. The parameters obtained from the first row of the grid search results, corresponding to Rank 1, will be utilized in the XGB1 model and its versions.
 
 ```python
 np.random.seed(12345)
@@ -258,7 +197,7 @@ Both of the results are sorted by the highest Area Under the Curve (AUC) value, 
 
 ### Effect Plot
 
-* Monotonicity adjustments for two variables: 
+* Monotonicity adjustments for three variables: 
     * **Monotonic Increasing**: Current Interest Rate, Original Interest Rate
     * **Monotonic Decreasing**: Credit Score
 
@@ -319,11 +258,10 @@ For the Credit Score, a negative relationship with the target variable is observ
 
 ### Global Interpretability
 
-
 <table>
   <tr>
     <td>
-      <img src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/7341f155-1164-473d-a1ba-7033f8c3cc3c" alt="Feature Importance" width="450"/>
+      <img src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/19b956ee-3eae-4eec-9991-ea8422a9f8f5" alt="Effect Importance" width="450"/>
     </td>
     </td>
   </tr>
@@ -350,8 +288,6 @@ The intereaction plot shows that when the loan is as much as the property's wort
 
 The interaction effect between the housing price index and the unemployment rate is observed to be the second highest at 1.7%. The analysis of the plot suggests that a stagnant or declining housing market, combined with a rising unemployment rate, increase the risk of loan defaults. This correlation aligns with economic rationale: if individuals are unable to secure employment, their capacity to fulfill financial obligations, such as loan repayments, is compromised, thereby elevating the likelihood of default. In essence, the inability to find employment, coupled with depreciating housing values, significantly amplifies the probability of default.
 
-
-
 ## Results
 ### Accuracy Descriptions of XGB2_v2 Model
 
@@ -367,6 +303,185 @@ The interaction effect between the housing price index and the unemployment rate
 ### Residual Box Plot of Predicted Default Variable from XGB2_v2 Model
 
 <img width= "650" alt = "image" src= "https://github.com/celinawong21/WF-ML-Model/assets/159848729/1d75d30a-eaab-4469-b1c3-a287e143dd61">
+
+## Modeling Using Stacked Data 
+### Overview of Time Series Horizon
+* The predictive loan default model utilizes a time series horizon approach.
+  * The model aims to forecast the probability of a loan defaulting at a future time (t) based on historical information available up to a snapshot time (s), where s < t.
+  * All available information up to time s is utilized, resulting in pairs of snapshots and forecasts, which constitute stacked data.
+  * Each row is duplicated 24 times to predict default probability over the subsequent 24-month period (sample table below).
+* The decision to opt for a time series horizon model over a traditional time series model was driven by the latter's diminishing predictive power with increasing time duration.
+* Traditional time series models tend to overly emphasize initial lagged time periods, potentially overlooking valuable insights from earlier years.
+
+### Creating a Stacked Dataset
+#### Vectorized Process to Create the Stacked Dataset
+* The process begins with obtaining a sample file containing 3,000 loans from each of the 24 years. Subsequently, the data undergoes a vectorized transformation to generate a time series dataframe.
+* Then, the minimum _LOAN AGE_ for each _LOAN SEQUENCE NUMBER_ group is identified, which is the starting point for each loan.
+    * During the vectorization process, the combination of _LOAN SEQUENCE NUMBER_ and _LOAN AGE_ is documented for each iteration of the horizons.
+    * In cases where multiple _LOAN SEQUENCE NUMBERS_ exhibit the same LOAN AGE throughout the duration of a HORIZON, adjustments are made to ensure chronological order within each _LOAN SEQUENCE NUMBER_. This involves recalculating loan ages for duplicate rows, thus preserving the sequential progression of loan ages. 
+* Each row in the merged dataset is replicated 24 times to project loan information for 24 months into the future. This duplication enables forecasting loan behavior over an extended period.
+* To enhance analysis, two new columns, _HORIZON_ and _SOURCE_, are introduced.
+    * **HORIZON**: tracks past information, with each horizon representing a month in the past.
+        * For instance, if a loan's monthly reporting period is "2013-06", HORIZON(1) corresponds to duplicated data from "2013-05", and HORIZON(2) corresponds to duplicated data from "2013-04".
+    * **SOURCE**: distinguishes between original sample rows ("orig") and those generated through the vectorized process ("Duplicated").
+* The process will continue, incrementing the 'LOAN AGE' by one consistently until the loan reaches the end of its lifecycle.
+
+#### Example of Stacked Data
+
+| Group | DEFAULT | Horizon | Source | LOAN SEQUENCE NUMBER | MONTHLY REPORTING PERIOD | CURRENT ACTUAL UPB | CURRENT LOAN DELINQUENCY STATUS | LOAN AGE | CURRENT INTEREST RATE |
+|-------|---------|---------|--------|-----------------------|---------------------------|---------------------|---------------------------------|----------|-----------------------|
+| 0     | 0       | 0       | orig   | F00Q10000066          | 2000-02                   | 132000.0            | 0                               | 0        | 8.0                   |
+| 1     | 0       | 0       | orig   | F00Q10000066          | 2000-03                   | 132000.0            | 0                               | 1        | 8.0                   |
+| 1     | 0       | 1       | Dupli… | F00Q10000066          | 2000-02                   | 132000.0            | 0                               | 0        | 8.0                   |
+| 2     | 0       | 0       | orig   | F00Q10000066          | 2000-04                   | 131000.0            | 0                               | 2        | 8.0                   |
+| 2     | 0       | 1       | Dupli… | F00Q10000066          | 2000-03                   | 132000.0            | 0                               | 1        | 8.0                   |
+| 2     | 0       | 2       | Dupli… | F00Q10000066          | 2000-02                   | 132000.0            | 0                               | 0        | 8.0                   |
+| 3     | 0       | 0       | orig   | F00Q10000066          | 2000-05                   | 131000.0            | 0                               | 3        | 8.0                   |
+| 3     | 0       | 1       | Dupli… | F00Q10000066          | 2000-04                   | 131000.0            | 0                               | 2        | 8.0                   |
+| 3     | 0       | 2       | Dupli… | F00Q10000066          | 2000-03                   | 132000.0            | 0                               | 1        | 8.0                   |
+| 3     | 0       | 3       | Dupli… | F00Q10000066          | 2000-02                   | 132000.0            | 0                               | 0        | 8.0                   |
+
+A sample of the first 48 rows of the [2000 Stacked Data](Stacked_2000_First_48.csv) is included in the repository.
+
+### Features Selection 
+Based on the feature select function in PiML, the following features were chosen. 
+
+**_Numerical variables_**
+* Credit Score
+* Current Interest Rate
+* Estimated Loan-to-Value (ELTV)
+* Original Interest Rate
+* Index_sa
+* UNRATE(Unemployment rate)
+* Inflation
+* % change in UPB
+
+**_Categorical variables_**
+* First-Time Homebuyer Flag
+* Occupancy Status
+* Property Type
+* Loan Purpose
+* Seller Name
+* OrigYear
+* OrigDate
+
+### XGBoost2
+
+|     | Model    | test_ACC | test_AUC | test_F1 | test_LogLoss | test_Brier | train_ACC | train_AUC | train_F1 | train_LogLoss | train_Brier |
+|-----|----------|----------|----------|---------|--------------|------------|-----------|-----------|----------|---------------|-------------|
+|  0  | XGB2     | 0.6656   | 0.7361   | 0.6367  | 0.6137       | 0.2125     | 0.7004    | 0.7695    | 0.7083   | 0.5729        | 0.1952      |
+|  1  | XGB2_v2  | 0.6681   | 0.7287   | 0.6416  | 0.6257       | 0.2160     | 0.7003    | 0.7702    | 0.7070   | 0.5726        | 0.1950      |
+
+### Predicted vs. Actual Default Rate: XGB2_v2  
+
+<img width="600" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/a10fe8f0-a89c-462c-a730-eb6e3f8ac5e2">
+
+## Model Interpretation: XGB2_v2
+
+### Effect Plot
+
+* Monotonicity adjustments for two variables: 
+    * **Monotonic Increasing**: Current Interest Rate 
+    * **Monotonic Decreasing**: Credit Score
+
+<table>
+  <tr>
+    <td>
+      <img src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/42744c3f-7c26-451e-9dd4-71f6da05e70a" alt="Before Monotonic Adjustment - Credit Score" width="450"/>
+    </td>
+    <td>
+      <img src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/20d39f03-a94d-40c5-840e-42a3ed31393c" alt="After Monotonic Adjustment - Credit Score" width="450"/>
+    </td>
+  </tr>
+  <tr>
+    <td>Before Monotonic Adjustment - Credit Score</td>
+    <td>After Monotonic Adjustment - Credit Score</td>
+  </tr>
+</table>
+
+For Credit Score, a negative relationship with the target variable is observed, indicating that as the credit score increases, the probability of default decreases. After the monotonicity adjustment, the impact of the credit score on the model's predictions decreased slightly from 16.4% to 16.2%. This suggests that the adjustment may have smoothed out irregularities in the data that initially contributed to a stronger relationship.
+
+<table>
+  <tr>
+    <td>
+      <img src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/ef8a6432-a3e7-484b-895a-034931fbfe20" alt="Before Monotonic Adjustment - Current Interest Rate" width="450"/>
+    </td>
+    <td>
+      <img src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/28f55109-75a8-43f4-8e25-9bc4d8ea8d75" alt="After Monotonic Adjustment - Current Interest Rate" width="450"/>
+    </td>
+  </tr>
+  <tr>
+    <td>Before Monotonic Adjustment - Current Interest Rate</td>
+    <td>After Monotonic Adjustment - Current Interest Rate</td>
+  </tr>
+</table>
+
+Regarding Current Interest Rate, it has a positive relationship with the target variable, implying that as the current interest rate increases, the probability of default also increases. Following the monotonicity adjustment, the influence of the current interest rate on the predictions slightly rose from 14.2% to 15.2%.
+
+### Global Interpretability
+
+<table>
+  <tr>
+    <td>
+      <img src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/f6bfbd59-e2cf-4cf1-ae85-458e8d589c76" alt="Effect Importance" width="450"/>
+    </td>
+    </td>
+  </tr>
+</table>
+
+The effect importance graph shows which the model finds most important when predicting outcomes. The feature with the highest effect is "index_sa," indicating it has a strong relationship with the model's predictions, followed by Credit scores and current interest rates. Economic indicators like the unemployment rate ("UNRATE") and the original interest rate are less influential, but still notable. The importance graph depicts the effect, aiding in the understanding of prioritized data and interpretation of predictions.
+
+### Interaction Effect: Four interaction effects with the highest percentages
+* **%Change in UPB x ELTV**
+
+<img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/d548a5cc-beb8-428c-9fd5-ff901b81b05b">
+
+The interaction plot reveals that small changes in Unpaid Principal Balance (UPB) paired with high Estimated Loan to Value (ELTV) ratios can lead to an increased chance of default. This relationship tends to weaken as the UPB change grows. The cited 2.1% figure measures the relative contribution of this interaction to the accuracy of the model’s default probability predictions.
+
+* **Horizon x Unemployment Rate**
+
+<img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/5a8da587-4866-4e6b-89e2-1ceabe59721c">
+
+The interaction plot demonstrates how the unemployment rate (UNRATE) may influence predictions of default probability across varying time horizons. The graph indicates that the effect of the unemployment rate on risk assessment may evolve as the time horizon extends. The indicated 1.4% represents the interaction’s proportional influence on the likelihood of default, emphasizing that the impact of economic factors like unemployment can shift over time.
+
+* **Horizon x HPI**
+  
+<img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/40d35c78-bd6c-45be-984e-d1b802690666">
+
+The interaction plot illustrates that the interaction between the housing market index ('index_sa') and the horizon could affect default risk assessments. The significance of the housing market's status in predicting defaults may alter as the horizon grows. The 1.1% highlighted implies that this interaction accounts for a certain amount of the variability in predicting defaults, highlighting the need to factor in long-term economic trends in risk models.
+
+## Results
+### Accuracy Descriptions of XGB2_v2 Model
+
+|         |  ACC   |  AUC   |   F1   | LogLoss |  Brier |
+|---------|--------|--------|--------|---------|--------|
+|  Train  | 0.7003 | 0.7702 | 0.7070 |  0.5726 | 0.1950 |
+|  Test   | 0.6681 | 0.7287 | 0.6414 |  0.6257 | 0.2160 |
+|   Gap   |-0.0323 |-0.0415 |-0.0656 |  0.0530 | 0.0210 |
+
+<img width="500" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/d684fd69-ea70-461c-a996-7fd36acbe9e9">
+
+### Residual Box Plot of Predicted Default Variable from XGB2_v2 Model
+
+<img width= "650" alt = "image" src= "https://github.com/celinawong21/WF-ML-Model/assets/159848729/9e8f2fcd-ef9f-4825-8d33-c5effd0d0bf7">
+
+## Overfit Test
+### Property Type
+<img width="400" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/69b4f8fd-d7bb-4951-9cf9-13d7c2183314">
+
+|                 | (PROPERTY TYPE) | (PROPERTY TYPE) | #Test  | #Train | test_AUC | train |
+|-----------------|-----------------|-----------------|--------|--------|----------|-------|
+| 0               | 1.8             | 3.4             | 160040 | 128905 | 0.5946   | 0     |
+
+| PROPERTY TYPE | #Test  | #Train | train_AUC | test_AUC | Gap    |
+|---------------|--------|--------|-----------|----------|--------|
+| 3.4           | 160040 | 128905 | 0.5946    | 0.7733   | -0.1787 |
+
+### Original Interest Rate
+<img width="400" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/ff3c011e-b8cd-4f66-ba63-cd15978575d2">
+
+
+
 
 ## Risk Considerations
 * **Automation Risk**: Potential consequences of solely relying on predictive models for decision-making without human oversight. 
