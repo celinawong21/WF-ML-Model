@@ -51,7 +51,7 @@
 ### Variable Selection
 * **Target variable**: the probability of default
 * Three types of input variables
-  * **Variables that don't change over time**: Credit Score, Original Interest Rate, Property Type, Loan Purpose, Seller Name, First-Time Homebuyer Flag, Occupancy Status
+  * **Variables that don't change over time**: Origination Credit Score, Original Interest Rate, Property Type, Loan Purpose, Seller Name, First-Time Homebuyer Flag, Occupancy Status
   * **Variables that change over time**: Current Actual UPB, Current Loan Delinquency Status, Loan Age, Estimated Loan-to-Value (ELTV)
   * **Leading macroeconomic variables**: Current Interest Rate, Unemployment Rate, Inflation Rate, House Price Index
     * Macroeconomic variables such as inflation, House Price Index (HPI), and unemployment are loaded from third-party sources.
@@ -289,7 +289,7 @@ For the Credit Score, a negative relationship with the target variable is observ
 </table>
 
 
-### Interaction Effect: Four interaction effects with the highest percentages
+### Interaction Effect: Three interaction effects with the highest percentages
 The interaction plots show how the interaction between two features affect the probability of default. The top 3 interactions were selected based on the highest percentage values.
 
 
@@ -371,10 +371,6 @@ A sample of the first 48 rows of the [2000 Stacked Data](Stacked_2000_First_48.c
 |  0  | XGB2     | 0.6656   | 0.7361   | 0.6367  | 0.6137       | 0.2125     | 0.7004    | 0.7695    | 0.7083   | 0.5729        | 0.1952      |
 |  1  | XGB2_v2  | 0.6681   | 0.7287   | 0.6416  | 0.6257       | 0.2160     | 0.7003    | 0.7702    | 0.7070   | 0.5726        | 0.1950      |
 
-### Predicted vs. Actual Default Rate: XGB2_v2  
-
-<img width="600" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/c6e6ba99-25e1-4794-bb0f-2e6d6496f522">
-
 ## Model Interpretation: XGB2_v2
 
 ### Effect Plot
@@ -430,7 +426,7 @@ Regarding Current Interest Rate, it has a positive relationship with the target 
 
 The effect importance graph shows which the model finds most important when predicting outcomes. The feature with the highest effect is "index_sa," indicating it has a strong relationship with the model's predictions, followed by Credit scores and current interest rates. Economic indicators like the unemployment rate ("UNRATE") and the original interest rate are less influential, but still notable. The importance graph depicts the effect, aiding in the understanding of prioritized data and interpretation of predictions.
 
-### Interaction Effect: Four interaction effects with the highest percentages
+### Interaction Effect: Three interaction effects with the highest percentages
 * **%Change in UPB x ELTV**
 
 <img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/d548a5cc-beb8-428c-9fd5-ff901b81b05b">
@@ -463,6 +459,10 @@ The interaction plot illustrates that the interaction between the housing market
 ### Residual Box Plot of Predicted Default Variable from XGB2_v2 Model
 
 <img width= "650" alt = "image" src= "https://github.com/celinawong21/WF-ML-Model/assets/159848729/9e8f2fcd-ef9f-4825-8d33-c5effd0d0bf7">
+
+### Predicted vs. Actual Default Rate: XGB2_v2  
+
+<img width="600" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/c6e6ba99-25e1-4794-bb0f-2e6d6496f522">
 
 ## Overfit Test
 ### Property Type
