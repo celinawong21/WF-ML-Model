@@ -374,7 +374,6 @@ A sample of the first 48 rows of the [2000 Stacked Data](Stacked_2000_First_48.c
 ### Predicted vs. Actual Default Rate: XGB2_v2  
 
 <img width="600" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/c6e6ba99-25e1-4794-bb0f-2e6d6496f522">
-<img width="698" alt="Screenshot 2024-05-02 at 12 34 15 PM" src="https://github.com/celinawong21/WF-ML-Model/assets/158225115/c6e6ba99-25e1-4794-bb0f-2e6d6496f522">
 
 ## Model Interpretation: XGB2_v2
 
