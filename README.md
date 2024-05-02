@@ -192,9 +192,9 @@ result.data
 ### Comparing XGB1 and XBG2
 Both of the results are sorted by the highest Area Under the Curve (AUC) value, providing a comprehensive comparison of model performance.
 * **XGB**: Base model with default parameters and no monotonic variables.
-* **XGB_V2**: Variant of XGB with default parameters and incorporating two monotonic variables: "CURRENT INTEREST RATE" (monotonic increasing) and "CREDIT SCORE" (monotonic decreasing).
+* **XGB_V2**: Variant of XGB with default parameters and incorporating two monotonic variables: "CURRENT INTEREST RATE" and "ORIGINAL INTEREST RATE" (monotonic increasing) and "CREDIT SCORE" (monotonic decreasing).
 * **XGB_V3**: Another variation of XGB1, maintaining default parameters and excluding monotonic variables.
-* **XGB_V4**: Similar to XGB_V2, featuring default parameters alongside the two monotonic variables: "CURRENT INTEREST RATE" (monotonic increasing) and "CREDIT SCORE" (monotonic decreasing).
+* **XGB_V4**: Similar to XGB_V2, featuring default parameters alongside the two monotonic variables: "CURRENT INTEREST RATE" and "ORIGINAL INTEREST RATE" (monotonic increasing) and "CREDIT SCORE" (monotonic decreasing).
 
 #### XGB1
 |   | Model   | test_ACC | test_AUC | test_F1 | test_LogLoss | test_Brier | train_ACC | train_AUC | train_F1 | train_LogLoss | train_Brier |
