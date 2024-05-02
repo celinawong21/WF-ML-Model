@@ -327,7 +327,7 @@ The interaction effect between the housing price index and the unemployment rate
 
 ## Modeling Using Stacked Data 
 ### Overview of Time Series Horizon
-* The predictive loan default model utilizes a time series horizon approach.
+* The predictive loan default model utilizes a paneled approach with horizons representing different periods in time across the entire dataset. For the purposes of this project and code, the paneled data will be referred to as time series data. 
   * The model aims to forecast the probability of a loan defaulting at a future time (t) based on historical information available up to a snapshot time (s), where s < t.
   * All available information up to time s is utilized, resulting in pairs of snapshots and forecasts, which constitute stacked data.
   * Each row is duplicated 24 times to predict default probability over the subsequent 24-month period (sample table below).
