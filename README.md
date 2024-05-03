@@ -9,8 +9,7 @@
   - [Data Cleaning](#data-cleaning)
   - [Variable Selection](#variable-selection)
   - [Data Dictionary](#data-dictionary)
-  - [Sampling](#sampling)
-- [Methodology](#methodology)
+- [Sampling](#sampling)
   - [Modeling Using Non-stacked Data](#modeling-using-non-stacked-data)
     - [Features Selection](#features-selection)
     - [Sampling for Parameters](#sampling-for-parameters)
@@ -23,8 +22,8 @@
     - [Creating a Stacked Dataset](#creating-a-stacked-dataset)
     - [Example of Stacked Data](#example-of-stacked-data)
     - [XGBoost2](#xgboost2)
-    - [Model Interpretation: XGB2_v2](#model-interpretation-xgb2_v2)
-    - [Results](#results)
+    - [Model Interpretation: XGB2_v2](#model-interpretation-xgb2_v2-1)
+    - [Results](#results1)
 - [Overfit Test](#overfit-test)
 - [Risk Considerations](#risk-considerations)
 - [Potential Next Steps](#potential-next-steps)
@@ -94,7 +93,8 @@
   * **Leading macroeconomic variables**: Current Interest Rate, Unemployment Rate, Inflation Rate, House Price Index
     * Macroeconomic variables such as inflation, House Price Index (HPI), and unemployment are loaded from third-party sources.
     * HPI is used nationally to accommodate null values at the state level.
-   
+
+<a name="data-dictionary"></a>   
 ### Data Dictionary 
 | Name | Variable Type | Data Type |  Modeling Role | Description |
 |----------|----------|----------|----------|----------|
@@ -115,7 +115,8 @@
 | House Price Index| Macroeconomic| Numeric| Input| A broad measure of single-family house prices that measures average price changes over a period of time, reported quarterly.|
 | Inflation| Macroeconomic| Numeric| Input| The rate of increase in prices over a given period of time, reported monthly| 
 | Default| Target| Binary| N/A | Describes whether a loan is 6 months late on payment|
- 
+
+<a name="sampling"></a>
 ## Sampling
 ### Methodology
 * Due to the extensive size of the dataset, a strategic sampling method was employed to manage the data. The key criteria used for sampling were centered around the _CURRENT LOAN DELINQUENCY STATUS_.
@@ -156,8 +157,10 @@
 ```     
 
 A sample of the first 20 rows of the [2000 Sample Data](Sample_2000_First_20.csv) is included in the repository.
- 
+
+<a name="modeling-using-non-stacked-data"></a>
 ## Modeling Using Non-stacked Data
+<a name="features-selection"></a>
 ### Features Selection 
 Based on the feature select function in PiML, the following features were chosen. 
 
@@ -180,11 +183,13 @@ Based on the feature select function in PiML, the following features were chosen
 * OrigYear
 * OrigDate
 
+<a name="sampling-for-parameters"></a>
 ### Sampling for Parameters
 
 * [SampleForParameter.csv](https://github.com/celinawong21/WF-ML-Model/blob/main/sampleforparameter.csv) is a smaller sample that shows the merged data, which is then used to obtain hyperparameters for both the XGB1 and XGB2 models. Subsequently, these parameters, along with the monotonic variables, are utilized to train four different models for both XGB1 and XGB2.
 * SampleForParameter.csv is used to obtain parameters for the XGB1 model through the grid search method. The parameters obtained from the first row of the grid search results, corresponding to Rank 1, will be utilized in the XGB1 model and its versions.
 
+<a name="xgboost"></a>
 ### XGBoost 
 
 ```python
@@ -226,7 +231,7 @@ result.data
 
 * SampleForParameter.csv  is then used to derive parameters for the XGB2 model through the grid search method. The parameters extracted from the first row of the grid search results, corresponding to Rank 1, will be employed in the XGB2 model and its versions.
 
-
+<a name="comparing-xgb1-and-xgb2"></a>
 ### Comparing XGB1 and XBG2
 Both of the results are sorted by the highest Area Under the Curve (AUC) value, providing a comprehensive comparison of model performance.
 * **XGB**: Base model with default parameters and no monotonic variables.
@@ -251,7 +256,7 @@ Both of the results are sorted by the highest Area Under the Curve (AUC) value, 
 | 3 | XBG2_v4 | 0.6635   | 0.7199   | 0.6405  | 0.8378       | 0.2521     | 0.8241    | 0.9019    | 0.8246   | 0.4026        | 0.1262      |
 | 2 | XBG2_v3 | 0.6461   | 0.7145   | 0.6978  | 0.9345       | 0.2728     | 0.78305   | 0.9073    | 0.8311   | 0.3955        | 0.1234      |
 
-
+<a name="model-interpretation-xgb2_v2"></a>
 ## Model Interpretation: XGB2_v2
 
 ### Effect Plot
