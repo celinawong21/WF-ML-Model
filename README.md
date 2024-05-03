@@ -1,4 +1,8 @@
 # Wells Fargo Interpretable Machine Learning for Mortgage Default Prediction
+## Table of Contents
+* [Basic Information](#basic-information)
+* [Intended Use](#intended-use)
+* 
 <a name="basic-information"></a>
 ## Basic Information
 * **Organization or People Developing Model**: GWU Wells Fargo Predictive Mortgage Default Team (Members: Anukshan Ghosh, Allison Ko, Andrew Renga, and Celina Wong)
@@ -6,6 +10,7 @@
 * **Model Implementation Code**: [Main Code - PySpark_0412.ipynb](https://github.com/celinawong21/WF-ML-Model/blob/main/Main%20Code%20-%20PySpark_0412.ipynb)
 * **Freddie Mac Database**: [Single-family home loan data](https://freddiemac.embs.com/FLoan/secure/login.php?pagename=download) 
 
+<a name="intended-use"></a>
 ## Intended Use
 * **Primary intended uses**: This model is an example of a predictive model for mortgage lenders, financial institutions, and investors to assess and mitigate mortgage lending portfolio risks.
 * **Primary intended users**: Wells Fargo Team, Patrick Hall, Miguel Maldonado de Santillana, and GWU Students in DNSC 4289/6317
