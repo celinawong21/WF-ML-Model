@@ -298,16 +298,19 @@ The interaction plots show how the interaction between two features affect the p
 
 The interaction plot shows that if a loan amount is nearly the same or more than what the property is worth, and the borrower isn't paying it off well, there's a much bigger risk (3.2% higher) that they won't be able to finish paying the loan. This can often lead to a situation where the borrower may not be able to pay back the loan at all, especially if the value of the property doesn't cover the loan and the remaining loan amount isn't dropping. But if the borrower is making regular payments and reducing the loan amount, the risk goes down, even if the loan started out big compared to the property's value. 
 
+
+* **HPI x Unemployment Rate**
+<img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/e3a262c9-f70d-4a5b-a740-7e5b83b6933a">
+
+The interaction effect between the housing price index and the unemployment rate is observed to be the second highest at 1.7%. The analysis of the plot suggests that a stagnant or declining housing market, combined with a rising unemployment rate, increase the risk of loan defaults. This correlation aligns with economic rationale: if individuals are unable to secure employment, their capacity to fulfill financial obligations, such as loan repayments, is compromised, thereby elevating the likelihood of default. In essence, the inability to find employment, coupled with depreciating housing values, significantly amplifies the probability of default.
+
+
 * **% ELTV x HPI** 
 
 <img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/74a4a5a2-b682-4b0f-a933-35b1e8cb2598">
 
 The intereaction plot shows that when the loan is as much as the property's worth or more, the risk that the borrower won't be able to pay back the loan is higher. This risk is even greater when the housing market isn't doing well. Basically, if a home loan is worth more than the house, and the market is weak, there's a bigger chance the loan won't be paid off.
 
-* **HPI x Unemployment Rate**
-<img width="550" alt="image" src="https://github.com/celinawong21/WF-ML-Model/assets/159848729/e3a262c9-f70d-4a5b-a740-7e5b83b6933a">
-
-The interaction effect between the housing price index and the unemployment rate is observed to be the third highest at 1.7%. The analysis of the plot suggests that a stagnant or declining housing market, combined with a rising unemployment rate, increase the risk of loan defaults. This correlation aligns with economic rationale: if individuals are unable to secure employment, their capacity to fulfill financial obligations, such as loan repayments, is compromised, thereby elevating the likelihood of default. In essence, the inability to find employment, coupled with depreciating housing values, significantly amplifies the probability of default.
 
 ## Results
 ### Accuracy Descriptions of XGB2_v2 Model
