@@ -20,7 +20,6 @@
   - [Modeling Using Stacked Data](#modeling-using-stacked-data)
     - [Overview of Time Series Horizon](#overview-of-time-series-horizon)
     - [Creating a Stacked Dataset](#creating-a-stacked-dataset)
-    - [Example of Stacked Data](#example-of-stacked-data)
     - [XGBoost2](#xgboost2)
     - [Model Interpretation: XGB2_v2](#model-interpretation-xgb2_v2-1)
     - [Results](#results1)
