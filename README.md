@@ -1,8 +1,34 @@
 # Wells Fargo Interpretable Machine Learning for Mortgage Default Prediction
 ## Table of Contents
-* [Basic Information](#basic-information)
-* [Intended Use](#intended-use)
-* 
+- [Basic Information](#basic-information)
+- [Intended Use](#intended-use)
+- [Executive Summary](#executive-summary)
+- [Problem Understanding](#problem-understanding)
+- [The Data](#the-data)
+- [Data Preprocessing](#data-preprocessing)
+  - [Data Cleaning](#data-cleaning)
+  - [Variable Selection](#variable-selection)
+  - [Data Dictionary](#data-dictionary)
+  - [Sampling](#sampling)
+- [Methodology](#methodology)
+  - [Modeling Using Non-stacked Data](#modeling-using-non-stacked-data)
+    - [Features Selection](#features-selection)
+    - [Sampling for Parameters](#sampling-for-parameters)
+    - [XGBoost](#xgboost)
+    - [Comparing XGB1 and XBG2](#comparing-xgb1-and-xbg2)
+    - [Model Interpretation: XGB2_v2](#model-interpretation-xgb2_v2)
+    - [Results](#results)
+  - [Modeling Using Stacked Data](#modeling-using-stacked-data)
+    - [Overview of Time Series Horizon](#overview-of-time-series-horizon)
+    - [Creating a Stacked Dataset](#creating-a-stacked-dataset)
+    - [Example of Stacked Data](#example-of-stacked-data)
+    - [XGBoost2](#xgboost2)
+    - [Model Interpretation: XGB2_v2](#model-interpretation-xgb2_v2)
+    - [Results](#results)
+- [Overfit Test](#overfit-test)
+- [Risk Considerations](#risk-considerations)
+- [Potential Next Steps](#potential-next-steps)
+- [Appendix](#appendix)
 <a name="basic-information"></a>
 ## Basic Information
 * **Organization or People Developing Model**: GWU Wells Fargo Predictive Mortgage Default Team (Members: Anukshan Ghosh, Allison Ko, Andrew Renga, and Celina Wong)
@@ -16,6 +42,7 @@
 * **Primary intended users**: Wells Fargo Team, Patrick Hall, Miguel Maldonado de Santillana, and GWU Students in DNSC 4289/6317
 * **Out-of-scope use cases**: Any use beyond an educational example is out-of-scope.
 
+<a name="executive-summary"></a>
 ## Executive Summary
 * The mortgage market ranks as the second-largest globally, trailing only interest rates, emphasizing its immense scale and significance.
 * Banks allocate capital strategically through mortgage bonds, highlighting the industry's pivotal role in financial markets.
@@ -24,7 +51,8 @@
 * Key objectives involve identifying predictors of revenue loss for Wells Fargo and forecasting potential losses over the next 24 months.
 * Risk mitigation efforts aim to enhance the stability of mortgage-backed securities, particularly addressing potential downward trends.
 * Adaptability across diverse economic scenarios, including stress testing during crises like COVID-19, is vital for evaluating the model's robustness.
-  
+
+<a name="problem-understanding"></a>
 ## Problem Understanding
 
 <div align= "center">
@@ -36,6 +64,7 @@
 * Collaborating with the Wells Fargo team, the student team's objective is to develop a predictive model for mortgage default over the next 24 months.
 * The model will integrate various static, dynamic, and macroeconomic variables to enhance accuracy and robustness.
 
+<a name="the-data"></a>
 ## The Data
 * The dataset utilized for constructing the predictive model is sourced from Freddie Mac and spans from the year 2000 up to Q2 of 2023.
 * It encompasses information on single-family home loans categorized into Origination and Performance datasets.
@@ -43,7 +72,9 @@
    * **Performance**: records monthly activities for each loan throughout its contract period.
 * The primary focus of the student team is on 30-year-fixed rate mortgages as the main dataset for training the model.
 
+<a name="data-preprocessing"></a>
 ## Data Preprocessing 
+<a name="data-cleaning"></a>
 ### Data Cleaning 
 * Before any data preprocessing, there were 64 variables across both datasets and over 2.4 billion rows of data.
 * PySpark is employed through GWU's High Power Computing system to handle the large dataset.
@@ -54,6 +85,7 @@
   * **Lack of Estimated Loan-to-Value (ELTV) ratio**: ELTV is crucial for modeling to incorporate the financial risk associated with each loan, but there were a significant number of null values present within the Performance dataset.
      * To address this, ELTV was independently calculated by dividing _CURRENT UNPAID BALANCE_ by the adjusted housing price. The adjusted housing price is determined by applying the change in the House Price Index from the loan's origination date to the month of prediction, to the original unpaid balance.
 
+<a name="variable-selection"></a>
 ### Variable Selection
 * **Target variable**: the probability of default
 * Three types of input variables
