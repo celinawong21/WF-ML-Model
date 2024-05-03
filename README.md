@@ -569,7 +569,6 @@ The interaction plot illustrates that the interaction between the housing market
 * **Automation Risk**: Potential consequences of solely relying on predictive models for decision-making without human oversight. 
 * **Sampling Bias**: Careful consideration is given to the implications of sampling a minuscule proportion of the overall data, which may introduce biases or limit the model's ability to accurately predict defaults during periods of crisis. 
 * **Biased Data during Crisis**: Inherent biases in data collected during times of crisis, as loans may predominantly be issued to customers with strong financial profiles, skewing the dataset. It underscores the significance of not only predicting defaults but also anticipating and mitigating crises beforehand. By identifying early warning signs, proactive measures can be implemented to avert potential crises and minimize their impact.
-* **Racial Disparities in Mortgage Loans**: There are significant disparities in mortgage lending practices across racial demographics within the industry.
 
 ## Potential Next Steps 
 * **Larger Dataset**: Apply the modeling techniques to all Freddie Mac single-family home loan data to further incorporate the changes in the economic scenario over time.
