@@ -185,7 +185,7 @@ Based on the feature select function in PiML, the following features were chosen
 <a name="sampling-for-parameters"></a>
 ### Sampling for Parameters
 
-* [SampleForParameter.csv](https://github.com/celinawong21/WF-ML-Model/blob/main/sampleforparameter.csv) is a smaller sample that shows the merged data, which is then used to obtain hyperparameters for both the XGB1 and XGB2 models. Subsequently, these parameters, along with the monotonic variables, are utilized to train four different models for both XGB1 and XGB2.
+* [SampleForParameter.csv](https://github.com/celinawong21/WF-ML-Model/blob/main/sampleforparameter.csv) is a smaller sample that shows the merged data, which is then used to obtain optimal hyperparameters for both the XGB1 and XGB2 models. Subsequently, these parameters, along with the monotonic variables, are utilized to train four different models for both XGB1 and XGB2.
 * SampleForParameter.csv is used to obtain parameters for the XGB1 model through the grid search method. The parameters obtained from the first row of the grid search results, corresponding to Rank 1, will be utilized in the XGB1 model and its versions.
 
 <a name="xgboost"></a>
@@ -228,14 +228,14 @@ result.data
 | {'eta': 0.5, 'n_estimators': 1000, 'reg_alpha': 0.5, 'reg_lambda': 0.0}   | 1            | 0.146856 | 0.146856 | 5.722547 |
 | {'eta': 0.5, 'n_estimators': 1000, 'reg_alpha': 0.99, 'reg_lambda': 0.5}   | 1            | 0.146937 | 0.146937 | 5.495173 |
 
-* SampleForParameter.csv  is then used to derive parameters for the XGB2 model through the grid search method. The parameters extracted from the first row of the grid search results, corresponding to Rank 1, will be employed in the XGB2 model and its versions.
+* SampleForParameter.csv  is then used to derive optimal parameters for the XGB2 model through the grid search method. The parameters extracted from the first row of the grid search results, corresponding to Rank 1, will be employed in the XGB2 model and its versions.
 
 <a name="comparing-xgb1-and-xgb2"></a>
 ### Comparing XGB1 and XBG2
 Both of the results are sorted by the highest Area Under the Curve (AUC) value, providing a comprehensive comparison of model performance.
 * **XGB**: Base model with default parameters and no monotonic variables.
 * **XGB_V2**: Variant of XGB with default parameters and incorporating two monotonic variables: "CURRENT INTEREST RATE" and "ORIGINAL INTEREST RATE" (monotonic increasing) and "CREDIT SCORE" (monotonic decreasing).
-* **XGB_V3**: Another variation of XGB1, maintaining optimal parameters and excluding monotonic variables.
+* **XGB_V3**: Another variation of XGB1, featuring optimal parameters and excluding monotonic variables.
 * **XGB_V4**: Similar to XGB_V2, featuring optimal parameters alongside the two monotonic variables: "CURRENT INTEREST RATE" and "ORIGINAL INTEREST RATE" (monotonic increasing) and "CREDIT SCORE" (monotonic decreasing).
 
 #### XGB1
