@@ -532,6 +532,7 @@ The interaction plot illustrates that the interaction between the housing market
 * **Integration of Additional Data Sources**: Consider incorporating regional economic indicators or property market data alongside existing sources like Freddie Mac to enhance predictive accuracy.
 * **Government Intervention**: Consider any regulatory compliance and ethical implications in future iterations of the project.
 * **User Interface**: Create a front-end development to input certain specifics about a loan and/or macroeconomic variables to output a potential rate of default. This application will take user input, visually explain the impact of each variable, and attempt to boost the interpretability of the model.
+* **Calibration**: Implement calibration adjustments, which involves post-processing the model's output probabilities to better align with the true distribution of the data. This will ensure more accurate probability estimates, mitigating any biases introduced by the oversampling technique.
 
 ## Appendix
 ### Local Interpretability: Non-stacked Data
