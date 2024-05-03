@@ -417,6 +417,7 @@ A sample of the first 48 rows of the [2000 Stacked Data](Stacked_2000_First_48.c
 |  0  | XGB2     | 0.6656   | 0.7361   | 0.6367  | 0.6137       | 0.2125     | 0.7004    | 0.7695    | 0.7083   | 0.5729        | 0.1952      |
 |  1  | XGB2_v2  | 0.6681   | 0.7287   | 0.6416  | 0.6257       | 0.2160     | 0.7003    | 0.7702    | 0.7070   | 0.5726        | 0.1950      |
 
+<a name="model_interpretation_xgb2_v2_1"></a>
 ## Model Interpretation: XGB2_v2
 
 ### Effect Plot
@@ -491,6 +492,7 @@ The interaction plot demonstrates how the unemployment rate (UNRATE) may influen
 
 The interaction plot illustrates that the interaction between the housing market index ('index_sa') and the horizon could affect default risk assessments. The significance of the housing market's status in predicting defaults may alter as the horizon grows. The 1.1% highlighted implies that this interaction accounts for a certain amount of the variability in predicting defaults, highlighting the need to factor in long-term economic trends in risk models.
 
+<a name="results1"></a>
 ## Results
 ### Accuracy Descriptions of XGB2_v2 Model
 
